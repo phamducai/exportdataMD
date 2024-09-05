@@ -3,13 +3,13 @@ import { format } from '@fast-csv/format';
 import { PassThrough } from 'stream';
 import sqlserver1 from '@/app/lib/sqlserver1Client';
 import { SaleDataDTO } from '@/app/lib/definitions';
+import moment from 'moment'; 
 
+export async function POST(req: NextRequest) {   
+  const body = await req.json();
 
-export async function GET(req: NextRequest) {   
-    console.log("hello");
-    const { searchParams } = new URL(req.url);
-    const pprogId = searchParams.get('PProg_ID');
-    console.log(pprogId);
+  const { pprogId ,ppogCode} = body;
+  console.log(ppogCode);
     if (!pprogId) {
       return NextResponse.json({ message: 'PProg_ID is required' }, { status: 400 });
     }
@@ -48,8 +48,8 @@ export async function GET(req: NextRequest) {
   
     salesData.forEach((row) => {
       csvStream.write({
-        DATE: row.DATE,
-        EfDate: row.EfDate,
+        DATE: moment(row.DATE).format('DD/MM/YYYY'),   // Định dạng ngày với moment
+        EfDate: moment(row.EfDate).format('DD/MM/YYYY'),  // Định dạng ngày với moment
         Store: row.store,
         Trans_No: row.Trans_No,
         Goods_ID: row.Goods_ID,
@@ -61,14 +61,14 @@ export async function GET(req: NextRequest) {
     });
   
     csvStream.end();
-  
+   
+    console.log(ppogCode);
     return new Promise<NextResponse>((resolve, reject) => {
       passThrough.on('end', () => {
         const buffer = Buffer.concat(chunks);
         const headers = new Headers();
         headers.set('Content-Type', 'text/csv; charset=utf-8');
-        headers.set('Content-Disposition', `attachment; filename="sales_data_${pprogId}.csv"`);
-  
+        headers.set('Content-Disposition', `attachment; filename="sales_data_${ppogCode}.csv"`);
         resolve(new NextResponse(buffer, { headers }));
       });
   

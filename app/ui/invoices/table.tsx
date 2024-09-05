@@ -24,7 +24,7 @@ export default async function InvoicesTable({
           <div className="md:hidden">
             {promotions?.map((promotion) => (
               <div
-                key={promotion.Promotion_Code}
+                key={promotion.PProg_Code}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
                 <div className="flex items-center justify-between border-b pb-4">
@@ -42,7 +42,7 @@ export default async function InvoicesTable({
                     {/* <p>{formatDateToLocal(invoice.date)}</p> */}
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={promotion.PProg_ID} />
+                    <UpdateInvoice id={promotion.PProg_ID} promotion={promotion.PProg_Code}/>
                   </div>
                 </div>
               </div>
@@ -96,7 +96,7 @@ export default async function InvoicesTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={promotion.PProg_ID} />
+                      <UpdateInvoice id={promotion.PProg_ID} promotion={promotion.PProg_Code}/>
                     </div>
                   </td>
                 </tr>

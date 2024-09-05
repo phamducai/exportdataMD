@@ -4,29 +4,29 @@ import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useState } from "react";
 
-export function UpdateInvoice({ id }: { id: number }) {
+export function UpdateInvoice({ id ,promotion }: { id: number ,promotion:string|null}) {
   const [loading, setLoading] = useState(false);
-  console.log(id);
+  // console.log(id);
   const handleDownload = async () => {
     setLoading(true);
+    console.log(promotion,"promotion ");
     try {
-      // Make a request to your API to fetch the CSV
-      const response = await axios.get(`/api/export?PProg_ID=${id}`, {
-        responseType: 'blob', // Expecting a blob response for the file
-      });
+      const response = await axios.post('/api/export', { pprogId: id,
+        ppogCode: promotion
+       }, {
+        responseType: 'blob',  // Đảm bảo trả về blob (dữ liệu nhị phân)
+    });
 
-      // Create a URL from the blob response
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+    // Tạo URL từ blob
+    const url = window.URL.createObjectURL(new Blob([response.data]));
 
-      // Create a link and trigger the download
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `promotion_${id}.csv`); // Set the filename
-      document.body.appendChild(link);
-      link.click();
-
-      // Cleanup: Remove the link after triggering the download
-      document.body.removeChild(link);
+    // Tạo link để tải file
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `promotion_${promotion}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     } catch (error) {
       console.error('Error downloading file:', error);
     } finally {
