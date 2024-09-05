@@ -1,0 +1,2986 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/sqlserver1"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL_SQLSERVER1")
+}
+
+model ALERTMSG {
+  Form_Name   String @default("", map: "DF_AlertMsg_Form_Name") @db.VarChar(30)
+  Alert_ID    Int    @default(0, map: "DF_AlertMsg_Alert_ID")
+  Alert_Type  String @default("10", map: "DF_Table_1_Alert_Type''") @db.Char(2)
+  Alert_Desc  String @default("", map: "DF_AlertMsg_Alert_Desc") @db.NVarChar(200)
+  Resource_ID Int    @default(-1, map: "DF_AlertMsg_Resource_ID")
+
+  @@id([Form_Name, Alert_ID], map: "PK_AlertMsg")
+}
+
+model ALLCODE {
+  IDX         Decimal @default(0, map: "DF_ALLCODE_IDX") @db.Decimal(3, 0)
+  Code_Name   String  @default("", map: "DF_ALLCODE_CODE_NAME") @db.VarChar(20)
+  Type_Name   String  @default("", map: "DF_ALLCODE_TYPE_NAME") @db.NVarChar(60)
+  Dept_IDs    String  @default("", map: "DF_ALLCODE_DEP_CODE") @db.VarChar(8)
+  Code_Val    String  @default("", map: "DF_ALLCODE_CODE_VAL") @db.VarChar(20)
+  Contents    String  @default("", map: "DF_ALLCODE_CONTENTS") @db.NVarChar(200)
+  Modify      Boolean @default(true, map: "DF_ALLCODE_MODIFY")
+  IsDefault   Boolean @default(false, map: "DF_ALLCODE_ISDEFAULT")
+  Resource_ID Int     @default(-1, map: "DF_ALLCODE_Resource_ID")
+
+  @@id([Code_Name, IDX], map: "PK_ALLCODE")
+}
+
+model APPVAR {
+  Var_Name  String  @id(map: "PK_APPVAR") @default("", map: "DF_APPVAR_NAME") @db.VarChar(20)
+  Data_Type String  @default("", map: "DF_APPVAR_TYPE") @db.Char(2)
+  Var_Value String  @default("", map: "DF_APPVAR_VALUE") @db.NVarChar(60)
+  Var_Desc  String  @default("", map: "DF_APPVAR_DESCRIPT") @db.NVarChar(60)
+  InputMask String  @default("", map: "DF_APPVAR_INPUTMASK") @db.NVarChar(12)
+  Modify    Boolean @default(true, map: "DF_APPVAR_MODIFY")
+  SWA_Code  String  @default("", map: "DF_APPVAR_INVALID") @db.Char(2)
+  SWM_Code  String  @default("", map: "DF_APPVAR_DEP_CODE") @db.Char(4)
+  Disabled  Boolean @default(false, map: "DF_APPVAR_Disabled")
+}
+
+model Authority {
+  Authority_ID   Int     @id(map: "PK_Authority") @default(0, map: "DF_Authority_Authority_ID")
+  Authority_Code String  @default("", map: "DF_Authority_Authority_Code") @db.VarChar(50)
+  Authority_Desc String  @default("", map: "DF_Authority_Authority_Desc") @db.NVarChar(100)
+  Disabled       Boolean @default(false, map: "DF_Authority_Disabled")
+}
+
+model BarcodeDef {
+  Barcode_IDX     Int     @id(map: "PK_BarcodeDef") @default(0, map: "DF_BarcodeDef_Barcode_IDX")
+  Barcode_Symb    String  @default("", map: "DF_BarcodeDef_Barcode_Symb") @db.NVarChar(20)
+  Barcode_Desc    String  @default("", map: "DF_BarcodeDef_Barcode_Desc") @db.NVarChar(50)
+  Prefix          String  @default("", map: "DF_BarcodeDef_Prefix") @db.NVarChar(20)
+  Barcode_Length  Int     @default(0, map: "DF_BarcodeDef_Barcode_Length")
+  Obj_ID          Int     @default(0, map: "DF_BarcodeDef_Obj_ID")
+  Barcode_TblName String  @default("", map: "DF_BarcodeDef_Barcode_TblName") @db.NVarChar(30)
+  Barcode_FName   String  @default("", map: "DF_BarcodeDef_Barcode_FName") @db.NVarChar(20)
+  Obj_IDFName     String  @default("", map: "DF_BarcodeDef_Obj_IDFName") @db.NVarChar(20)
+  Obj_CodeFName   String  @default("", map: "DF_BarcodeDef_Obj_CodeFName") @db.NVarChar(20)
+  Disabled        Boolean @default(false, map: "DF_BarcodeDef_Disabled")
+}
+
+model Brand {
+  Brand_ID   Int     @id(map: "PK_Brand") @default(0, map: "DF_Brand_Brand_ID")
+  Brand_Code String  @default("", map: "DF_Brand_Brand_Code") @db.VarChar(12)
+  MFC_ID     Int     @default(0, map: "DF_Brand_MFC_ID")
+  Brand_Name String  @default("", map: "DF_Brand_Brand_Name") @db.NVarChar(50)
+  Brand_Img  String  @default("", map: "DF_Brand_Brand_Img") @db.NVarChar(Max)
+  GS_Grp_ID  Int     @default(0, map: "DF_Brand_GS_Grp_ID")
+  Status     Boolean @default(true, map: "DF_Brand_Status")
+}
+
+model CashBalance {
+  Cashier_ID  Int      @default(0, map: "DF__CashBalan__Cashi__5006DFF2")
+  Period_Code String   @default("", map: "DF__CashBalan__Perio__50FB042B") @db.Char(6)
+  Pmt_ID      Int      @default(0, map: "DF__CashBalan__Pmt_I__51EF2864")
+  CYS         String?  @default("", map: "DF__CashBalance__CYS__52E34C9D") @db.Char(3)
+  CYS_Beg_Amt Float?   @default(0, map: "DF__CashBalan__CYS_B__53D770D6")
+  CYS_In_Amt  Float?   @default(0, map: "DF__CashBalan__CYS_I__54CB950F")
+  CYS_Out_Amt Float?   @default(0, map: "DF__CashBalan__CYS_O__55BFB948")
+  Beg_Amt     Float?   @default(0, map: "DF__CashBalan__Beg_A__56B3DD81")
+  In_Amt      Float?   @default(0, map: "DF__CashBalan__In_Am__57A801BA")
+  Out_Amt     Float?   @default(0, map: "DF__CashBalan__Out_A__589C25F3")
+  Disabled    Boolean? @default(false, map: "DF__CashBalan__Disab__59904A2C")
+
+  @@id([Cashier_ID, Period_Code, Pmt_ID], map: "PK_CashBalance")
+}
+
+model Cashier {
+  Cashier_ID   Int      @default(0, map: "DF_Cashier_Cashier_ID")
+  Cashier_Code String   @default("", map: "DF_Cashier_Cashier_Code") @db.NVarChar(10)
+  Cashier_Name String   @default("", map: "DF_Cashier_Cashier_Name") @db.NVarChar(50)
+  SCC_ID       Int      @default(0, map: "DF_Cashier_SCC_ID")
+  StkClust_ID  Int      @default(0, map: "DF_Cashier_STK_ID")
+  isSalePmt    Boolean  @default(false, map: "DF_Cashier_isSalePmt")
+  isPOS        Boolean  @default(false, map: "DF_Cashier_isPOS")
+  WS_ID        Int      @default(0, map: "DF_Cashier_Shift_No1")
+  Shift_Qty    Int      @default(0, map: "DF_Cashier_Shift_Qty")
+  isClosed     Boolean  @default(false, map: "DF_Cashier_isClosed")
+  CashUser_ID  Int      @default(0, map: "DF_Cashier_CashUser_ID")
+  Shift_No     Int      @default(0, map: "DF_Cashier_Shift_No")
+  Shift_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Cashier_Shift_Date") @db.DateTime
+  Disabled     Boolean  @default(false, map: "DF_Cashier_Disabled")
+
+  @@id([Cashier_ID, SCC_ID, StkClust_ID], map: "PK_Cashier")
+}
+
+model CashTr_DTL {
+  CashTr_No      String   @default("", map: "DF_CashTr_DTL_CashTr_No") @db.Char(20)
+  CashTr_Date    DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTr_DTL_CashTr_Date") @db.DateTime
+  CashEfTr_Date  DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTr_DTL_CashEfTr_Date") @db.DateTime
+  CashUser_ID    Int      @default(0, map: "DF_CashTr_DTL_CashUser_ID")
+  Cashier_ID     Int      @default(0, map: "DF_CashTr_DTL_Cashier_ID")
+  CashTrOrd_No   String   @default("", map: "DF_CashTr_DTL_CashTrOrd_No") @db.Char(20)
+  CashTrOrd_Date DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTr_DTL_CashTrOrd_Date") @db.DateTime
+  Pmt_ID         Int      @default(0, map: "DF_CashTr_DTL_Pmt_ID")
+  CYS            String   @default("", map: "DF_CashTr_DTL_CYS") @db.Char(3)
+  CYS_Amt        Decimal  @default(0, map: "DF_CashTr_DTL_CYS_Amt") @db.Decimal(12, 2)
+  CashTr_Amt     Decimal  @default(0, map: "DF_CashTr_DTL_CashTr_Amt") @db.Decimal(12, 2)
+  Disabled       Boolean  @default(false, map: "DF_CashTr_DTL_Disabled")
+  Partition_Code String   @default("", map: "DF_CashTr_DTL_Period_Code") @db.VarChar(10)
+  CYS_Face_Val   Decimal  @default(0, map: "DF_CashTr_DTL_CYS_Face_Val") @db.Decimal(12, 2)
+  Pmt_IDX        Int      @default(0, map: "DF_CashTr_DTL_IDX")
+
+  @@id([CashTr_No, Cashier_ID, Pmt_IDX], map: "PK_CashTr_DTL")
+}
+
+model CashTr_HDR {
+  CashTr_No      String    @default("", map: "DF_CashTr_HDR_CashTr_No") @db.Char(20)
+  CashTr_Date    DateTime  @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTr_HDR_CashTr_Date") @db.DateTime
+  CashEfTr_Date  DateTime  @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTr_HDR_CashEfTr_Date") @db.DateTime
+  CashUser_ID    Int       @default(0, map: "DF_CashTr_HDR_CashUser_ID")
+  Cashier_ID     Int       @default(0, map: "DF_CashTr_HDR_Cashier_ID")
+  Shift_No       Int       @default(0, map: "DF_CashTr_HDR_Shift_No")
+  OrderRef_No    String    @default("", map: "DF_CashTr_HDR_OrderRef_No") @db.NVarChar(20)
+  CashTrCls_ID   Int       @default(0, map: "DF_CashTr_HDR_CashTrCls_ID")
+  Staff_ID       Int       @default(0, map: "DF_CashTr_HDR_Staff_ID")
+  StkTrans_No    String    @default("", map: "DF_CashTr_HDR_StkTrans_No") @db.Char(20)
+  StkTrans_Date  DateTime? @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTr_HDR_StkTrans_Date") @db.DateTime
+  SCC_ID         Int       @default(0, map: "DF_CashTr_HDR_SCC_ID")
+  StkClust_ID    Int       @default(0, map: "DF_CashTr_HDR_STK_ID")
+  CashTrOrd_No   String    @default("", map: "DF_CashTr_HDR_CashTrOrd_No") @db.Char(20)
+  CashTrOrd_Date DateTime? @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTr_HDR_CashTrOrd_Date") @db.DateTime
+  CashOrd_Amt    Decimal   @default(0, map: "DF_CashTr_HDR_CashOrd_Amt") @db.Decimal(12, 2)
+  CashTr_Amt     Decimal   @default(0, map: "DF_CashTr_HDR_CashTr_Amt") @db.Decimal(12, 2)
+  Disabled       Boolean   @default(false, map: "DF_CashTr_HDR_Disabled")
+  Partition_Code String?   @default("", map: "DF_CashTr_HDR_Period_Code") @db.VarChar(10)
+
+  @@id([CashTr_No, Cashier_ID], map: "PK_CashTr_HDR")
+}
+
+model CashTransCls {
+  CashTrCls_ID   Int     @id(map: "PK_CashTransCls") @default(0, map: "DF_CashTransCls_CashTrCls_ID")
+  CashTrCls_Code String  @default("", map: "DF_CashTransCls_CashTrCls_Code") @db.Char(2)
+  CashTrCls_Name String  @default("", map: "DF_CashTransCls_CashTrCls_Name") @db.NVarChar(100)
+  isSalePmt      Boolean @default(false, map: "DF_CashTransCls_isSalePmt")
+  isPOS          Boolean @default(false, map: "DF_CashTransCls_isPOS")
+  isShift        Boolean @default(false, map: "DF_CashTransCls_isShift")
+  isMovement     Boolean @default(false, map: "DF_CashTransCls_isMovement")
+  isInternal     Boolean @default(false, map: "DF_CashTransCls_isInternal")
+  isBalance      Boolean @default(false, map: "DF_CashTransCls_isBalance")
+  isAuto         Boolean @default(false, map: "DF_CashTransCls_isAuto")
+  isCredit       Boolean @default(false, map: "DF_CashTransCls_isCredit")
+  isDebit        Boolean @default(false, map: "DF_CashTransCls_isDebit")
+  Disabled       Boolean @default(false, map: "DF_CashTransCls_Disabled")
+}
+
+model CashTrOrder {
+  CashTrOrd_No   String   @default("", map: "DF_CashTrOrder_CashTrOrd_No") @db.Char(20)
+  CashTrOrd_Date DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTrOrder_CashTrOrd_Date") @db.DateTime
+  OrderRef_No    String   @default("", map: "DF_CashTrOrder_OrderRef_No") @db.NVarChar(20)
+  CashTrCls_ID   Int      @default(0, map: "DF_CashTrOrder_CashTrCls_ID")
+  SCC_ID         Int      @default(0, map: "DF_CashTrOrder_SCC_ID")
+  STK_ID         Int      @default(0, map: "DF_CashTrOrder_STK_ID")
+  OrgUnit_ID     Int      @default(0, map: "DF_CashTrOrder_OrgUnit_ID")
+  OrdUser_ID     Int      @default(0, map: "DF_CashTrOrder_OrdUser_ID")
+  Cashier_ID     Int      @default(0, map: "DF_CashTrOrder_Cashier_ID")
+  Staff_ID       Int      @default(0, map: "DF_CashTrOrder_Staff_ID")
+  CashTr_No      String   @default("", map: "DF_CashTrOrder_CashTr_No") @db.Char(20)
+  CashTr_Date    DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_CashTrOrder_CashTr_Date") @db.DateTime
+  CashOrd_Amt    Decimal  @default(0, map: "DF_CashTrOrder_CashOrd_Amt") @db.Decimal(12, 2)
+  CashTr_Amt     Decimal  @default(0, map: "DF_CashTrOrder_CashTr_Amt") @db.Decimal(12, 2)
+  Disabled       Boolean  @default(false, map: "DF_CashTrOrder_Disabled")
+  Period_Code    String?  @default("", map: "DF_CashTrOrder_Period_Code") @db.VarChar(10)
+
+  @@id([CashTrOrd_No, SCC_ID, STK_ID], map: "PK_CashTrOrder")
+}
+
+model COUNTER {
+  Obj_ID    Int
+  Prefix    String @default("", map: "DF_COUNTER_Prefix") @db.VarChar(10)
+  Length    Int    @default(6, map: "DF_Counter_Length")
+  Curr_ID   Int    @default(0, map: "DF_Counter_Curr_ID")
+  Period_ID String @default("", map: "DF_Counter_Period_ID") @db.VarChar(20)
+  Subfix    String @default("", map: "DF_COUNTER_Subfix") @db.VarChar(10)
+
+  @@id([Obj_ID, Prefix, Period_ID, Subfix], map: "PK_Counter")
+}
+
+model Countries {
+  Country_ID       Int     @id(map: "PK_Countries") @default(0, map: "DF_Countries_Country_ID")
+  Country_Code     String  @default("", map: "DF_Countries_Country_Code") @db.Char(3)
+  Country_Name     String  @default("", map: "DF_Countries_Country_Name") @db.NVarChar(60)
+  Ctry_Resource_ID Int     @default(0, map: "DF_Countries_Ctry_Resource_ID")
+  CYS              String  @default("", map: "DF_Countries_CYS") @db.Char(3)
+  Name             String  @default("", map: "DF_Countries_Name") @db.NVarChar(20)
+  Decimal          Int     @default(0, map: "DF_Countries_Decimal")
+  BuyEx_Rate       Decimal @default(0, map: "DF_Countries_BuyEx_Rate") @db.Decimal(12, 2)
+  MarkUp           Decimal @default(0, map: "DF_Countries_MarkUp") @db.Decimal(12, 2)
+  MarkDown         Decimal @default(0, map: "DF_Countries_MarkDown") @db.Decimal(12, 2)
+  Disabled         Boolean @default(false, map: "DF_Countries_Disabled")
+}
+
+model CouponInfo {
+  Coupon_No      String    @id(map: "PK_CouponInfo_1") @default("", map: "DF_CouponInfo_Voucher_No") @db.NVarChar(20)
+  CouponPrg_ID   Int       @default(0, map: "DF_CouponInfo_CouponPrg_ID")
+  Iss_Date       DateTime? @default(dbgenerated("1900/1/1"), map: "DF_CouponInfo_Effect_Date2") @db.DateTime
+  Iss_Type       String    @default("", map: "DF_CouponInfo_LastTr_Num1") @db.Char(2)
+  IssTr_Num      String    @default("", map: "DF_CouponInfo_LastTr_Num") @db.Char(20)
+  Effect_Time    DateTime? @default(dbgenerated("1900/1/1"), map: "DF_CouponInfo_Effect_Date1") @db.DateTime
+  Due_Time       DateTime? @default(dbgenerated("1900/1/1"), map: "DF_CouponInfo_Due_Date1") @db.DateTime
+  CollectTr_Date DateTime? @default(dbgenerated("1900/1/1"), map: "DF_CouponInfo_Last_Date") @db.DateTime
+  CollectTr_Num  String    @default("", map: "DF_CouponInfo_Prefix") @db.Char(20)
+  Disabled       Boolean   @default(false, map: "DF_CouponInfo_Disabled")
+}
+
+model CouponPrg {
+  CouponPrg_ID   Int       @id(map: "PK_CouponPrg") @default(0, map: "DF_CouponPrg_CouponPrg_ID")
+  CouponPrg_Code String    @default("", map: "DF_CouponPrg_CouponPrg_Code") @db.NVarChar(20)
+  CouponPrg_Name String    @default("", map: "DF_CouponPrg_CouponPrg_Name") @db.NVarChar(60)
+  Owner_ID       Int       @default(0, map: "DF_CouponPrg_Owner_ID")
+  SCC_ID         Int       @default(0, map: "DF_CouponPrg_SCC_ID")
+  Prefix         String    @default("", map: "DF_CouponPrg_Prefix") @db.NVarChar(10)
+  Serial_Length  Int       @default(0, map: "DF_CouponPrg_Serial_Length")
+  Fr_Serial      Int       @default(0, map: "DF_CouponPrg_Fr_Serial")
+  Issued_Qty     Int       @default(0, map: "DF_CouponPrg_Issued_Qty")
+  Max_Qty        Int       @default(0, map: "DF_CouponPrg_Max_Qty")
+  Promotion_Code String    @default("", map: "DF_CouponPrg_Promotion_Code") @db.NVarChar(12)
+  PProg_ID       Int       @default(0, map: "DF_CouponPrg_PProg_ID")
+  Effect_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF_CouponPrg_Effect_Date") @db.DateTime
+  Due_Date       DateTime? @default(dbgenerated("1900/1/1"), map: "DF_CouponPrg_Due_Date") @db.DateTime
+  Life_Hour      Int       @default(0, map: "DF_CouponPrg_Life_Hour")
+  Disabled       Boolean
+  Process        String?   @default("", map: "DF__CouponPrg__Proce__786AA25E") @db.Char(1)
+}
+
+model CURRENCY {
+  CYS_ID     Int     @id(map: "PK_CURRENCY") @default(0, map: "DF_CURRENCY_CYS_ID")
+  CYS        String  @default("", map: "DF_CURRENCY_SYMBOL") @db.VarChar(3)
+  Name       String  @default("", map: "DF_CURRENCY_NAME") @db.NVarChar(50)
+  Decimal    Decimal @default(0, map: "DF_CURRENCY_DECIMAL") @db.Decimal(2, 0)
+  Ctry_ID    Int     @default(0, map: "DF_CURRENCY_CTRY_CODE")
+  BuyEX_Rate Decimal @default(0, map: "DF_CURRENCY_EXCH_RATE") @db.Decimal(12, 4)
+  MarkUp     Decimal @default(0, map: "DF_CURRENCY_MARKUP") @db.Decimal(7, 4)
+  MarkDown   Decimal @default(0, map: "DF_CURRENCY_MARKDOWN") @db.Decimal(7, 4)
+  Status     Boolean @default(true, map: "DF_CURRENCY_STATUS")
+}
+
+model DayType {
+  DayType_ID   Int     @id(map: "PK_DayType") @default(0, map: "DF_DayType_DayType_ID")
+  DayType_Code String  @default("", map: "DF_DayType_DayType_Code") @db.Char(20)
+  DayType_Desc String  @default("", map: "DF_DayType_DayType_Desc") @db.NVarChar(100)
+  DOW          Int     @default(0, map: "DF_DayType_DOW")
+  DOY          Int     @default(0, map: "DF_DayType_DOY")
+  DOM          Int     @default(0, map: "DF_DayType_DOM")
+  DOLY         Int     @default(0, map: "DF_DayType_DOLY")
+  DOLM         Int     @default(0, map: "DF_DayType_DOLM")
+  Disabled     Boolean @default(false, map: "DF_DayType_Disabled")
+}
+
+model DEPARTS {
+  Dept_ID    Int     @id(map: "PK_Departs")
+  Dept_Code  String  @default("", map: "DF_Departs_Dept_Code") @db.Char(2)
+  Dept_Name  String  @default("", map: "DF_Departs_Dept_Name") @db.NVarChar(60)
+  IsBasic    Boolean @default(true, map: "DF_Departs_IsBasic")
+  SubSys_IDs String? @db.VarChar(64)
+  PEC_Type   String  @default("", map: "DF_Departs_PEC_Type") @db.Char(2)
+  PEC_WSID   Int     @default(0, map: "DF_Departs_PEC_WSID")
+  Status     Boolean @default(true, map: "DF_Departs_Status")
+}
+
+model DEVICES {
+  DEV_TYPE String  @default("", map: "DF_DEVICES_TYPE") @db.Char(2)
+  DEV_CODE String  @default("", map: "DF_Table_1_CODE") @db.VarChar(12)
+  DEV_NAME String  @default("", map: "DF_DEVICES_DESCRIPT") @db.NVarChar(50)
+  DEV_PORT String  @default("", map: "DF_DEVICES_DEV_PORT") @db.Char(10)
+  COM_SET  String  @default("", map: "DF_DEVICES_COM_SET") @db.Char(12)
+  STATUS   Boolean @default(true, map: "DF_DEVICES_STATUS")
+
+  @@id([DEV_TYPE, DEV_CODE], map: "PK_DEVICES")
+}
+
+model DEVSTS {
+  DEV_TYPE String @default("", map: "DF_DEVSTS_TYPE") @db.Char(2)
+  DEV_CODE String @default("", map: "DF_DEVSTS_CODE") @db.VarChar(12)
+  DEV_PORT String @default("", map: "DF_DEVSTS_DEV_PORT") @db.Char(10)
+  COM_SET  String @default("", map: "DF_DEVSTS_COM_SET") @db.Char(12)
+  WIND_DEV String @default("", map: "DF_DEVSTS_NET_PORT") @db.VarChar(25)
+  USB_DEV  String @default("", map: "DF_DEVSTS_USBDEV") @db.VarChar(25)
+  OPOS_DEV String @default("", map: "DF_DEVSTS_OPOS_DEV") @db.VarChar(25)
+  WS_ID    Int    @default(0, map: "DF_DEVSTS_WS_ID")
+
+  @@id([DEV_TYPE, DEV_CODE, WS_ID], map: "PK_DEVSTS")
+}
+
+model EVENTLOGCLS {
+  ECls_ID     Int    @id(map: "PK_EventLogCls") @default(0, map: "DF_EventLogCls_ECls_ID")
+  ECls_Type   String @default("", map: "DF_EventLogCls_ECls_Type") @db.Char(2)
+  ECls_Desc   String @default("", map: "DF_EventLogCls_ECls_Desc") @db.NVarChar(50)
+  EEng_Type   String @default("", map: "DF_EventLogCls_EEng_Type") @db.Char(2)
+  ESYS_Type   String @default("", map: "DF_EventLogCls_ESYS_Type") @db.Char(2)
+  Important   Int    @default(0, map: "DF_EventLogCls_Important")
+  Warn_Time   String @default("", map: "DF_EventLogCls_Warn_Time") @db.Char(1)
+  Detect_Desc String @default("", map: "DF_EventLogCls_Detect_Desc") @db.NVarChar(100)
+  Status      String @default("", map: "DF_EventLogCls_Status") @db.Char(1)
+}
+
+model EVENTLOGS {
+  ELog_ID    Int      @id(map: "PK_EventLogs") @default(0, map: "DF_EventLogs_ELog_ID")
+  ECls_ID    Int      @default(0, map: "DF_EventLogs_ECls_ID")
+  SUnit_ID   Int      @default(0, map: "DF_EventLogs_SUnit_ID")
+  ELog_Time  DateTime @default(dbgenerated(), map: "DF_EventLogs_ELog_Time") @db.DateTime
+  ESent_Time DateTime @default(dbgenerated(), map: "DF_EventLogs_ESent_Time") @db.DateTime
+  ESent_ID   Int      @default(dbgenerated(), map: "DF_EventLogs_ESent_ID")
+}
+
+model ExternalObjCls {
+  ExtObjCls_ID     Int     @id(map: "PK_ExternalObjCls") @default(0, map: "DF_ExternalObjCls_ExtObjCls_ID")
+  ExtObjCls_Code   String  @default("", map: "DF_ExternalObjCls_ExtObjCls_Code") @db.VarChar(12)
+  ExtObjCls_Desc   String  @default("", map: "DF_ExternalObjCls_ExtObjCls_Desc") @db.NVarChar(50)
+  Invoice_Type     String  @default("", map: "DF_ExternalObjCls_Invoice_Type") @db.VarChar(2)
+  ItemCls_IDs      String  @default("", map: "DF_ExternalObjCls_ItemCls_IDs") @db.VarChar(8)
+  ItemObj_ID       Int     @default(0, map: "DF_ExternalObjCls_ItemObj_ID")
+  Tbl_ItemName     String  @default("", map: "DF_ExternalObjCls_Tbl_ItemName") @db.NVarChar(20)
+  Fld_CodeName     String  @default("", map: "DF_ExternalObjCls_Fld_CodeName") @db.NVarChar(20)
+  Fld_DescName     String  @default("", map: "DF_ExternalObjCls_Fld_DescName") @db.NVarChar(20)
+  Fld_DisabledName String  @default("", map: "DF_ExternalObjCls_Fld_DisabledName") @db.NVarChar(20)
+  Disabled         Boolean @default(false, map: "DF_ExternalObjCls_Disabled")
+}
+
+model FC_Contract {
+  FCContract_ID  Int       @id(map: "PK_FC_Contract") @default(0, map: "DF__FC_Contra__FCCon__0A1F3E45")
+  FCContract_No  String    @default("", map: "DF__FC_Contra__FCCon__0B13627E") @db.VarChar(20)
+  Franchisee_ID  Int       @default(0, map: "DF__FC_Contra__Franc__0C0786B7")
+  FCC_Desc       String    @default("", map: "DF__FC_Contra__FCC_D__0CFBAAF0") @db.NVarChar(100)
+  Place_ID       Int       @default(0, map: "DF__FC_Contra__Place__0DEFCF29")
+  Sign_Date      DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Contra__Sign___0EE3F362") @db.DateTime
+  Effective_Date DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Contra__Effec__0FD8179B") @db.DateTime
+  Due_Date       DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Contra__Due_D__10CC3BD4") @db.DateTime
+  Ext_Last_Date  DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Contra__Ext_L__11C0600D") @db.DateTime
+  Ext_Due_Date   DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Contra__Ext_D__12B48446") @db.DateTime
+  Ext_Ref_No     String    @default("", map: "DF__FC_Contra__Ext_R__13A8A87F") @db.NVarChar(20)
+  Ext_No         Int       @default(0, map: "DF__FC_Contra__Ext_N__149CCCB8")
+  Disabled       Boolean   @default(false, map: "DF__FC_Contra__Disab__1590F0F1")
+}
+
+model FC_Contract_Place {
+  Franchisee_ID         Int      @default(0, map: "DF__FC_Contra__Franc__186D5D9C")
+  FCContract_ID         Int      @default(0, map: "DF__FC_Contra__FCCon__196181D5")
+  Place_ID              Int      @default(0, map: "DF__FC_Contra__Place__1A55A60E")
+  MinCVS_Qty            Int      @default(0, map: "DF__FC_Contra__MinCV__1B49CA47")
+  MaxCVS_Qty            Int      @default(0, map: "DF__FC_Contra__MaxCV__1C3DEE80")
+  Royalty_Fix_Amt       Decimal? @default(0, map: "DF__FC_Contra__Royal__1D3212B9") @db.Decimal(18, 2)
+  isGPDiscDeduct        Boolean  @default(false, map: "DF__FC_Contra__isGPD__1E2636F2")
+  Royalty_Profit_Rate   Decimal? @default(0, map: "DF__FC_Contra__Royal__1F1A5B2B") @db.Decimal(6, 2)
+  Waste_Loss_Rate       Decimal? @default(0, map: "DF__FC_Contra__Waste__200E7F64") @db.Decimal(6, 2)
+  Inventory_Lost_Rate   Decimal? @default(0, map: "DF__FC_Contra__Inven__2102A39D") @db.Decimal(6, 2)
+  Promo_Cost_Rate       Decimal? @default(0, map: "DF__FC_Contra__Promo__21F6C7D6") @db.Decimal(6, 2)
+  Capital_Interest_Rate Decimal? @default(0, map: "DF__FC_Contra__Capit__22EAEC0F") @db.Decimal(6, 2)
+  isAccAllCVS           Boolean  @default(false, map: "DF__FC_Contra__isAcc__23DF1048")
+  Disabled              Boolean  @default(false, map: "DF__FC_Contra__Disab__24D33481")
+
+  @@id([FCContract_ID, Place_ID], map: "PK_FC_Contract_Place")
+}
+
+model FC_GPMargin {
+  GGrp_ID   Int     @default(0, map: "DF__FC_GPMarg__GGrp___055A8928")
+  Place_ID  Int     @default(0, map: "DF__FC_GPMarg__Place__064EAD61")
+  GP_Margin Decimal @default(0, map: "DF__FC_GPMarg__GP_Ma__0742D19A") @db.Decimal(6, 2)
+  Disabled  Boolean
+
+  @@id([GGrp_ID, Place_ID], map: "PK_FC_GPMargin")
+}
+
+model FC_Period {
+  Period_Code           String    @default("", map: "DF__FC_Period__Perio__38DA2D2E") @db.Char(6)
+  Fr_Date               DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Period__Fr_Da__39CE5167") @db.DateTime
+  To_Date               DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Period__To_Da__3AC275A0") @db.DateTime
+  StkClust_ID           Int       @default(0, map: "DF__FC_Period__StkCl__3BB699D9")
+  FCContract_ID         Int       @default(0, map: "DF__FC_Period__FCCon__3CAABE12")
+  Franchisee_ID         Int       @default(0, map: "DF__FC_Period__Franc__3D9EE24B")
+  isGPDiscDeduct        Boolean   @default(false, map: "DF__FC_Period__isGPD__3E930684")
+  Royalty_Profit_Rate   Decimal?  @default(0, map: "DF__FC_Period__Royal__3F872ABD") @db.Decimal(6, 2)
+  Waste_Loss_Rate       Decimal?  @default(0, map: "DF__FC_Period__Waste__407B4EF6") @db.Decimal(6, 2)
+  Inventory_Lost_Rate   Decimal?  @default(0, map: "DF__FC_Period__Inven__416F732F") @db.Decimal(6, 2)
+  Promo_Cost_Rate       Decimal?  @default(0, map: "DF__FC_Period__Promo__42639768") @db.Decimal(6, 2)
+  Capital_Interest_Rate Decimal?  @default(0, map: "DF__FC_Period__Capit__4357BBA1") @db.Decimal(6, 2)
+  Sale_Revenue_Amt      Decimal?  @default(0, map: "DF__FC_Period__Sale___444BDFDA") @db.Decimal(18, 2)
+  Direct_Disc_Amt       Decimal?  @default(0, map: "DF__FC_Period__Direc__45400413") @db.Decimal(18, 2)
+  Sale_Cost_Amt         Decimal?  @default(0, map: "DF__FC_Period__Sale___4634284C") @db.Decimal(18, 2)
+  Waste_Lost_Amt        Decimal?  @default(0, map: "DF__FC_Period__Waste__47284C85") @db.Decimal(18, 2)
+  Inventory_Lost_Amt    Decimal?  @default(0, map: "DF__FC_Period__Inven__481C70BE") @db.Decimal(18, 2)
+  Aver_Capital_Amt      Decimal?  @default(0, map: "DF__FC_Period__Aver___491094F7") @db.Decimal(18, 2)
+  Royalty_Fix_Amt       Decimal?  @default(0, map: "DF__FC_Period__Royal__4A04B930") @db.Decimal(18, 2)
+  Royal_Profit_Amt      Decimal?  @default(0, map: "DF__FC_Period__Royal__4AF8DD69") @db.Decimal(18, 2)
+  Update_Date           DateTime? @default(dbgenerated("1900-01-01"), map: "DF__FC_Period__Updat__4BED01A2") @db.DateTime
+
+  @@id([Period_Code, StkClust_ID], map: "PK_FC_Period")
+}
+
+model FC_Period_Grp {
+  Period_Code        String   @default("", map: "DF__FC_Period__Perio__4EC96E4D") @db.Char(6)
+  StkClust_ID        Int      @default(0, map: "DF__FC_Period__StkCl__4FBD9286")
+  GGrp_ID            Int      @default(0, map: "DF__FC_Period__GGrp___50B1B6BF")
+  GP_Margin          Decimal  @default(0, map: "DF__FC_Period__GP_Ma__51A5DAF8") @db.Decimal(6, 2)
+  Sale_Cost_Amt      Decimal? @default(0, map: "DF__FC_Period__Sale___5299FF31") @db.Decimal(18, 2)
+  Waste_Lost_Amt     Decimal? @default(0, map: "DF__FC_Period__Waste__538E236A") @db.Decimal(18, 2)
+  Inventory_Lost_Amt Decimal? @default(0, map: "DF__FC_Period__Inven__548247A3") @db.Decimal(18, 2)
+  Aver_Capital_Amt   Decimal? @default(0, map: "DF__FC_Period__Aver___55766BDC") @db.Decimal(18, 2)
+
+  @@id([Period_Code, StkClust_ID, GGrp_ID], map: "PK_FC_Period_Grp")
+}
+
+model FC_Period_Gs {
+  Period_Code        String   @default("", map: "DF__FC_Period__Perio__5852D887") @db.Char(6)
+  StkClust_ID        Int      @default(0, map: "DF__FC_Period__StkCl__5946FCC0")
+  GGrp_ID            Int      @default(0, map: "DF__FC_Period__GGrp___5A3B20F9")
+  Goods_ID           Int      @default(0, map: "DF__FC_Period__Goods__5B2F4532")
+  SKU_Code           String   @default("", map: "DF__FC_Period__SKU_C__5C23696B") @db.Char(12)
+  GP_Margin          Decimal? @default(0, map: "DF__FC_Period__GP_Ma__5D178DA4") @db.Decimal(6, 2)
+  RT_Price           Decimal? @default(0, map: "DF__FC_Period__RT_Pr__5E0BB1DD") @db.Decimal(18, 2)
+  Sale_Cost_Amt      Decimal? @default(0, map: "DF__FC_Period__Sale___5EFFD616") @db.Decimal(18, 2)
+  Waste_Lost_Amt     Decimal? @default(0, map: "DF__FC_Period__Waste__5FF3FA4F") @db.Decimal(18, 2)
+  Inventory_Lost_Amt Decimal? @default(0, map: "DF__FC_Period__Inven__60E81E88") @db.Decimal(18, 2)
+  Aver_Capital_Amt   Decimal? @default(0, map: "DF__FC_Period__Aver___61DC42C1") @db.Decimal(18, 2)
+
+  @@id([Period_Code, StkClust_ID, Goods_ID, SKU_Code], map: "PK_FC_Period_Gs")
+}
+
+model FC_Store {
+  StkClust_ID           Int      @default(0, map: "DF__FC_Store__StkClu__27AFA12C")
+  Place_ID              Int      @default(0, map: "DF__FC_Store__Place___28A3C565")
+  FCContract_ID         Int      @default(0, map: "DF__FC_Store__FCCont__2997E99E")
+  Franchisee_ID         Int      @default(0, map: "DF__FC_Store__Franch__2A8C0DD7")
+  Fr_Period_Code        String?  @default("", map: "DF__FC_Store__Fr_Per__2B803210") @db.Char(6)
+  To_Period_Code        String?  @default("", map: "DF__FC_Store__To_Per__2C745649") @db.Char(6)
+  Invoice_Code          String?  @default("", map: "DF__FC_Store__Invoic__2D687A82") @db.Char(20)
+  Invoice_Symb          String?  @default("", map: "DF__FC_Store__Invoic__2E5C9EBB") @db.Char(20)
+  Royalty_Fix_Amt       Decimal? @default(0, map: "DF__FC_Store__Royalt__2F50C2F4") @db.Decimal(18, 2)
+  isGPDiscDeduct        Boolean  @default(false, map: "DF__FC_Store__isGPDi__3044E72D")
+  Royalty_Profit_Rate   Decimal? @default(0, map: "DF__FC_Store__Royalt__31390B66") @db.Decimal(6, 2)
+  Waste_Loss_Rate       Decimal? @default(0, map: "DF__FC_Store__Waste___322D2F9F") @db.Decimal(6, 2)
+  Inventory_Lost_Rate   Decimal? @default(0, map: "DF__FC_Store__Invent__332153D8") @db.Decimal(6, 2)
+  Promo_Cost_Rate       Decimal? @default(0, map: "DF__FC_Store__Promo___34157811") @db.Decimal(6, 2)
+  Capital_Interest_Rate Decimal? @default(0, map: "DF__FC_Store__Capita__35099C4A") @db.Decimal(6, 2)
+  Disabled              Boolean  @default(false, map: "DF__FC_Store__Disabl__35FDC083")
+
+  @@id([StkClust_ID, FCContract_ID], map: "PK_FC_Store")
+}
+
+model FFCategory {
+  FFCat_ID    Int     @id(map: "PK_FFCategory")
+  FFCat_Name  String  @db.NVarChar(20)
+  Market_Desc String  @db.NVarChar(100)
+  FFCat_IDX   Int
+  Colour      Int
+  Item_Qty    Int
+  SCC_ID      Int
+  StkType_ID  Int
+  Market_IDs  Bytes   @db.Binary(16)
+  Stk_ID      Int
+  WS_ID       Int
+  Fr_DayTime  Int
+  To_DayTime  Int
+  DoW         Bytes   @db.Binary(8)
+  Disabled    Boolean
+}
+
+model FFCategoryItem {
+  FFCatItem_ID  Int     @id(map: "PK_FFCategoryItem")
+  Goods_ID      Int
+  SKU_Code      String  @db.NChar(12)
+  FFCat_ID      Int
+  FFCatItem_IDX Int
+  Disabled      Boolean
+}
+
+model FOBJS {
+  Form_Name   String @default("", map: "DF_FObjs_Form_Name") @db.VarChar(30)
+  FObj_Name   String @default("", map: "DF_FObjs_FObj_Name") @db.VarChar(30)
+  FObj_Type   String @default("", map: "DF_FObjs_FObj_Type") @db.Char(2)
+  FObj_Desc   String @default("", map: "DF_FObjs_FObj_Desc") @db.NVarChar(200)
+  Resource_ID Int    @default(-1, map: "DF_FObjs_Resource_ID")
+
+  @@id([Form_Name, FObj_Name], map: "PK_FObjs")
+}
+
+model FORMS {
+  Form_Name String  @id(map: "PK_Forms") @unique(map: "UQ__FORMS__27123EF722401542") @default("", map: "DF_Forms_Form_Name") @db.VarChar(30)
+  Form_Desc String  @default("", map: "DF_Forms_Form_Desc") @db.NVarChar(100)
+  Status    Boolean @default(true, map: "DF_Forms_Status")
+  Form_Type String  @default("1", map: "DF_Forms_Form_Type") @db.Char(2)
+}
+
+model Franchisee {
+  Franchisee_ID Int       @id(map: "PK_Franchisee") @default(0, map: "DF__Franchise__Franc__7FA1AFD2")
+  CurrCVS_Qty   Int       @default(0, map: "DF__Franchise__CurrC__0095D40B")
+  First_Open    DateTime? @default(dbgenerated("1900-01-01"), map: "DF__Franchise__First__0189F844") @db.DateTime
+  Last_Open     DateTime? @default(dbgenerated("1900-01-01"), map: "DF__Franchise__Last___027E1C7D") @db.DateTime
+  Disabled      Boolean
+}
+
+model FUNCTIONS {
+  FUNC_ID   Int     @id(map: "PK_FUNCTIONS") @default(0, map: "DF_FUNCTIONS_ID")
+  FUNC_CODE String  @default("", map: "DF_FUNCTIONS_FUNC_CODE") @db.VarChar(8)
+  FUNC_DESC String  @default("", map: "DF_FUNCTIONS_DESCRIPT") @db.NVarChar(100)
+  COMMENT   String  @default("", map: "DF_FUNCTIONS_COMMENT") @db.NText
+  COMMAND   String  @default("", map: "DF_FUNCTIONS_COMMAND") @db.VarChar(50)
+  DEPT_CODE String  @default("", map: "DF_FUNCTIONS_DEP_CODE") @db.Char(1)
+  STATUS    Boolean @default(true, map: "DF_FUNCTIONS_STATUS")
+}
+
+model GEOPLACES {
+  PLC_ID      Int     @id(map: "PK_Place") @default(0, map: "DF_Place_PLC_ID")
+  PLC_CODE    String  @default("", map: "DF_GEOPLACES_PLC_CODE") @db.VarChar(12)
+  P_PLACE_ID  Int     @default(0, map: "DF_GEOPLACES_P_PLACE_ID")
+  COUNTRY_ID  Int     @default(0, map: "DF_GEOPLACES_P_PLACE_ID1")
+  LAST_LEVEL  Boolean @default(false, map: "DF_GEOPLACES_COUNTRY_ID1")
+  PLC_NAME    String  @default("", map: "DF_Place_PLC_NAME") @db.NVarChar(200)
+  PLC_LVL     Int     @default(0, map: "DF_Place_PLC_LVL")
+  RESOURCE_ID Int     @default(-1, map: "DF_GEOPLACES_COUNTRY_ID2")
+  STATUS      Boolean @default(false, map: "DF_Place_STATUS")
+}
+
+model Goods {
+  Goods_ID        Int       @id(map: "PK_Goods") @default(0, map: "DF_Goods_Good_ID")
+  Goods_Code      String    @default("", map: "DF_Goods_Good_Code") @db.VarChar(20)
+  Short_Name      String    @default("", map: "DF_Goods_Short_Name") @db.NVarChar(60)
+  Full_Name       String    @default("", map: "DF_Goods_Full_Name") @db.NVarChar(60)
+  Goods_Div_ID    Int       @default(0, map: "DF_Goods_Good_Div_ID")
+  Goods_Class_ID  Int       @default(0, map: "DF_Goods_Good_Class_ID")
+  Goods_Grp_ID    Int       @default(0, map: "DF_Goods_Good_Grp_ID")
+  Goods_AccCls_ID Int       @default(0, map: "DF_Goods_Good_AccCls_ID")
+  Family_ID       Int       @default(0, map: "DF_Goods_Family_ID")
+  GType_ID        Int       @default(0, map: "DF_Goods_GType_ID")
+  isSKUByQty      Boolean   @default(false, map: "DF_Goods_isSKUByQty")
+  isSKUByAmt      Boolean   @default(false, map: "DF_Goods_isSKUByAmt")
+  isPurcItem      Boolean   @default(false, map: "DF_Goods_isPurcItem")
+  isSaleItem      Boolean   @default(false, map: "DF_Goods_isSaleItem")
+  isPromotion     Boolean   @default(false, map: "DF_Goods_isPromotion")
+  isExpiry        Boolean   @default(false, map: "DF_Goods_isExpiry")
+  Is4SaleOrder    Boolean   @default(false, map: "DF_Goods_Is4SaleOrder")
+  SOrder_Days     Boolean   @default(false, map: "DF_Goods_SOrder_Days")
+  SOrder_MinQty   Decimal   @default(0, map: "DF_Goods_MaxGrossMargin1") @db.Decimal(12, 2)
+  LifeTime_Code   String    @default("", map: "DF_Goods_LifeTime_Code") @db.Char(3)
+  isWarranty      Boolean   @default(false, map: "DF_Goods_isWarranty")
+  WarrTime_Code   String    @default("", map: "DF_Goods_WarrTime_Code") @db.Char(3)
+  isLot           Boolean   @default(false, map: "DF_Goods_isLot")
+  isAutoLot       Boolean   @default(false, map: "DF_Goods_isAutoLot")
+  isSerial        Boolean   @default(false, map: "DF_Goods_isSerial")
+  isAutoSerial    Boolean   @default(false, map: "DF_Goods_isAutoSerial")
+  PLU_ID          Int       @default(0, map: "DF_Goods_PLU_ID")
+  isPLUbyCost     Boolean   @default(false, map: "DF_Goods_isPLUbyCost")
+  KIT_ID          Int       @default(0, map: "DF_Goods_KIT_ID")
+  Matrix_ID       Int       @default(0, map: "DF_Goods_Matrix_ID")
+  Season_ID       Int       @default(0, map: "DF_Goods_Season_ID")
+  GsBOM_ID        Int       @default(0, map: "DF_Goods_GsBOM_ID")
+  GAGrp_ID        Int       @default(0, map: "DF_Goods_GAGrp_ID")
+  isOutOfList     Boolean   @default(false, map: "DF_Goods_isOutOfList")
+  Tax_ID          Int       @default(0, map: "DF_Goods_Tax_ID")
+  Image           String    @default("", map: "DF_Goods_Image") @db.NVarChar(Max)
+  GrossMargin     Decimal   @default(0, map: "DF_Goods_GrossMargin") @db.Decimal(12, 2)
+  MinGrossMargin  Decimal   @default(0, map: "DF_Goods_MinGrossMargin") @db.Decimal(12, 2)
+  MaxGrossMargin  Decimal   @default(0, map: "DF_Goods_MaxGrossMargin") @db.Decimal(12, 2)
+  SKUBase_Unit    Int       @default(0, map: "DF_Goods_SKUBase_Unit")
+  SKUSubs_ID      Int       @default(0, map: "DF_Goods_SKUSubs_ID")
+  SubsUnit_ID     Int       @default(0, map: "DF_Goods_SubsUnit_ID")
+  Cost_Type       String    @default("", map: "DF_Goods_Cost_Type") @db.Char(2)
+  CostDueDay      Int       @default(0, map: "DF_Goods_CostDueDay")
+  Disabled        Boolean   @default(false, map: "DF_Goods_Disabled")
+  StartSaleDate   DateTime? @db.DateTime
+  DueSaleDate     DateTime? @db.DateTime
+}
+
+model GoodsGrp {
+  GGrp_ID         Int     @id(map: "PK_GoodsGrp") @default(0, map: "DF_GoodsGrp_GGrp_ID")
+  GGrp_Code       String  @default("", map: "DF_GoodsGrp_GGrp_Code") @db.NVarChar(8)
+  GGrp_Name       String  @default("", map: "DF_GoodsGrp_GGrp_Name") @db.NVarChar(20)
+  ItemGrpSet_Code String  @default("", map: "DF_GoodsGrp_ItemGrpSet_Code") @db.NVarChar(20)
+  GGrp_Level      Int     @default(0, map: "DF_GoodsGrp_GGrp_Level")
+  ParentGrp_ID    Int     @default(0, map: "DF_GoodsGrp_ParentGrp_ID")
+  Last_Level      Boolean @default(false, map: "DF_GoodsGrp_Last_Level")
+  GType_ID        Int     @default(0, map: "DF_GoodsGrp_GType_ID")
+  Tax_ID          Int     @default(0, map: "DF_GoodsGrp_Tax_ID")
+  Image           String  @default("", map: "DF_GoodsGrp_Image") @db.NVarChar(Max)
+  GrossMargin     Decimal @default(0, map: "DF_GoodsGrp_GrossMargin") @db.Decimal(12, 2)
+  MinGrossMargin  Decimal @default(0, map: "DF_GoodsGrp_MinGrossMargin") @db.Decimal(12, 2)
+  MaxGrossMargin  Decimal @default(0, map: "DF_GoodsGrp_MaxGrossMargin") @db.Decimal(12, 2)
+  Decimal         Int     @default(0, map: "DF_GoodsGrp_Decimal")
+  Disabled        Boolean @default(false, map: "DF_GoodsGrp_Disabled")
+}
+
+model GoodsInfo {
+  Goods_ID       Int     @id(map: "PK_GoodInfo") @default(0, map: "DF_GoodInfo_Good_ID")
+  MFC_ID         Int     @default(0, map: "DF_GoodInfo_MFC_ID")
+  Brand_ID       Int     @default(0, map: "DF_GoodInfo_Brand_ID")
+  Draw_No        String  @default("", map: "DF_GoodInfo_Draw_No") @db.NVarChar(20)
+  Product_Code   String  @default("", map: "DF_GoodInfo_Product_Code") @db.NVarChar(20)
+  Model_No       String  @default("", map: "DF_GoodInfo_Model_No") @db.NVarChar(20)
+  CO             String  @default("", map: "DF_GoodInfo_CO") @db.Char(2)
+  Assembled      String  @default("", map: "DF_GoodInfo_Assembled") @db.Char(2)
+  Importer       String  @default("", map: "DF_GoodInfo_Importer") @db.NVarChar(50)
+  Weight_Unit    Int     @default(0, map: "DF_GoodInfo_Weight_Unit")
+  Weight_Qty     Decimal @default(0, map: "DF_GoodInfo_Weight_Qty") @db.Decimal(12, 2)
+  Dim_Unit       Int     @default(0, map: "DF_GoodInfo_Dim_Unit")
+  Length_Qty     Decimal @default(0, map: "DF_GoodInfo_Length_Qty") @db.Decimal(12, 2)
+  Breadth_Qty    Decimal @default(0, map: "DF_GoodInfo_Breadth_Qty") @db.Decimal(12, 2)
+  Height_Qty     Decimal @default(0, map: "DF_GoodInfo_Height_Qty") @db.Decimal(12, 2)
+  Volume_Unit    Int     @default(0, map: "DF_GoodInfo_Volume_Unit")
+  Volume_Qty     Decimal @default(0, map: "DF_GoodInfo_Volume_Qty") @db.Decimal(12, 2)
+  Price_Type     String  @default("", map: "DF_GoodInfo_Price_Type") @db.Char(2)
+  Sales_Block    String  @default("", map: "DF_GoodInfo_Sales_Block") @db.Char(2)
+  OPL_Limit      String  @default("", map: "DF_GoodInfo_OPL_Limit") @db.Char(2)
+  ORD_Right      String  @default("", map: "DF_GoodInfo_ORD_Right") @db.Char(2)
+  IsBulkItem     Boolean @default(false, map: "DF_GoodInfo_IsBulkItem")
+  GS_Img_Icon    String  @default("", map: "DF_GoodInfo_GS_Img_Icon") @db.NVarChar(Max)
+  GS_Img_01      String  @default("", map: "DF_GoodInfo_GS_Img_01") @db.NVarChar(Max)
+  GS_Img_02      String  @default("", map: "DF_GoodInfo_GS_Img_02") @db.NVarChar(Max)
+  GS_Img_03      String  @default("", map: "DF_GoodInfo_GS_Img_03") @db.NVarChar(Max)
+  GS_Img_04      String  @default("", map: "DF_GoodInfo_GS_Img_04") @db.NVarChar(Max)
+  GS_Img_05      String  @default("", map: "DF_GoodInfo_GS_Img_05") @db.NVarChar(Max)
+  GS_Img_06      String  @default("", map: "DF_GoodInfo_GS_Img_06") @db.NVarChar(Max)
+  GS_Description String  @default("", map: "DF_GoodInfo_GS_Description") @db.NVarChar(Max)
+  Userdef1       String  @default("", map: "DF__GoodsInfo__Userd__3A4D7454") @db.NVarChar(Max)
+  Userdef2       String  @default("", map: "DF__GoodsInfo__Userd__3B41988D") @db.NVarChar(Max)
+}
+
+model GoodsNotice {
+  Good_ID         Int     @default(0, map: "DF_GoodNotice_Good_ID")
+  ObjEvent_Code   String  @default("", map: "DF_GoodNotice_ObjEvent_Code") @db.VarChar(6)
+  Notice_Contents String  @default("", map: "DF_GoodNotice_Notice_Contents") @db.NVarChar(Max)
+  Disabled        Boolean @default(false, map: "DF_GoodNotice_Disabled")
+
+  @@id([Good_ID, ObjEvent_Code], map: "PK_GoodNotice")
+}
+
+model GoodsSet {
+  GSet_ID     Int       @id(map: "PK_GoodsSet") @default(0, map: "DF__GoodsSet__GSet_I__3632CAAD")
+  GSet_Code   String    @default("", map: "DF__GoodsSet__GSet_C__3726EEE6") @db.VarChar(4)
+  GSet_Desc   String    @default("", map: "DF__GoodsSet__GSet_D__381B131F") @db.NVarChar(50)
+  GSet_Type   String?   @default("", map: "DF__GoodsSet__GSet_T__390F3758") @db.Char(2)
+  SCC_ID      Int       @default(0, map: "DF__GoodsSet__SCC_ID__3A035B91")
+  SCClust_ID  Int?      @default(0, map: "DF__GoodsSet__SCClus__3AF77FCA")
+  StkClust_ID Int?      @default(0, map: "DF__GoodsSet__StkClu__3BEBA403")
+  IsRTPProg   Boolean?  @default(false, map: "DF__GoodsSet__IsRTPP__3CDFC83C")
+  IsWSPProg   Boolean?  @default(false, map: "DF__GoodsSet__IsWSPP__3DD3EC75")
+  IsSPPProg   Boolean?  @default(false, map: "DF__GoodsSet__IsSPPP__3EC810AE")
+  Ref_No      String?   @default("", map: "DF__GoodsSet__Ref_No__3FBC34E7") @db.NVarChar(50)
+  Ref_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__GoodsSet__Ref_Da__40B05920") @db.DateTime
+  User_ID     Int?      @default(0, map: "DF__GoodsSet__User_I__41A47D59")
+  Last_Date   DateTime? @default(dbgenerated("0"), map: "DF__GoodsSet__Last_D__4298A192") @db.DateTime
+  Disabled    Boolean?  @default(false, map: "DF__GoodsSet__Disabl__438CC5CB")
+}
+
+model GoodsType {
+  GType_ID       Int     @id(map: "PK_GoodType") @default(0, map: "DF__GoodsType__GType__43C1CFF5")
+  GType_Code     String  @default("", map: "DF__GoodsType__GType__44B5F42E") @db.Char(8)
+  GType_Name     String  @default("", map: "DF__GoodsType__GType__45AA1867") @db.NVarChar(50)
+  DefForm_Name   String  @default("", map: "DF__GoodsType__DefFo__469E3CA0") @db.NVarChar(20)
+  ExtraAttrTable String  @default("", map: "DF__GoodsType__Extra__479260D9") @db.NVarChar(20)
+  isSKUByQty     Boolean @default(false, map: "DF__GoodsType__isSKU__48868512")
+  isSKUByAmt     Boolean @default(false, map: "DF__GoodsType__isSKU__497AA94B")
+  isPurcItem     Boolean @default(false, map: "DF__GoodsType__isPur__4A6ECD84")
+  isSaleItem     Boolean @default(false, map: "DF__GoodsType__isSal__4B62F1BD")
+  isExpiry       Boolean @default(false, map: "DF__GoodsType__isExp__4C5715F6")
+  isWarranty     Boolean @default(false, map: "DF__GoodsType__isWar__4D4B3A2F")
+  isLot          Boolean @default(false, map: "DF__GoodsType__isLot__4E3F5E68")
+  isAutoLot      Boolean @default(false, map: "DF__GoodsType__isAut__4F3382A1")
+  isSerial       Boolean @default(false, map: "DF__GoodsType__isSer__5027A6DA")
+  isAutoSerial   Boolean @default(false, map: "DF__GoodsType__isAut__511BCB13")
+  isPLU          Boolean @default(false, map: "DF__GoodsType__isPLU__520FEF4C")
+  isKit          Boolean @default(false, map: "DF__GoodsType__isKit__53041385")
+  isMatrix       Boolean @default(false, map: "DF__GoodsType__isMat__53F837BE")
+  isSeason       Boolean @default(false, map: "DF__GoodsType__isSea__54EC5BF7")
+  isGsBOM        Boolean @default(false, map: "DF__GoodsType__isGsB__55E08030")
+  isMultiAttrs   Boolean @default(false, map: "DF__GoodsType__isMul__56D4A469")
+  isPromotion    Boolean @default(false, map: "DF__GoodsType__isPro__57C8C8A2")
+  isOutOfList    Boolean @default(false, map: "DF__GoodsType__isOut__58BCECDB")
+  Disabled       Boolean @default(false, map: "DF__GoodsType__Disab__59B11114")
+}
+
+model GSetItems {
+  GSet_ID     Int      @default(0, map: "DF__GSetItems__GSet___29CCF3C8")
+  GSItem_IDX  Int      @default(0, map: "DF__GSetItems__GSIte__2AC11801")
+  GSICls_ID   Int      @default(0, map: "DF__GSetItems__GSICl__2BB53C3A")
+  GSItem_ID   Int      @default(0, map: "DF__GSetItems__GSIte__2CA96073")
+  GSItem_Code String   @default("", map: "DF__GSetItems__GSIte__2D9D84AC") @db.NVarChar(20)
+  RT_Price    Decimal  @default(0, map: "DF__GSetItems__RT_Pr__2E91A8E5") @db.Decimal(18, 5)
+  WS_Price    Decimal  @default(0, map: "DF__GSetItems__WS_Pr__2F85CD1E") @db.Decimal(18, 5)
+  SP_Price    Decimal  @default(0, map: "DF__GSetItems__SP_Pr__3079F157") @db.Decimal(18, 5)
+  isVATInc    Boolean? @default(false, map: "DF__GSetItems__isVAT__316E1590")
+  isIncExc    Boolean? @default(false, map: "DF__GSetItems__isInc__326239C9")
+  Disabled    Boolean? @default(false, map: "DF__GSetItems__Disab__33565E02")
+
+  @@id([GSet_ID, GSItem_IDX], map: "PK_GSetItems")
+}
+
+model HIS_ItemMaster {
+  Event_IDX   Int
+  Event_Date  DateTime @db.DateTime
+  StkClust_ID Int
+  User_ID     Int
+
+  @@id([Event_IDX, Event_Date], map: "PK_HIS_ItemMaster")
+}
+
+model HIS_RTPrice {
+  Event_IDX         Int
+  Event_Date        DateTime @db.DateTime
+  Goods_ID          Int
+  SKU_Code          String   @db.Char(12)
+  MasterImpAct_Type String?  @db.Char(2)
+  RTPLevel_ID       Int
+  Old_RT_Price      Decimal? @db.Decimal(18, 2)
+  RT_Price          Decimal? @db.Decimal(18, 2)
+
+  @@id([Event_IDX, Goods_ID, SKU_Code], map: "PK_HIS_RTPrice")
+}
+
+model HRMCode {
+  HRMEvent_Code  String    @default("", map: "DF__HRMCode__HRMEven__025EEC43") @db.NVarChar(20)
+  HRM_Code       String    @default("", map: "DF__HRMCode__HRM_Cod__0353107C") @db.NVarChar(60)
+  Fr_Datetime    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__HRMCode__Fr_Date__044734B5") @db.DateTime
+  To_Datetime    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__HRMCode__To_Date__053B58EE") @db.DateTime
+  SCC_ID         Int?      @default(dbgenerated(), map: "DF__HRMCode__SCC_ID__062F7D27")
+  StkType_ID     Int?      @default(dbgenerated(), map: "DF__HRMCode__StkType__0723A160")
+  StkClust_ID    Int?      @default(dbgenerated(), map: "DF__HRMCode__StkClus__0817C599")
+  Approved_Time  DateTime? @default(dbgenerated("1900/1/1"), map: "DF__HRMCode__Approve__090BE9D2") @db.DateTime
+  AprovedUser_ID Int?      @default(dbgenerated(), map: "DF__HRMCode__Aproved__0A000E0B")
+  Received_Time  DateTime? @default(dbgenerated("1900/1/1"), map: "DF__HRMCode__Receive__0AF43244") @db.DateTime
+
+  @@id([HRMEvent_Code, HRM_Code], map: "PK_HRMCode")
+}
+
+model ItemGrpSet {
+  ItemGrpSet_ID    Int     @id(map: "PK_ItemGrpSet") @default(0, map: "DF_ItemGrpSet_ItemGrpSet_ID")
+  ItemGrpSet_Code  String  @default("", map: "DF_ItemGrpSet_ItemGrpSet_Code") @db.NVarChar(20)
+  ItemGrpSet_Label String  @default("", map: "DF_ItemGrpSet_ItemGrpSet_Label") @db.NVarChar(20)
+  ItemGrpSet_Name  String  @default("", map: "DF_ItemGrpSet_ItemGrpSet_Name") @db.NVarChar(50)
+  Resource_ID      Int     @default(0, map: "DF_ItemGrpSet_Resource_ID")
+  GrpObj_ID        Int     @default(0, map: "DF_ItemGrpSet_GrpObj_ID")
+  Obj_ID           Int     @default(0, map: "DF_ItemGrpSet_Obj_ID")
+  GrpTbl_Name      String  @default("", map: "DF_ItemGrpSet_GrpTbl_Name") @db.NVarChar(20)
+  ObjTbl_Name      String  @default("", map: "DF_ItemGrpSet_ObjTbl_Name") @db.NVarChar(20)
+  Disabled         Boolean @default(false, map: "DF_ItemGrpSet_Disabled")
+}
+
+model KitInfo {
+  KIT_ID   Int      @default(0, map: "DF__KitInfo__KIT_ID__55216621")
+  GOODS_ID Int      @default(0, map: "DF__KitInfo__GOODS_I__56158A5A")
+  SKU_Code String   @default("", map: "DF__KitInfo__SKU_Cod__5709AE93") @db.Char(12)
+  Qty      Decimal? @default(0, map: "DF__KitInfo__Qty__57FDD2CC") @db.Decimal(18, 0)
+  RT_Price Decimal? @default(0, map: "DF__KitInfo__RT_Pric__58F1F705") @db.Decimal(18, 0)
+  isVATInc Boolean? @default(false, map: "DF__KitInfo__isVATIn__59E61B3E")
+  Disc_PC  Decimal? @default(0, map: "DF__KitInfo__Disc_PC__5ADA3F77") @db.Decimal(18, 0)
+  Disc_Amt Decimal? @default(0, map: "DF__KitInfo__Disc_Am__5BCE63B0") @db.Decimal(18, 0)
+  Status   Boolean? @default(false, map: "DF__KitInfo__Status__5CC287E9")
+
+  @@id([KIT_ID, GOODS_ID, SKU_Code], map: "PK_KITInfo")
+}
+
+model Kits {
+  KIT_ID        Int       @id(map: "PK_Kits") @default(0, map: "DF__Kits__KIT_ID__420E91AD")
+  KIT_Code      String?   @default("", map: "DF__Kits__KIT_Code__4302B5E6") @db.Char(12)
+  Goods_ID      Int?      @default(0, map: "DF__Kits__Goods_ID__43F6DA1F")
+  SKU_Code      String?   @default("", map: "DF__Kits__SKU_Code__44EAFE58") @db.Char(12)
+  KIT_TYPE      String?   @default("", map: "DF__Kits__KIT_TYPE__45DF2291") @db.Char(1)
+  IsSKUbyQty    Boolean?  @default(false, map: "DF__Kits__IsSKUbyQty__46D346CA")
+  Descript      String?   @default("", map: "DF__Kits__Descript__47C76B03") @db.NVarChar(60)
+  SCC_ID        Int?      @default(0, map: "DF__Kits__SCC_ID__48BB8F3C")
+  RTPLevel_ID   Int?      @default(0, map: "DF__Kits__RTPLevel_I__49AFB375")
+  RTPR_Fixed    Boolean?  @default(false, map: "DF__Kits__RTPR_Fixed__4AA3D7AE")
+  RT_Price      Decimal?  @default(0, map: "DF__Kits__RT_Price__4B97FBE7") @db.Decimal(18, 0)
+  isVATInc      Boolean?  @default(false, map: "DF__Kits__isVATInc__4C8C2020")
+  Label_Type    String?   @default("", map: "DF__Kits__Label_Type__4D804459") @db.Char(1)
+  RailCard_Type String?   @default("", map: "DF__Kits__RailCard_T__4E746892") @db.Char(1)
+  RailCard_Qty  Int?      @default(0, map: "DF__Kits__RailCard_Q__4F688CCB")
+  Open_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__Kits__Open_Date__505CB104") @db.DateTime
+  Last_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__Kits__Last_Date__5150D53D") @db.DateTime
+  Disabled      Boolean?  @default(false, map: "DF__Kits__Disabled__5244F976")
+  Process       String?   @default("", map: "DF__Kits__Process__768259EC") @db.Char(1)
+}
+
+model LeaveDays {
+  LeaveDate  DateTime @id(map: "PK_LeaveDays") @default(dbgenerated("01-01-1900"), map: "DF_LeaveDays_LeaveDate") @db.DateTime
+  DayTime_ID Int      @default(0, map: "DF_LeaveDays_DayTime_ID")
+  BUArea_ID  Int      @default(0, map: "DF_LeaveDays_BUArea_ID")
+  Store_ID   Int      @default(0, map: "DF_LeaveDays_Store_ID")
+  Leave_Desc String   @default("", map: "DF_LeaveDays_Leave_Desc") @db.NVarChar(100)
+  Disabled   Boolean  @default(false, map: "DF_LeaveDays_Disabled")
+}
+
+model LOGCLS {
+  LogCls_Code String  @id(map: "PK_LOGCODE") @default("", map: "DF_LOGCODE_LogCls_Code") @db.VarChar(20)
+  LogCls_Desc String  @default("", map: "DF_LOGCODE_DESCRIPT") @db.NVarChar(200)
+  Status      Boolean @default(true, map: "DF_LOGCODE_Status")
+}
+
+model LogistArea {
+  LogistArea_ID   Int     @id(map: "PK_LogistArea") @default(0, map: "DF_Table_1_LogistServ_ID")
+  LogistArea_Code String  @default("", map: "DF_Table_1_LogistPack_Code") @db.Char(12)
+  Description     String  @default("", map: "DF_LogistArea_Description") @db.NChar(120)
+  ShortName_Eng   String  @default("", map: "DF_LogistArea_ShortName_Eng") @db.NChar(20)
+  ShortName_VN    String  @default("", map: "DF_LogistArea_ShortName_VN") @db.NChar(20)
+  Disabled        Boolean @default(false, map: "DF_LogistArea_Disabled")
+}
+
+model LogistPack {
+  LogistServ_ID   Int     @id(map: "PK_LogistPack") @default(0, map: "DF_LogistPack_LogistServ_ID")
+  LogistPack_Code String  @default("", map: "DF_Table_1_LogistServ_Code") @db.Char(12)
+  Description     String  @default("", map: "DF_Table_1_ServPmtTMode") @db.NChar(50)
+  ShortName_Eng   String  @default("", map: "DF_Table_1_Description2") @db.NChar(20)
+  ShortName_VN    String  @default("", map: "DF_Table_1_Description1") @db.NChar(20)
+  Disabled        Boolean @default(false, map: "DF_LogistPack_Disabled")
+}
+
+model LogistService {
+  LogistServ_ID    Int       @id(map: "PK_LogistService") @default(0, map: "DF_Table_1_PmtServ_ID")
+  LogistServ_Code  String    @default("", map: "DF_Table_1_PmtServ_Code") @db.Char(12)
+  Goods_ID         Int?      @default(0, map: "DF_LogistService_Goods_ID")
+  ServPmtTMode     String    @default("", map: "DF_Table_1_PmtServ_Type") @db.Char(3)
+  LogistPack_ID    Boolean   @default(false, map: "DF_Table_1_Partner_ID")
+  Fr_LogistArea_ID Boolean   @default(false, map: "DF_Table_1_LogistPack_ID2")
+  To_LogistArea_ID Boolean   @default(false, map: "DF_Table_1_LogistPack_ID1")
+  RTPrice          Decimal   @default(0, map: "DF_Table_1_Commision_Rate") @db.Decimal(15, 2)
+  Partner_ID       Boolean   @default(false, map: "DF_Table_1_To_LogistArea_ID1")
+  Open_Date        DateTime? @db.DateTime
+  Last_Date        DateTime? @db.DateTime
+  Disabled         Boolean   @default(false, map: "DF_LogistService_Disabled")
+}
+
+model LOGS {
+  Log_ID      Int      @id(map: "PK_LOGS") @default(autoincrement())
+  LogCls_Code String   @default("", map: "DF_LOGS_LOG_CODE") @db.VarChar(20)
+  Log_Date    DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_LOGS_DATE") @db.DateTime
+  Log_Time    String   @default("", map: "DF_LOGS_TIME") @db.Char(5)
+  User_ID     Decimal  @default(0, map: "DF_LOGS_USER_ID") @db.Decimal(5, 0)
+  WS_ID       Int
+  OLD         String   @default("", map: "DF_LOGS_OLD") @db.NVarChar(Max)
+  NEW         String   @default("", map: "DF_LOGS_NEW") @db.NVarChar(Max)
+  Obj_ID      Int      @default(0, map: "DF_LOGS_REFERENCE")
+  ObjKey_Code String   @default("", map: "DF_LOGS_PROC_NAME") @db.VarChar(30)
+  Event_ID    Int      @default(dbgenerated(), map: "DF_LOGS_FIELD_NAME")
+  Event_Code  String   @default("", map: "DF_LOGS_EVENT_KEY") @db.NVarChar(20)
+  Status      Boolean  @default(true, map: "DF_LOGS_Status")
+}
+
+model Manufacturer {
+  MFC_ID     Int     @id(map: "PK_Manufacturer") @default(0, map: "DF_Manufacturer_MFC_ID")
+  MFC_Code   String  @default("", map: "DF_Manufacturer_MFC_Code") @db.Char(2)
+  MFC_Name   String  @default("", map: "DF_Manufacturer_MFC_Name") @db.NVarChar(50)
+  Country_ID Int     @default(0, map: "DF_Manufacturer_Country_ID")
+  Disabled   Boolean @default(false, map: "DF_Manufacturer_Disabled")
+}
+
+model MENUS {
+  Key_ID      String  @default("", map: "DF_MENUS_KEY_ID") @db.VarChar(6)
+  IDX         String  @default("0", map: "DF_MENUS_IDX") @db.VarChar(1)
+  Bar_ID      Int     @id(map: "PK_MENUS_1") @default(0, map: "DF_MENUS_BAR_ID")
+  Parent_ID   String  @default("", map: "DF_MENUS_PARENT") @db.VarChar(6)
+  Last_Level  Boolean @default(true, map: "DF_MENUS_Last_Level")
+  Prompt      String  @default("", map: "DF_MENUS_PROMPT") @db.NVarChar(60)
+  Password    Boolean @default(false, map: "DF_MENUS_PASSWORD")
+  HotKey      String  @default("0", map: "DF_MENUS_HOTKEY") @db.Char(1)
+  BasicRight  Boolean @default(true, map: "DF_MENUS_BASICRIGHT")
+  Skip        Boolean @default(false, map: "DF_MENUS_SKIP")
+  ProcName    String  @default("", map: "DF_MENUS_ProcName") @db.VarChar(100)
+  Message     String  @default("", map: "DF_MENUS_MESSAGE") @db.NVarChar(100)
+  Dept_IDs    String  @default("", map: "DF_MENUS_DEP_CODE") @db.VarChar(8)
+  Obj_IDs     String  @default("", map: "DF_MENUS_Dept_IDs1") @db.VarChar(64)
+  IsAPSMenus  Boolean @default(false, map: "DF_MENUS_IsBPSMenus1")
+  IsBDSMenus  Boolean @default(false, map: "DF_MENUS_IsAPSMenus1")
+  IsPOSMenus  Boolean @default(false, map: "DF_MENUS_IsAPSMenus2")
+  IsRESMenus  Boolean @default(false, map: "DF_MENUS_IsAPSMenus3")
+  Status      Boolean @default(true, map: "DF_MENUS_CHK")
+  Resource_ID Int     @default(-1, map: "DF_MENUS_Resource_ID")
+  Image       String  @default("", map: "DF_MENUS_Image") @db.VarChar(Max)
+}
+
+model MessageCls {
+  MsgCls_ID   Int     @id(map: "PK_MessageCls") @default(0, map: "DF__MessageCl__MsgCl__379037E3")
+  MsgCls_Code String  @default("", map: "DF__MessageCl__MsgCl__38845C1C") @db.VarChar(12)
+  MsgCls_Desc String  @default("", map: "DF__MessageCl__MsgCl__39788055") @db.NVarChar(100)
+  MsgCls_Img  String? @db.NVarChar(Max)
+  Obj_ID      Int     @default(0, map: "DF__MessageCl__Obj_I__3A6CA48E")
+  isSys       Boolean @default(false, map: "DF__MessageCl__isSys__3B60C8C7")
+  API_Create  String  @default("", map: "DF__MessageCl__API_C__3C54ED00") @db.NVarChar(50)
+  API_Disp    String  @default("", map: "DF__MessageCl__API_D__3D491139") @db.NVarChar(50)
+  Status      Boolean @default(true, map: "DF__MessageCl__Statu__3E3D3572")
+}
+
+model MsgClsPart {
+  MsgCls_ID    Int     @default(0, map: "DF_MsgClsPart_MsgCls_ID")
+  Part_IDX     Int     @default(0, map: "DF_MsgClsPart_Part_IDX")
+  Part_Desc    String  @default("", map: "DF_MsgClsPart_Part_Desc") @db.NVarChar(100)
+  Part_Caption String  @default("", map: "DF_MsgClsPart_Part_Caption") @db.NVarChar(50)
+  MsgCls_Img   String  @default("", map: "DF_MsgClsPart_MsgCls_Img") @db.NVarChar(Max)
+  Data_Type    String  @default("", map: "DF_MsgClsPart_Data_Type") @db.Char(2)
+  Status       Boolean @default(true, map: "DF_MsgClsPart_Status")
+
+  @@id([MsgCls_ID, Part_IDX], map: "PK_MsgClsPart")
+}
+
+model NODES {
+  Node_ID      Int     @id(map: "PK_Nodes") @default(0, map: "DF_Nodes_Node_ID")
+  Node_Code    String  @default("", map: "DF_Nodes_Node_Code") @db.VarChar(6)
+  Node_Desc    String  @default("", map: "DF_Nodes_Node_Desc") @db.NVarChar(50)
+  Node_Addr    String  @default("", map: "DF_Nodes_Node_Addr") @db.NVarChar(50)
+  SUnit_ID     Int     @default(0, map: "DF_Nodes_SUnit_ID")
+  OSServ_Name  String  @default("", map: "DF_Nodes_OSServ_Name") @db.NVarChar(40)
+  OSServ_IP    String  @default("", map: "DF_Nodes_OSServ_IP") @db.NVarChar(20)
+  DBServ_Type  String  @default("", map: "DF_Nodes_DBServ_Type") @db.Char(2)
+  DBServ_Name  String  @default("", map: "DF_Nodes_DBServ_Name") @db.VarChar(20)
+  DBServ_Login String  @default("", map: "DF_Nodes_DBServ_Login") @db.VarChar(20)
+  DBServ_PW    String  @default("", map: "DF_Nodes_DBServ_PW") @db.VarChar(20)
+  PRCls_ID     Int     @default(0, map: "DF_NODES_Zone_Code")
+  Status       Boolean @default(true, map: "DF_Nodes_Status")
+  IsInventory  Boolean @default(false, map: "DF_NODES_IsInventory")
+}
+
+model OBJEVENTS {
+  Obj_ID      Int     @default(0, map: "DF_OBJEVENTS_Obj_ID")
+  Obj_Code    String  @default("", map: "DF_OBJEVENTS_Obj_Code") @db.Char(4)
+  Event_Idx   Int     @default(0, map: "DF_OBJEVENTS_Event_Idx")
+  Event_Code  String  @default("", map: "DF_OBJEVENTS_Event_Code") @db.Char(6)
+  Event_Desc  String  @default("", map: "DF_OBJEVENTS_Event_Desc") @db.NVarChar(60)
+  isOnline    Boolean @default(false, map: "DF_OBJEVENTS_isOnline")
+  isReply     Boolean @default(false, map: "DF_OBJEVENTS_isReply")
+  Priority    Int     @default(0, map: "DF_OBJEVENTS_Priority")
+  isLocal     Boolean @default(false, map: "DF_OBJEVENTS_isLocal")
+  isPublic    Boolean @default(false, map: "DF_OBJEVENTS_isPublic")
+  Create_Proc String  @default("", map: "DF_OBJEVENTS_Create_Proc") @db.VarChar(50)
+  WS_Proc     String  @default("", map: "DF_OBJEVENTS_WS_Proc") @db.VarChar(50)
+  BDS_Proc    String  @default("", map: "DF_OBJEVENTS_BDS_Proc") @db.VarChar(50)
+  App_Proc    String  @default("", map: "DF_OBJEVENTS_App_Proc") @db.VarChar(50)
+  Para_XML    String  @default("", map: "DF_OBJEVENTS_Para_XML") @db.NVarChar(Max)
+  Status      Boolean @default(true, map: "DF_OBJEVENTS_Status")
+  Resource_ID Int     @default(-1, map: "DF_OBJEVENTS_Resource_ID")
+
+  @@id([Obj_ID, Event_Idx], map: "PK_OBJEVENTS")
+}
+
+model OBJGRPEVT {
+  ObjGrp_Code String  @default("", map: "DF_OBJGRPEVT_ObjGrp_Code") @db.Char(2)
+  Event_Idx   Int     @default(0, map: "DF_OBJGRPEVT_Event_Idx")
+  Event_Name  String  @default("", map: "DF_OBJGRPEVT_Event_Name") @db.NVarChar(10)
+  Event_Desc  String  @default("", map: "DF_OBJGRPEVT_Event_Desc") @db.NVarChar(50)
+  Status      Boolean @default(true, map: "DF_OBJGRPEVT_Status")
+  Resource_ID Int     @default(-1, map: "DF_OBJGRPEVT_Resource_ID")
+
+  @@id([ObjGrp_Code, Event_Idx], map: "PK_OBJGRPEVT")
+}
+
+model OBJGRPS {
+  ObjGrp_Code  String  @id(map: "PK_OBJGRPS") @default("", map: "DF_OBJGRPS_ObjGrp_Code") @db.Char(2)
+  ObjGrp_Idx   Int     @default(0, map: "DF_OBJGRPS_ObjGrp_Idx")
+  ObjGrp_Type  String  @default("", map: "DF_OBJGRPS_ObjGrp_Type") @db.Char(2)
+  ObjGrp_Desc  String  @default("", map: "DF_OBJGRPS_ObjGrp_Desc") @db.NVarChar(200)
+  isUserRight  Boolean @default(false, map: "DF_OBJGRPS_isUserRight")
+  isEventLimit Boolean @default(false, map: "DF_OBJGRPS_isEventLimit")
+  isDayLimit   Boolean @default(false, map: "DF_OBJGRPS_isDayLimit")
+  isPassDay    Boolean @default(false, map: "DF_OBJGRPS_isPassDay")
+  isMembRight  Boolean @default(false, map: "DF_OBJGRPS_isMembRight")
+  Status       Boolean @default(true, map: "DF_OBJGRPS_Status")
+  Resource_ID  Int     @default(-1, map: "DF_OBJGRPS_Resource_ID")
+}
+
+model OBJS {
+  Obj_ID       Int     @id(map: "PK_OBJS") @default(0, map: "DF_OBJINFO_OBJ_ID")
+  Obj_Code     String  @unique(map: "Idx_Code") @default("", map: "DF_OBJS_OBJ_CODE") @db.Char(4)
+  Obj_Idx      Int     @default(0, map: "DF_OBJINFO_Event_Idx")
+  ObjGrp_Code  String  @default("", map: "DF_OBJINFO_ObjGrp_Code") @db.Char(2)
+  ObjLimit_IDs String  @default("", map: "DF_OBJINFO_ObjLimit_IDs") @db.NVarChar(Max)
+  Obj_Desc     String  @default("", map: "DF_OBJS_OBJ_DESC") @db.NVarChar(100)
+  Obj_TblName  String  @default("", map: "DF_OBJINFO_Obj_Desc1") @db.NVarChar(30)
+  Obj_KeyField String  @default("", map: "DF_OBJS_OBJ_KEY") @db.VarChar(60)
+  Obj_DBType   String  @default("", map: "DF_OBJS_DATA_TYPE") @db.Char(1)
+  Desc_Field   String  @default("", map: "DF_OBJS_IS_PUBLIC") @db.VarChar(60)
+  Search_Field String  @default("", map: "DF_OBJINFO_Desc_Field1") @db.VarChar(60)
+  Status       Boolean @default(true, map: "DF_OBJS_STATUS")
+  Resource_ID  Int     @default(-1, map: "DF_OBJS_Resource_ID")
+}
+
+model Partner_Bank {
+  BankAcc_No    String  @default("", map: "DF_Partner_Bank_BankAcc_No") @db.VarChar(12)
+  Bank_ID       Int     @default(0, map: "DF_Partner_Bank_Bank_ID")
+  BankAcc_Cys   String  @default("", map: "DF_Partner_Bank_BankAcc_Cys") @db.Char(3)
+  BankAcc_Name  String  @default("", map: "DF_Partner_Bank_BankAcc_Name") @db.NVarChar(50)
+  BkAcc_EName   String  @default("", map: "DF_Partner_Bank_BkAcc_EName") @db.NVarChar(50)
+  BkBranch_Addr String  @default("", map: "DF_Partner_Bank_BkBranch_Addr") @db.VarChar(100)
+  Partner_ID    Int     @default(0, map: "DF_Partner_Bank_Partner_ID")
+  PLoca_ID      Int     @default(0, map: "DF_Partner_Bank_PLoca_ID")
+  Status        Boolean @default(true, map: "DF_Partner_Bank_Status")
+
+  @@id([BankAcc_No, Bank_ID], map: "PK_Partner_Bank")
+}
+
+model Partner_Loc {
+  PLoca_ID      Int     @id(map: "PK_Partner_Loc") @default(0, map: "DF_Partner_Loc_PLoca_ID")
+  PLoca_Code    String  @default("", map: "DF_Partner_Loc_PLoca_Code") @db.VarChar(8)
+  Partner_ID    Int     @default(0, map: "DF_Partner_Loc_Partner_ID")
+  PLoca_Type    String  @default("", map: "DF_Partner_Loc_PLoca_Type") @db.Char(2)
+  PLoca_Name    String  @default("", map: "DF_Partner_Loc_PLoca_Name") @db.NVarChar(100)
+  PLoca_Address String  @default("", map: "DF_Partner_Loc_PLoca_Address") @db.NVarChar(100)
+  Place_ID      Int     @default(0, map: "DF_Partner_Loc_Place_ID")
+  Longitude     Decimal @default(0, map: "DF_Partner_Loc_Longitude") @db.Decimal(12, 2)
+  Latitude      Decimal @default(0, map: "DF_Partner_Loc_Latitude") @db.Decimal(12, 2)
+  Status        Boolean @default(true, map: "DF_Partner_Loc_Status")
+}
+
+model Partner_PIC {
+  PPIC_ID       Int      @id(map: "PK_Partner_PIC") @default(0, map: "DF_Partner_PIC_PPIC_ID")
+  PPIC_Code     String   @default("", map: "DF_Partner_PIC_PPIC_Code") @db.VarChar(8)
+  Partner_ID    Int      @default(0, map: "DF_Partner_PIC_Partner_ID")
+  PLoca_ID      Int      @default(0, map: "DF_Partner_PIC_PLoca_ID")
+  Position_Type String   @default("", map: "DF_Partner_PIC_Position_Type") @db.Char(2)
+  PIC_Name      String   @default("", map: "DF_Partner_PIC_PIC_Name") @db.NVarChar(50)
+  PIC_ID_No     String   @default("", map: "DF_Partner_PIC_PIC_ID_No") @db.NVarChar(12)
+  PIC_Sex       String   @default("", map: "DF_Partner_PIC_PIC_Sex") @db.Char(1)
+  PIC_Birthday  DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Partner_PIC_PIC_Birthday") @db.DateTime
+  PIC_Tel       String   @default("", map: "DF_Partner_PIC_PIC_Tel") @db.NVarChar(12)
+  PIC_Fax       String   @default("", map: "DF_Partner_PIC_PIC_Fax") @db.NVarChar(12)
+  PIC_Email     String   @default("", map: "DF_Partner_PIC_PIC_Email") @db.NVarChar(30)
+  Nick_Chat     String   @default("", map: "DF_Partner_PIC_Nick_Chat") @db.NVarChar(20)
+  Status        Boolean  @default(true, map: "DF_Partner_PIC_Status")
+}
+
+model Partner_Type {
+  PType_ID     Int     @id(map: "PK_Partner_Type") @default(0, map: "DF_Partner_Type_PType_ID")
+  PType_Symb   String  @default("", map: "DF_Partner_Type_PType_Symb") @db.NVarChar(12)
+  Ptype_Desc   String  @default("", map: "DF_Partner_Type_Ptype_Desc") @db.NVarChar(50)
+  Invoice_Type String  @default("", map: "DF_Partner_Type_Invoice_Type") @db.Char(3)
+  ItemCls_IDs  String  @default("", map: "DF_Partner_Type_ItemCls_IDs") @db.VarChar(8)
+  Obj_ID       Int     @default(0, map: "DF_Partner_Type_Obj_ID")
+  Status       Boolean @default(true, map: "DF_Partner_Type_Status")
+}
+
+model Partners {
+  Partner_ID    Int     @id(map: "PK_Partners") @default(0, map: "DF_Partners_Partner_ID")
+  Partner_Code  String  @default("", map: "DF_Partners_Partner_Code") @db.VarChar(8)
+  PType_ID      Int     @default(0, map: "DF_Partners_PType_ID")
+  PartCtg_ID    Int     @default(0, map: "DF_Partners_PartCtg_ID")
+  Area_IDs      Int     @default(0, map: "DF_Partners_Area_IDs")
+  GLDept_Code   String  @default("", map: "DF_Partners_GLDept_Code") @db.Char(1)
+  ItemCls_IDs   String  @default("", map: "DF_Partners_ItemCls_IDs") @db.VarChar(8)
+  ItemRef_Code  String  @default("", map: "DF_Partners_ItemRef_Code") @db.Char(12)
+  Full_Name     String  @default("", map: "DF_Partners_Full_Name") @db.NVarChar(100)
+  Short_Name    String  @default("", map: "DF_Partners_Short_Name") @db.NVarChar(50)
+  Bill_Address  String  @default("", map: "DF_Partners_Bill_Address") @db.NVarChar(100)
+  Place_ID      Int     @default(0, map: "DF_Partners_Place_ID")
+  Country_ID    Int     @default(0, map: "DF_Partners_Country_ID")
+  Business_No   String  @default("", map: "DF_Partners_Business_No") @db.NVarChar(20)
+  Tax_No        String  @default("", map: "DF_Partners_Tax_No") @db.NVarChar(20)
+  ExtObjCls_IDs String  @default("", map: "DF_Partners_ExtObjCls_IDs") @db.VarChar(8)
+  Disabled      Boolean @default(false, map: "DF_Partners_Disabled")
+}
+
+model PARTTYPE {
+  PType_ID      Int     @id(map: "PK_PartType") @default(0, map: "DF_PartType_PType_ID")
+  PType_Code    String  @default("", map: "DF_PartType_PType_Code") @db.VarChar(20)
+  Subs_Code     String  @default("", map: "DF_PartType_Subs_Code") @db.Char(2)
+  Descript      String  @default("", map: "DF_PartType_Descript") @db.NVarChar(100)
+  PatchUpd_Proc String  @default("", map: "DF_PartType_PatchUpd_Proc") @db.NVarChar(40)
+  PatchUpd_DLL  String  @default("", map: "DF_PartType_PatchUpd_DLL") @db.NVarChar(20)
+  Dept_Code     String  @default("", map: "DF_PartType_Dept_Code") @db.Char(2)
+  Status        Boolean @default(false, map: "DF_PartType_Status")
+}
+
+model PATCHTYPE {
+  Patch_No      String   @default("", map: "DF_PatchType_Patch_No") @db.Char(20)
+  Part_ID       Int      @default(0, map: "DF_PatchType_Part_ID")
+  PType_ID      Int      @default(0, map: "DF_PatchType_PType_ID")
+  Part_Content  String   @default("", map: "DF_PatchType_Part_Content") @db.NVarChar(Max)
+  Product_Code  String   @default("", map: "DF_PatchType_Product_Code") @db.Char(12)
+  isImportant   String   @default("", map: "DF_PatchType_isImportant") @db.Char(1)
+  UpdTime       String   @default("", map: "DF_PatchType_UpdTime") @db.Char(1)
+  Node_ID       Int      @default(0, map: "DF_PatchType_Node_ID")
+  SysUnit_ID    Int      @default(0, map: "DF_PatchType_SysUnit_ID")
+  Received_time DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_PatchType_Received_time") @db.DateTime
+  StartUpd_time DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_PatchType_StartUpd_time") @db.DateTime
+  Status        Boolean  @default(false, map: "DF_PatchType_Status")
+
+  @@id([Patch_No, Part_ID], map: "PK_PatchType")
+}
+
+model PaymentMode {
+  Pmt_ID          Int       @id(map: "PK_PaymentMode") @default(0, map: "DF_PaymentMode_Pmt_ID")
+  Pmt_Code        String    @default("", map: "DF_PaymentMode_Pmt_Code") @db.Char(5)
+  IDX             Int       @default(0, map: "DF_PaymentMode_IDX")
+  Descript        String    @default("", map: "DF_PaymentMode_Descript") @db.NVarChar(100)
+  CYS             String    @default("", map: "DF_PaymentMode_CYS") @db.Char(3)
+  Forex_Rate      Decimal   @default(0, map: "DF_PaymentMode_Forex_Rate") @db.Decimal(12, 4)
+  Value           Decimal   @default(0, map: "DF_PaymentMode_Value") @db.Decimal(12, 4)
+  isCard          Boolean   @default(false, map: "DF_PaymentMode_isCard")
+  Disabled        Boolean   @default(false, map: "DF_PaymentMode_Disabled")
+  Fr_Date         DateTime? @default(dbgenerated("1900/1/1"), map: "DF_PaymentMode_Fr_Date") @db.DateTime
+  To_Date         DateTime? @default(dbgenerated("1900/1/1"), map: "DF_PaymentMode_To_Date") @db.DateTime
+  Merchant_Code   String?   @db.VarChar(20)
+  Merchant_Name   String?   @db.NVarChar(100)
+  IsAutoCheckMode Boolean?  @default(false, map: "DF__PaymentMo__IsAut__39643D13")
+  AutoFrSeconds   Int?      @default(0, map: "DF__PaymentMo__AutoF__3A58614C")
+  WaitSeconds     Int?      @default(0, map: "DF__PaymentMo__WaitS__3B4C8585")
+  NumOfWait       Int?      @default(0, map: "DF__PaymentMo__NumOf__3C40A9BE")
+}
+
+model PaymentService {
+  PmtServ_ID       Int       @id(map: "PK_PaymentService") @default(0, map: "DF_Table_1_GType_ID")
+  PmtServ_Code     String    @default("", map: "DF_Table_1_GType_Code") @db.Char(12)
+  Goods_ID         Int?      @default(0, map: "DF_Table_1_GType_Name")
+  PmtServ_Type     String    @default("", map: "DF_Table_1_DefForm_Name") @db.Char(2)
+  SrvProvider_Code String    @default("", map: "DF_Table_1_ExtraAttrTable") @db.Char(2)
+  Partner_ID       Int       @default(0, map: "DF_Table_1_isSKUQty")
+  Commision_Rate   Decimal   @default(0, map: "DF_Table_1_isSKUAmt") @db.Decimal(5, 2)
+  Open_Date        DateTime? @db.DateTime
+  Last_Date        DateTime? @db.DateTime
+  Disabled         Boolean   @default(false, map: "DF_PaymentService_Disabled")
+}
+
+model PItemCls {
+  PICls_ID       Int      @id(map: "PK_PItemCls") @default(0, map: "DF__PItemCls__PICls___19968BFF")
+  PICls_Code     String   @default("", map: "DF__PItemCls__PICls___1A8AB038") @db.VarChar(4)
+  PICls_Desc     String   @default("", map: "DF__PItemCls__PICls___1B7ED471") @db.NVarChar(50)
+  PICls_Tbl_Name String?  @default("", map: "DF__PItemCls__PICls___1C72F8AA") @db.NVarChar(50)
+  PICls_Fld_ID   String?  @default("", map: "DF__PItemCls__PICls___1D671CE3") @db.NVarChar(20)
+  PICls_Fld_Code String?  @default("", map: "DF__PItemCls__PICls___1E5B411C") @db.NVarChar(20)
+  PICls_Fld_Name String?  @default("", map: "DF__PItemCls__PICls___1F4F6555") @db.NVarChar(20)
+  Filter_SQL     String?  @default("", map: "DF__PItemCls__Filter__2043898E") @db.NVarChar(200)
+  PI_Cost_Tbl    String?  @default("", map: "DF__PItemCls__PI_Cos__2137ADC7") @db.NVarChar(20)
+  PI_Fld_ID      String?  @default("", map: "DF__PItemCls__PI_Fld__222BD200") @db.NVarChar(20)
+  PI_Fld_Cost    String?  @default("", map: "DF__PItemCls__PI_Fld__231FF639") @db.NVarChar(20)
+  isRetail       Boolean? @default(false, map: "DF__PItemCls__isReta__24141A72")
+  isWholesale    Boolean? @default(false, map: "DF__PItemCls__isWhol__25083EAB")
+  isPurchase     Boolean? @default(false, map: "DF__PItemCls__isPurc__25FC62E4")
+  Disabled       Boolean? @default(false, map: "DF__PItemCls__Disabl__26F0871D")
+}
+
+model Player {
+  PLayer_ID     Int      @id(map: "PK_Player") @default(0, map: "DF__Player__PLayer_I__0E24D953")
+  PLayer_Code   String   @default("", map: "DF__Player__PLayer_C__0F18FD8C") @db.NVarChar(4)
+  PLayer_Desc   String?  @default("", map: "DF__Player__PLayer_D__100D21C5") @db.NVarChar(50)
+  Owner_Type    String?  @default("", map: "DF__Player__Owner_Ty__110145FE") @db.Char(2)
+  Owner_ID      Int?     @default(0, map: "DF__Player__Owner_ID__11F56A37")
+  SCC_ID        Int      @default(0, map: "DF__Player__SCC_ID__12E98E70")
+  PProg_Type    String?  @default("", map: "DF__Player__PProg_Ty__13DDB2A9") @db.Char(2)
+  Prior_Type    String?  @default("", map: "DF__Player__Prior_Ty__14D1D6E2") @db.Char(2)
+  Inherit_Level Int?     @default(0, map: "DF__Player__Inherit___15C5FB1B")
+  Disabled      Boolean? @default(false, map: "DF__Player__Disabled__16BA1F54")
+}
+
+model PLUCode {
+  PLU_ID      Int     @default(0, map: "DF_PLUCode_PLU_ID")
+  PLU_Code    String  @default("", map: "DF_PLUCode_PLU_Code") @db.Char(4)
+  Good_ID     Int     @default(0, map: "DF_PLUCode_Good_ID")
+  SKU_Code    String  @default("", map: "DF_PLUCode_SKU_Code") @db.Char(12)
+  PLU_Type    String  @default("", map: "DF_PLUCode_PLU_Type") @db.Char(2)
+  isInventory Boolean @default(false, map: "DF_PLUCode_isInventory")
+  Disabled    Boolean @default(false, map: "DF_PLUCode_Disabled")
+
+  @@id([PLU_ID, PLU_Code, Good_ID, SKU_Code], map: "PK_PLUCode")
+}
+
+model PmtModeTerminal {
+  Pmt_ID      Int      @default(0, map: "DF__PmtModeTe__Pmt_I__4A8EC915")
+  StkClust_ID Int      @default(0, map: "DF__PmtModeTe__StkCl__4B82ED4E")
+  Terminal_ID String?  @default("", map: "DF__PmtModeTe__Termi__4C771187") @db.NVarChar(256)
+  Disabled    Boolean? @default(false, map: "DF__PmtModeTe__Disab__4D6B35C0")
+
+  @@id([Pmt_ID, StkClust_ID], map: "PK_PmtModeTerminal")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model POCheck {
+  Stk_ID         Int?
+  Stk_Code       String?   @db.VarChar(20)
+  Tran_Date      DateTime? @db.DateTime
+  EF_Date        DateTime? @db.DateTime
+  POCheck_Number String?   @db.Char(20)
+  User_ID        Int?
+  WS_ID          Int?
+  Status         Boolean?
+
+  @@ignore
+}
+
+model Promotions {
+  PType_ID     Int      @id(map: "PK_Promotions") @default(0, map: "DF__Promotion__PType__049B6F19")
+  PType_Code   String   @default("", map: "DF__Promotion__PType__058F9352") @db.NVarChar(4)
+  PType_Desc   String?  @default("", map: "DF__Promotion__PType__0683B78B") @db.NVarChar(50)
+  Obj_ID       Int?     @default(0, map: "DF__Promotion__Obj_I__0777DBC4")
+  isSCCManaged Boolean? @default(false, map: "DF__Promotion__isSCC__086BFFFD")
+  Prefix       String?  @default("", map: "DF__Promotion__Prefi__09602436") @db.NVarChar(4)
+  Last_Count   Int?     @default(0, map: "DF__Promotion__Last___0A54486F")
+  Disabled     Boolean? @default(false, map: "DF__Promotion__Disab__0B486CA8")
+  Priority     Int      @default(0, map: "DF__Promotion__Prior__68B428D9")
+  IsItemReturn Int      @default(1, map: "DF__Promotion__IsIte__6A9C714B")
+}
+
+model PSItemCls {
+  PSICls_ID      Int      @id(map: "PK_PSItemCls") @default(0, map: "DF__PSItemCls__PSICl__75592B89")
+  PSICls_Code    String   @default("", map: "DF__PSItemCls__PSICl__764D4FC2") @db.VarChar(4)
+  PSICls_Desc    String   @default("", map: "DF__PSItemCls__PSICl__774173FB") @db.NVarChar(50)
+  SICls_Tbl_Name String?  @default("", map: "DF__PSItemCls__SICls__78359834") @db.NVarChar(50)
+  SICls_Fld_ID   String?  @default("", map: "DF__PSItemCls__SICls__7929BC6D") @db.NVarChar(20)
+  SICls_Fld_Code String?  @default("", map: "DF__PSItemCls__SICls__7A1DE0A6") @db.NVarChar(20)
+  SICls_Fld_Name String?  @default("", map: "DF__PSItemCls__SICls__7B1204DF") @db.NVarChar(20)
+  Filter_SQL     String?  @default("", map: "DF__PSItemCls__Filte__7C062918") @db.NVarChar(200)
+  Rlt_Goods_Tbl  String?  @default("", map: "DF__PSItemCls__Rlt_G__7CFA4D51") @db.NVarChar(20)
+  Goods_Fld_Name String?  @default("", map: "DF__PSItemCls__Goods__7DEE718A") @db.NVarChar(20)
+  isRetail       Boolean? @default(false, map: "DF__PSItemCls__isRet__7EE295C3")
+  isWholesale    Boolean? @default(false, map: "DF__PSItemCls__isWho__7FD6B9FC")
+  isPurchase     Boolean? @default(false, map: "DF__PSItemCls__isPur__00CADE35")
+  Disabled       Boolean? @default(false, map: "DF__PSItemCls__Disab__01BF026E")
+}
+
+model QueueMsg {
+  Msg_Code    String   @default("", map: "DF_QueueMsg_Msg_Code") @db.Char(20)
+  CrNode_ID   Int      @default(0, map: "DF_QueueMsg_CrNode_ID")
+  CrUser_ID   Int      @default(0, map: "DF_QueueMsg_CrUser_ID")
+  CrTime      DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_QueueMsg_CrTime") @db.DateTime
+  ToNode_ID   Int      @default(0, map: "DF_QueueMsg_ToNode_ID")
+  ToUser_ID   Int      @default(0, map: "DF_QueueMsg_ToUser_ID")
+  ToTime      DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_QueueMsg_ToTime") @db.DateTime
+  DispTime    DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_QueueMsg_DispTime") @db.DateTime
+  MsgCls_ID   Int      @default(0, map: "DF_QueueMsg_MsgCls_ID")
+  Msg_Content String   @default("", map: "DF_QueueMsg_Msg_Content") @db.NVarChar(Max)
+  Status      Boolean  @default(true, map: "DF_QueueMsg_Status")
+
+  @@id([Msg_Code, ToUser_ID], map: "PK_QueueMsg")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model RECVEVENTHIST {
+  Event_ID     Decimal  @db.Decimal(18, 0)
+  Event_Code   String   @db.VarChar(13)
+  Obj_ID       Int
+  Event_IDX    Int
+  Cr_SUnit_ID  Int
+  Cr_Time      DateTime @db.DateTime
+  Fr_SUnit_ID  Int
+  To_SUnit_ID  Int
+  To_Time      DateTime @db.DateTime
+  Proc_Time    DateTime @db.DateTime
+  Process_Stat String   @db.Char(1)
+  Repro_Time   DateTime @db.DateTime
+  ReProd_Stat  String   @db.Char(1)
+  Event_XML    String   @db.NVarChar(Max)
+  Event_Key    String   @db.VarChar(30)
+  Priority     Int
+  Status       String   @db.Char(1)
+
+  @@ignore
+}
+
+model RECVEVENTQUEUE {
+  Event_ID     Decimal  @id(map: "PK_RECVEVENTQUEUE") @db.Decimal(18, 0)
+  Event_Code   String   @default("", map: "DF_RECVEVENTQUEUE_Event_Code") @db.VarChar(13)
+  Obj_ID       Int      @default(0, map: "DF_RECVEVENTQUEUE_Obj_ID")
+  Event_IDX    Int      @default(0, map: "DF_RECVEVENTQUEUE_Event_IDX")
+  Cr_SUnit_ID  Int      @default(0, map: "DF_RECVEVENTQUEUE_Cr_SUnit_ID")
+  Cr_Time      DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_RECVEVENTQUEUE_Cr_Time") @db.DateTime
+  Fr_SUnit_ID  Int      @default(0, map: "DF_RECVEVENTQUEUE_Fr_SUnit_ID")
+  To_SUnit_ID  Int      @default(0, map: "DF_RECVEVENTQUEUE_To_SUnit_ID")
+  To_Time      DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_RECVEVENTQUEUE_To_Time") @db.DateTime
+  Proc_Time    DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_RECVEVENTQUEUE_Proc_Time") @db.DateTime
+  Process_Stat String   @default("", map: "DF_RECVEVENTQUEUE_Process_Stat") @db.Char(1)
+  Repro_Time   DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_RECVEVENTQUEUE_Repro_Time") @db.DateTime
+  ReProd_Stat  String   @default("", map: "DF_RECVEVENTQUEUE_ReProd_Stat") @db.Char(1)
+  Event_XML    String   @default("", map: "DF_RECVEVENTQUEUE_Event_XML") @db.NVarChar(Max)
+  Event_Key    String   @default("", map: "DF_RECVEVENTQUEUE_Event_Key") @db.VarChar(30)
+  Priority     Int      @default(1, map: "DF_RECVEVENTQUEUE_Priority")
+  Status       String   @default("1", map: "DF_RECVEVENTQUEUE_Status") @db.Char(1)
+
+  @@index([Process_Stat], map: "RECVEVENTQUEUE_ProcessStat")
+  @@index([ReProd_Stat], map: "RECVEVENTQUEUE_ReprodStat")
+}
+
+model REPORTS {
+  IDX          String  @id(map: "PK_REPORTS_1") @default("00", map: "DF_REPORTS_IDX_1") @db.VarChar(4)
+  Rpt_ID       String  @default("0", map: "DF_REPORTS_RPT_ID_1") @db.VarChar(3)
+  Rpt_Name     String  @default("", map: "DF_REPORTS_RPT_NAME_1") @db.NVarChar(100)
+  Rpt_Descript String  @default("", map: "DF_REPORTS_Rpt_Name1") @db.NVarChar(300)
+  Rpt_Fname    String  @default("", map: "DF_REPORTS_RPT_FILE_1") @db.NVarChar(100)
+  Rpt_Form     String  @default("", map: "DF_REPORTS_RPT_FORM") @db.VarChar(50)
+  Pitch        Int     @default(0, map: "DF_REPORTS_Resource_ID1")
+  Size         String  @default("", map: "DF_REPORTS_Rpt_Fname1") @db.VarChar(20)
+  Orient       Boolean @default(true, map: "DF_REPORTS_Orient")
+  Obj_IDs      String  @default("", map: "DF_REPORTS_Size1") @db.VarChar(64)
+  Filter_Cnd   String  @default("", map: "DF_REPORTS_Rpt_Fname1_1") @db.NVarChar(Max)
+  Obj_ID       Int     @default(0, map: "DF_REPORTS_Pitch1")
+  Dept_IDs     String  @default("", map: "DF_REPORTS_Obj_IDs1") @db.VarChar(8)
+  Resource_ID  Int     @default(-1, map: "DF_REPORTS_Resource_ID")
+  Status       Boolean @default(true, map: "DF_REPORTS_Orient1")
+
+  @@index([Dept_IDs], map: "Idx_Dept")
+}
+
+model RESOURCE_DIC {
+  Resource_ID   Int    @default(0, map: "DF_Resource_Dic_Resource_ID")
+  Lang_Type     String @default("", map: "DF_Resource_Dic_Lang_Type") @db.Char(2)
+  Lang_Resource String @default("", map: "DF_Resource_Dic_Lang_Resource") @db.NVarChar(200)
+
+  @@id([Resource_ID, Lang_Type], map: "PK_Resource_Dic")
+}
+
+model RESOURCES {
+  Resource_ID   Int    @id(map: "PK_Resources_1") @default(0, map: "DF_Resources_Resource_ID")
+  Reso_Type     String @default("10", map: "DF_Resources_Reso_Type") @db.Char(2)
+  Max_Length    Int    @default(0, map: "DF_Resources_Max_Length")
+  Resource_Desc String @default("", map: "DF_Resources_Lang_Resource") @db.NVarChar(200)
+}
+
+model RoleAuthority {
+  Role_ID      Int @default(0, map: "DF_RoleAuthority_Role_ID")
+  Authority_ID Int @default(0, map: "DF_RoleAuthority_Authority_ID")
+
+  @@id([Role_ID, Authority_ID], map: "PK_RoleAuthority")
+}
+
+model Roles {
+  Role_ID   Int     @id(map: "PK_Roles") @default(0, map: "DF_Roles_Role_ID")
+  Role_Code String  @default("", map: "DF_Roles_Role_Code") @db.VarChar(50)
+  Role_Desc String  @default("", map: "DF_Roles_Role_Desc") @db.NVarChar(100)
+  Disabled  Boolean @default(false, map: "DF_Roles_Disabled")
+}
+
+model RT_LevelPrice {
+  SCC_ID       Int       @default(0, map: "DF__RT_LevelP__SCC_I__3449B6E4")
+  RTPLevel_ID  Int       @default(0, map: "DF__RT_LevelP__RTPLe__353DDB1D")
+  Goods_ID     Int       @default(0, map: "DF__RT_LevelP__Goods__3631FF56")
+  SKU_Code     String    @default("", map: "DF__RT_LevelP__SKU_C__3726238F") @db.Char(12)
+  RT_Price     Decimal?  @default(0, map: "DF__RT_LevelP__RT_Pr__381A47C8") @db.Decimal(18, 5)
+  RT_POrd_ID   Int?      @default(0, map: "DF__RT_LevelP__RT_PO__390E6C01")
+  RT_POrd_Time DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_LevelP__RT_PO__3A02903A") @db.DateTime
+  Disabled     Boolean?  @default(false, map: "DF__RT_LevelP__Disab__3AF6B473")
+
+  @@id([SCC_ID, RTPLevel_ID, Goods_ID, SKU_Code], map: "PK_RT_LevelPrice")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model RT_MarginPolicy {
+  GGrp_ID        Int?     @default(0, map: "DF__RT_Margin__GGrp___3BEAD8AC")
+  StkType_ID     Int?     @default(0, map: "DF__RT_Margin__StkTy__3CDEFCE5")
+  GrossMargin    Float?   @default(0, map: "DF__RT_Margin__Gross__3DD3211E")
+  MinGrossMargin Float?   @default(0, map: "DF__RT_Margin__MinGr__3EC74557")
+  MaxGrossMargin Float?   @default(0, map: "DF__RT_Margin__MaxGr__3FBB6990")
+  COG_Amt        Decimal? @default(0, map: "DF__RT_Margin__COG_A__40AF8DC9") @db.Decimal(18, 5)
+  COG_Max        Decimal? @default(0, map: "DF__RT_Margin__COG_M__41A3B202") @db.Decimal(18, 5)
+  COG_Min        Decimal? @default(0, map: "DF__RT_Margin__COG_M__4297D63B") @db.Decimal(18, 5)
+  Month_RevAmt   Decimal? @default(0, map: "DF__RT_Margin__Month__438BFA74") @db.Decimal(18, 5)
+  Month_RevMax   Decimal? @default(0, map: "DF__RT_Margin__Month__44801EAD") @db.Decimal(18, 5)
+  Month_RevMin   Decimal? @default(0, map: "DF__RT_Margin__Month__457442E6") @db.Decimal(18, 5)
+  Disabled       Boolean? @default(false, map: "DF__RT_Margin__Disab__4668671F")
+
+  @@ignore
+}
+
+model RT_PProgCase {
+  PProg_ID       Int      @default(0, map: "DF__RT_PProgC__PProg__7F6CA5A8")
+  PCase_IDX      Int      @default(0, map: "DF__RT_PProgC__PCase__0060C9E1")
+  Description    String   @default("", map: "DF__RT_PProgC__Descr__0154EE1A") @db.NVarChar(200)
+  Promotion_Type String?  @default("", map: "DF__RT_PProgC__Promo__02491253") @db.Char(1)
+  MaxCasebyTrs   Decimal? @default(0, map: "DF__RT_PProgC__MaxCa__033D368C") @db.Decimal(18, 2)
+  isCasebyStore  Boolean? @default(false, map: "DF__RT_PProgC__isCas__04315AC5")
+  MaxCasebyDay   Decimal? @default(0, map: "DF__RT_PProgC__MaxCa__05257EFE") @db.Decimal(18, 2)
+  MaxCasebyStore Decimal? @default(0, map: "DF__RT_PProgC__MaxCa__0619A337") @db.Decimal(18, 2)
+  MaxCase_Qty    Int?     @default(0, map: "DF__RT_PProgC__MaxCa__070DC770")
+  TotalCase_Qty  Int?     @default(0, map: "DF__RT_PProgC__Total__0801EBA9")
+  TotalSold_Amt  Decimal? @default(0, map: "DF__RT_PProgC__Total__08F60FE2") @db.Decimal(18, 2)
+  TotalCost_Amt  Decimal? @default(0, map: "DF__RT_PProgC__Total__09EA341B") @db.Decimal(18, 2)
+  Notes          String?  @default("", map: "DF__RT_PProgC__Notes__0ADE5854") @db.NVarChar(100)
+  PCase_Symb     String?  @default("", map: "DF__RT_PProgC__PCase__0BD27C8D") @db.NVarChar(Max)
+  isFortune      Boolean? @default(false, map: "DF__RT_PProgC__isFor__0CC6A0C6")
+  isFortuneDif   Boolean? @default(false, map: "DF__RT_PProgC__isFor__0DBAC4FF")
+  Fortune_Rate   Decimal? @default(0, map: "DF__RT_PProgC__Fortu__0EAEE938") @db.Decimal(18, 2)
+  Process        String?  @default("", map: "DF__RT_PProgC__Proce__0FA30D71") @db.Char(1)
+  Disabled       Boolean? @default(false, map: "DF__RT_PProgC__Disab__109731AA")
+
+  @@id([PProg_ID, PCase_IDX], map: "PK_RT_PProgCase")
+}
+
+model RT_PProgOwner {
+  PProg_ID      Int      @default(0, map: "DF__RT_PProgO__PProg__713394EA")
+  Owner_ID      Int      @default(0, map: "DF__RT_PProgO__Owner__7227B923")
+  PCase_IDX     Int      @default(0, map: "DF__RT_PProgO__PCase__731BDD5C")
+  ExtObjCls_IDs Bytes?   @db.Binary(2)
+  Owned_Rate    Decimal? @default(0, map: "DF__RT_PProgO__Owned__74100195") @db.Decimal(18, 2)
+  Disabled      Boolean? @default(false, map: "DF__RT_PProgO__Disab__750425CE")
+
+  @@id([PProg_ID, Owner_ID, PCase_IDX], map: "PK_RT_PProgOwner")
+}
+
+model RT_PProgPhase {
+  PProg_ID      Int       @default(0, map: "DF__RT_PProgP__PProg__2AF6222B")
+  Phase_IDX     Int       @default(0, map: "DF__RT_PProgP__Phase__2BEA4664")
+  Phase_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgP__Phase__2CDE6A9D") @db.DateTime
+  Phase_Due     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgP__Phase__2DD28ED6") @db.DateTime
+  SCC_ID        Int       @default(0, map: "DF__RT_PProgP__SCC_I__2EC6B30F")
+  SCClust_ID    Int       @default(0, map: "DF__RT_PProgP__SCClu__2FBAD748")
+  StkClust_ID   Int       @default(0, map: "DF__RT_PProgP__StkCl__30AEFB81")
+  PCase_IDX     Int       @default(0, map: "DF__RT_PProgP__PCase__31A31FBA")
+  LineGrp_IDX   Int       @default(0, map: "DF__RT_PProgP__LineG__329743F3")
+  Fortune_Rate  Decimal?  @default(dbgenerated(), map: "DF__RT_PProgP__Fortu__338B682C") @db.Decimal(18, 2)
+  PICls_ID      Int       @default(0, map: "DF__RT_PProgP__PICls__347F8C65")
+  PItem_ID      Int       @default(0, map: "DF__RT_PProgP__PItem__3573B09E")
+  PItem_Code    String?   @default("", map: "DF__RT_PProgP__PItem__3667D4D7") @db.NVarChar(20)
+  PItem_Qty     Decimal?  @default(dbgenerated(), map: "DF__RT_PProgP__PItem__375BF910") @db.Decimal(18, 2)
+  RestPItem_Qty Decimal?  @default(dbgenerated(), map: "DF__RT_PProgP__RestP__38501D49") @db.Decimal(18, 2)
+  AddPItem_Qty  Decimal?  @default(dbgenerated(), map: "DF__RT_PProgP__AddPI__39444182") @db.Decimal(18, 2)
+  GivePItem_Qty Decimal?  @default(dbgenerated(), map: "DF__RT_PProgP__GiveP__3A3865BB") @db.Decimal(18, 2)
+  Disabled      Boolean?  @default(false, map: "DF__RT_PProgP__Disab__3B2C89F4")
+
+  @@id([PProg_ID, Phase_IDX, SCC_ID, SCClust_ID, StkClust_ID, PCase_IDX, LineGrp_IDX, PICls_ID, PItem_ID], map: "PK_RT_PProgPhase")
+}
+
+model RT_PProgPIStore {
+  PProg_ID       Int      @default(0, map: "DF__RT_PProgP__PProg__46F3425B")
+  PCase_IDX      Int      @default(0, map: "DF__RT_PProgP__PCase__47E76694")
+  SCC_ID         Int      @default(0, map: "DF__RT_PProgP__SCC_I__48DB8ACD")
+  SCClust_ID     Int      @default(0, map: "DF__RT_PProgP__SCClu__49CFAF06")
+  StkClust_ID    Int      @default(0, map: "DF__RT_PProgP__StkCl__4AC3D33F")
+  PICls_ID       Int      @default(0, map: "DF__RT_PProgP__PICls__4BB7F778")
+  LineGrp_IDX    Int?     @default(0, map: "DF__RT_PProgP__LineG__4CAC1BB1")
+  Fortune_Rate   Decimal? @default(0, map: "DF__RT_PProgP__Fortu__4DA03FEA") @db.Decimal(18, 2)
+  PItem_ID       Int      @default(0, map: "DF__RT_PProgP__PItem__4E946423")
+  PItem_Code     String?  @default("", map: "DF__RT_PProgP__PItem__4F88885C") @db.NVarChar(20)
+  PItem_Qty      Decimal? @default(0, map: "DF__RT_PProgP__PItem__507CAC95") @db.Decimal(18, 2)
+  MaxPItem_TrQty Decimal? @default(0, map: "DF__RT_PProgP__MaxPI__5170D0CE") @db.Decimal(18, 2)
+  MaxPItem_Qty   Decimal? @default(0, map: "DF__RT_PProgP__MaxPI__5264F507") @db.Decimal(18, 2)
+  TotalPItem_Qty Decimal? @default(0, map: "DF__RT_PProgP__Total__53591940") @db.Decimal(18, 2)
+  MaxTrans_Qty   Int?     @default(0, map: "DF__RT_PProgP__MaxTr__544D3D79")
+  Disabled       Boolean? @default(false, map: "DF__RT_PProgP__Disab__554161B2")
+
+  @@id([PProg_ID, PCase_IDX, SCC_ID, SCClust_ID, StkClust_ID, PICls_ID, PItem_ID], map: "PK_RT_PProgPIStore")
+}
+
+model RT_PProgPOS {
+  PProg_ID    Int      @default(0, map: "DF__RT_PProgP__PProg__581DCE5D")
+  SCC_ID      Int      @default(0, map: "DF__RT_PProgP__SCC_I__5911F296")
+  SCClust_ID  Int      @default(0, map: "DF__RT_PProgP__SCClu__5A0616CF")
+  StkClust_ID Int      @default(0, map: "DF__RT_PProgP__StkCl__5AFA3B08")
+  WS_ID       Int      @default(0, map: "DF__RT_PProgP__WS_ID__5BEE5F41")
+  Disabled    Boolean? @default(false, map: "DF__RT_PProgP__Disab__5CE2837A")
+
+  @@id([PProg_ID, SCC_ID, SCClust_ID, StkClust_ID, WS_ID], map: "PK_RT_PProgPOS")
+}
+
+model RT_PProgs {
+  PProg_ID         Int       @id(map: "PK_RT_Pprogs") @default(0, map: "DF__RT_PProgs__PProg__64B8AF6C")
+  PProg_Code       String?   @default("", map: "DF__RT_PProgs__PProg__65ACD3A5") @db.NVarChar(20)
+  PType_ID         Int?      @default(0, map: "DF__RT_PProgs__PType__66A0F7DE")
+  Promotion_Code   String?   @default("", map: "DF__RT_PProgs__Promo__67951C17") @db.NVarChar(12)
+  Prom_Description String?   @default("", map: "DF__RT_PProgs__Prom___68894050") @db.NVarChar(200)
+  Ref_No           String?   @default("", map: "DF__RT_PProgs__Ref_N__697D6489") @db.NVarChar(20)
+  Ref_Date         DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgs__Ref_D__6A7188C2") @db.Date
+  Effect_Date      DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgs__Effec__6B65ACFB") @db.DateTime
+  Due_Date         DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgs__Due_D__6C59D134") @db.DateTime
+  SCC_ID           Int?      @default(0, map: "DF__RT_PProgs__SCC_I__6D4DF56D")
+  SCClust_ID       Int?      @default(0, map: "DF__RT_PProgs__SCClu__6E4219A6")
+  StkClust_ID      Int?      @default(0, map: "DF__RT_PProgs__StkCl__6F363DDF")
+  WS_ID            Int?      @default(0, map: "DF__RT_PProgs__WS_ID__702A6218")
+  PLayer_ID        Int?      @default(0, map: "DF__RT_PProgs__PLaye__711E8651")
+  Owner_ID         Int?      @default(0, map: "DF__RT_PProgs__Owner__7212AA8A")
+  isWalkInCust     Boolean?  @default(false, map: "DF__RT_PProgs__isWal__7306CEC3")
+  isLoyatyCust     Boolean?  @default(false, map: "DF__RT_PProgs__isLoy__73FAF2FC")
+  Loyalty_Rank     Int?      @default(0, map: "DF__RT_PProgs__Loyal__74EF1735")
+  IsCouponPrg      Boolean?  @default(false, map: "DF__RT_PProgs__IsCou__75E33B6E")
+  isMultiCase      Boolean?  @default(false, map: "DF__RT_PProgs__isMul__76D75FA7")
+  isMultiPSItem    Boolean?  @default(false, map: "DF__RT_PProgs__isMul__77CB83E0")
+  isStepCase       Boolean?  @default(false, map: "DF__RT_PProgs__isSte__78BFA819")
+  Last_Date        DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgs__Last___79B3CC52") @db.DateTime
+  User_ID          Int?      @default(0, map: "DF__RT_PProgs__User___7AA7F08B")
+  Process          String?   @default("", map: "DF__RT_PProgs__Proce__7B9C14C4") @db.Char(1)
+  Disabled         Boolean?  @default(false, map: "DF__RT_PProgs__Disab__7C9038FD")
+}
+
+model RT_PProgTime {
+  PProg_ID   Int       @default(0, map: "DF__RT_PProgT__PProg__13739E55")
+  PCase_IDX  Int       @default(0, map: "DF__RT_PProgT__PCase__1467C28E")
+  Time_IDX   Int       @default(0, map: "DF__RT_PProgT__Time___155BE6C7")
+  Fr_DoY     Int?      @default(0, map: "DF__RT_PProgT__Fr_Do__16500B00")
+  To_DoY     Int?      @default(0, map: "DF__RT_PProgT__To_Do__17442F39")
+  Fr_DoM     Int?      @default(0, map: "DF__RT_PProgT__Fr_Do__18385372")
+  To_DoM     Int?      @default(0, map: "DF__RT_PProgT__To_Do__192C77AB")
+  Fr_DayTime Int?      @default(0, map: "DF__RT_PProgT__Fr_Da__1A209BE4")
+  To_DayTime Int?      @default(0, map: "DF__RT_PProgT__To_Da__1B14C01D")
+  DoW        String?   @default("", map: "DF__RT_PProgTim__DoW__1C08E456") @db.VarChar(7)
+  Fr_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgT__Fr_Da__1CFD088F") @db.DateTime
+  To_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PProgT__To_Da__1DF12CC8") @db.DateTime
+  Bef_DoB    Int?      @default(0, map: "DF__RT_PProgT__Bef_D__1EE55101")
+  Aft_DoB    Int?      @default(0, map: "DF__RT_PProgT__Aft_D__1FD9753A")
+  Bef_DoC    Int?      @default(0, map: "DF__RT_PProgT__Bef_D__20CD9973")
+  Aft_DoC    Int?      @default(0, map: "DF__RT_PProgT__Aft_D__21C1BDAC")
+  Disabled   Boolean?  @default(false, map: "DF__RT_PProgT__Disab__22B5E1E5")
+
+  @@id([PProg_ID, PCase_IDX], map: "PK_RT_PProgTime_1")
+}
+
+model RT_Price {
+  Goods_ID     Int      @default(0, map: "DF__RT_Price__Goods___20583064")
+  SKU_Code     String   @default("", map: "DF__RT_Price__SKU_Co__214C549D") @db.Char(12)
+  SCC_ID       Int      @default(0, map: "DF__RT_Price__SCC_ID__224078D6")
+  RTPLevel_ID  Int      @default(0, map: "DF__RT_Price__RTPLev__23349D0F")
+  RT_ListPrice Decimal  @default(0, map: "DF__RT_Price__RT_Lis__2428C148") @db.Decimal(18, 5)
+  RT_Price     Decimal  @default(0, map: "DF__RT_Price__RT_Pri__251CE581") @db.Decimal(18, 5)
+  Disabled     Boolean? @default(false, map: "DF__RT_Price__Disabl__261109BA")
+
+  @@id([Goods_ID, SKU_Code], map: "PK_RT_Price")
+}
+
+model RT_PriceLevel {
+  RTPLevel_ID   Int      @default(0, map: "DF__RT_PriceL__RTPLe__13B2CA20")
+  RTPLevel_Code String?  @default("", map: "DF__RT_PriceL__RTPLe__14A6EE59") @db.NVarChar(4)
+  Priority      Int?     @default(0, map: "DF__RT_PriceL__Prior__159B1292")
+  RTPLevel_Name String?  @default("", map: "DF__RT_PriceL__RTPLe__168F36CB") @db.NVarChar(50)
+  SCC_ID        Int      @default(0, map: "DF__RT_PriceL__SCC_I__17835B04")
+  StkType_ID    Int?     @default(0, map: "DF__RT_PriceL__StkTy__18777F3D")
+  Market_IDs    Bytes?   @db.Binary(2)
+  Stk_ID        Int?     @default(0, map: "DF__RT_PriceL__Stk_I__196BA376")
+  WS_ID         Int?     @default(0, map: "DF__RT_PriceL__WS_ID__1A5FC7AF")
+  Fr_DayTime    Int?     @default(0, map: "DF__RT_PriceL__Fr_Da__1B53EBE8")
+  To_DayTime    Int?     @default(0, map: "DF__RT_PriceL__To_Da__1C481021")
+  DoW           Bytes?   @db.Binary(1)
+  isVATInc      Boolean? @default(false, map: "DF__RT_PriceL__isVAT__1D3C345A")
+  CYS           String?  @default("", map: "DF__RT_PriceLev__CYS__1E305893") @db.Char(3)
+  Disabled      Boolean? @default(false, map: "DF__RT_PriceL__Disab__1F247CCC")
+
+  @@id([RTPLevel_ID, SCC_ID], map: "PK_RT_PriceLevel")
+}
+
+model RT_PriceOrd {
+  PriceOrd_ID   Int       @id(map: "PK_RT_PriceOrd") @default(0, map: "DF__RT_PriceO__Price__08362A7C")
+  PriceOrd_Code String?   @default("", map: "DF__RT_PriceO__Price__092A4EB5") @db.Char(20)
+  PriceOrd_Date DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PriceO__Price__0A1E72EE") @db.DateTime
+  Ref_No        String?   @default("", map: "DF__RT_PriceO__Ref_N__0B129727") @db.Char(30)
+  Ref_Date      DateTime? @default(dbgenerated("1900/1/1"), map: "DF__RT_PriceO__Ref_D__0C06BB60") @db.Date
+  SCC_ID        Int?      @default(0, map: "DF__RT_PriceO__SCC_I__0CFADF99")
+  RTPLevel_ID   Int?      @default(0, map: "DF__RT_PriceO__RTPLe__0DEF03D2")
+}
+
+model RT_PriceOrdDtl {
+  PriceOrd_ID Int      @default(0, map: "DF__RT_PriceO__Price__0EE3280B")
+  Goods_ID    Int      @default(0, map: "DF__RT_PriceO__Goods__0FD74C44")
+  SKU_Code    String   @default("", map: "DF__RT_PriceO__SKU_C__10CB707D") @db.Char(12)
+  RT_Price    Decimal? @default(0, map: "DF__RT_PriceO__RT_Pr__11BF94B6") @db.Decimal(18, 5)
+
+  @@id([PriceOrd_ID, Goods_ID, SKU_Code], map: "PK_RT_PriceOrdDtl")
+}
+
+model RT_ProgCPItem {
+  PProg_ID        Int      @default(0, map: "DF__RT_ProgCP__PProg__36BCDA92")
+  PCase_IDX       Int      @default(0, map: "DF__RT_ProgCP__PCase__37B0FECB")
+  LineGrp_IDX     Int      @default(0, map: "DF__RT_ProgCP__LineG__38A52304")
+  Fortune_Rate    Decimal? @default(0, map: "DF__RT_ProgCP__Fortu__3999473D") @db.Decimal(18, 2)
+  Line_IDX        Int      @default(0, map: "DF__RT_ProgCP__Line___3A8D6B76")
+  PICls_ID        Int?     @default(0, map: "DF__RT_ProgCP__PICls__3B818FAF")
+  PItem_ID        Int?     @default(0, map: "DF__RT_ProgCP__PItem__3C75B3E8")
+  PItem_Code      String?  @default("", map: "DF__RT_ProgCP__PItem__3D69D821") @db.NVarChar(20)
+  PItem_Qty       Decimal? @default(0, map: "DF__RT_ProgCP__PItem__3E5DFC5A") @db.Decimal(18, 2)
+  PItem_Cost      Decimal? @default(0, map: "DF__RT_ProgCP__PItem__3F522093") @db.Decimal(18, 2)
+  MaxPItem_TrQty  Decimal? @default(0, map: "DF__RT_ProgCP__MaxPI__404644CC") @db.Decimal(18, 2)
+  MaxPItem_Qty    Decimal? @default(0, map: "DF__RT_ProgCP__MaxPI__413A6905") @db.Decimal(18, 2)
+  TotalPItem_Qty  Decimal? @default(0, map: "DF__RT_ProgCP__Total__422E8D3E") @db.Decimal(18, 2)
+  TotalPItem_Cost Decimal? @default(0, map: "DF__RT_ProgCP__Total__4322B177") @db.Decimal(18, 2)
+  Disabled        Boolean? @default(false, map: "DF__RT_ProgCP__Disab__4416D5B0")
+
+  @@id([PProg_ID, PCase_IDX, LineGrp_IDX, Line_IDX], map: "PK_RT_ProgCPItem")
+}
+
+model RT_ProgPSItem {
+  PProg_ID      Int      @default(0, map: "DF__RT_ProgPS__PProg__25924E90")
+  PCase_IDX     Int      @default(0, map: "DF__RT_ProgPS__PCase__268672C9")
+  PSICls_ID     Int      @default(0, map: "DF__RT_ProgPS__PSICl__277A9702")
+  PSICls_IDX    Int      @default(0, map: "DF__RT_ProgPS__PSICl__286EBB3B")
+  PSItem_ID     Int?     @default(0, map: "DF__RT_ProgPS__PSIte__2962DF74")
+  PSItem_Code   String?  @default("", map: "DF__RT_ProgPS__PSIte__2A5703AD") @db.NVarChar(20)
+  Is4Condition  Boolean? @default(false, map: "DF__RT_ProgPS__Is4Co__2B4B27E6")
+  Is4PItem      Boolean? @default(false, map: "DF__RT_ProgPS__Is4PI__2C3F4C1F")
+  ExpTimeUnit   String?  @default("", map: "DF__RT_ProgPS__ExpTi__2D337058") @db.Char(1)
+  Fr_BefExpTime Int?     @default(0, map: "DF__RT_ProgPS__Fr_Be__2E279491")
+  To_BefExpTime Int?     @default(0, map: "DF__RT_ProgPS__To_Be__2F1BB8CA")
+  isVATInc      Boolean? @default(false, map: "DF__RT_ProgPS__isVAT__300FDD03")
+  Sold_TrQty    Decimal? @default(0, map: "DF__RT_ProgPS__Sold___3104013C") @db.Decimal(18, 2)
+  Sold_TrAmt    Decimal? @default(0, map: "DF__RT_ProgPS__Sold___31F82575") @db.Decimal(18, 2)
+  Sold_ItemBy   Int?     @default(0, map: "DF__RT_ProgPS__Sold___32EC49AE")
+  Disabled      Boolean? @default(false, map: "DF__RT_ProgPS__Disab__33E06DE7")
+
+  @@id([PProg_ID, PCase_IDX, PSICls_ID, PSICls_IDX], map: "PK_RT_ProgPSItem")
+}
+
+model SCC_CVSGsPolicy {
+  SCC_ID        Int       @default(0, map: "DF__SCC_CVSGs__SCC_I__6D82FF97")
+  SCClust_ID    Int       @default(0, map: "DF__SCC_CVSGs__SCClu__6E7723D0")
+  StkClust_ID   Int       @default(0, map: "DF__SCC_CVSGs__StkCl__6F6B4809")
+  Goods_ID      Int       @default(0, map: "DF__SCC_CVSGs__Goods__705F6C42")
+  SKU_Code      String    @default("", map: "DF__SCC_CVSGs__SKU_C__7153907B") @db.Char(12)
+  OPL_DoW       Bytes?    @db.Binary(1)
+  Delivery_DoW  Bytes?    @db.Binary(1)
+  Supplier_ID   Int?      @default(0, map: "DF__SCC_CVSGs__Suppl__7247B4B4")
+  isCutItem     Boolean?  @default(false, map: "DF__SCC_CVSGs__isCut__733BD8ED")
+  isStopSale    Boolean?  @default(false, map: "DF__SCC_CVSGs__isSto__742FFD26")
+  GGrp_ID       Int?      @default(0, map: "DF__SCC_CVSGs__GGrp___7524215F")
+  ABCZ_Rank     Int?      @default(0, map: "DF__SCC_CVSGs__ABCZ___76184598")
+  StoreGs_Rank  Int?      @default(0, map: "DF__SCC_CVSGs__Store__770C69D1")
+  Start_Date    DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_CVSGs__Start__78008E0A") @db.DateTime
+  Last_Cleared  DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_CVSGs__Last___78F4B243") @db.DateTime
+  Last_TrsDate  DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_CVSGs__Last___79E8D67C") @db.DateTime
+  Cut_Date      DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_CVSGs__Cut_D__7ADCFAB5") @db.DateTime
+  StopSale_Date DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_CVSGs__StopS__7BD11EEE") @db.DateTime
+  Disabled      Boolean   @default(false, map: "DF__SCC_CVSGs__Disab__7CC54327")
+
+  @@id([SCC_ID, SCClust_ID, StkClust_ID, Goods_ID, SKU_Code], map: "PK_SCC_CVSGsPolicy")
+}
+
+model SCC_SKUItems {
+  SCC_ID         Int       @default(0, map: "DF__SCC_SKUIt__SCC_I__5887E2B1")
+  Goods_ID       Int       @default(0, map: "DF__SCC_SKUIt__Goods__597C06EA")
+  SKU_Code       String    @default("", map: "DF__SCC_SKUIt__SKU_C__5A702B23") @db.Char(12)
+  Sales_Block    String?   @default("", map: "DF__SCC_SKUIt__Sales__5B644F5C") @db.Char(2)
+  OPL_Limit      String?   @default("", map: "DF__SCC_SKUIt__OPL_L__5C587395") @db.Char(2)
+  ORD_Right      String?   @default("", map: "DF__SCC_SKUIt__ORD_R__5D4C97CE") @db.Char(2)
+  GS_SCC_Method  String    @default("", map: "DF__SCC_SKUIt__GS_SC__5E40BC07") @db.Char(1)
+  Supplier_ID    Int?      @default(0, map: "DF__SCC_SKUIt__Suppl__5F34E040")
+  InVAT_Rate     Decimal?  @default(0, map: "DF__SCC_SKUIt__InVAT__60290479") @db.Decimal(18, 5)
+  Master_Price   Decimal?  @default(0, map: "DF__SCC_SKUIt__Maste__611D28B2") @db.Decimal(18, 5)
+  Delivery_Time  Int?      @default(0, map: "DF__SCC_SKUIt__Deliv__62114CEB")
+  Last_PODate    DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_SKUIt__Last___63057124") @db.DateTime
+  DC_DMS_Qty     Decimal?  @default(0, map: "DF__SCC_SKUIt__DC_DM__63F9955D") @db.Decimal(18, 5)
+  DC_Reserv_Days Int?      @default(0, map: "DF__SCC_SKUIt__DC_Re__64EDB996")
+  PO_Period      String?   @default("", map: "DF__SCC_SKUIt__PO_Pe__65E1DDCF") @db.Char(1)
+  CVS_OPL_DoW    Bytes?    @db.Binary(1)
+  Customer_ID    Int?      @default(0, map: "DF__SCC_SKUIt__Custo__66D60208")
+  Cr_Date        DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_SKUIt__Cr_Da__67CA2641") @db.DateTime
+  Last_Cleared   DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_SKUIt__Last___68BE4A7A") @db.DateTime
+  Last_TrsDate   DateTime? @default(dbgenerated("1900-01-01"), map: "DF__SCC_SKUIt__Last___69B26EB3") @db.DateTime
+  Disabled       Boolean   @default(false, map: "DF__SCC_SKUIt__Disab__6AA692EC")
+
+  @@id([SCC_ID, Goods_ID, SKU_Code], map: "PK_SCC_SKUItems")
+}
+
+model SCCenter {
+  SCC_ID       Int      @id(map: "PK_SCCenter") @default(0, map: "DF_SCCenter_SCC_ID")
+  SCC_Code     String   @default("", map: "DF_SCCenter_SCC_Code") @db.NVarChar(12)
+  SCC_Name     String   @default("", map: "DF_SCCenter_SCC_Name") @db.NVarChar(100)
+  Node_ID      Int      @default(0, map: "DF_SCCenter_Node_ID")
+  DummyStk_ID  Int      @default(0, map: "DF_SCCenter_DummyStk_ID")
+  DummyPOS_ID  Int      @default(0, map: "DF_SCCenter_DummyPOS_ID")
+  MovingStk_ID Int      @default(0, map: "DF_SCCenter_MovingStk_ID")
+  Creat_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SCCenter_Creat_Date") @db.DateTime
+  Disabled     Boolean  @default(false, map: "DF_SCCenter_Disabled")
+}
+
+model SCCluster {
+  SCClust_ID    Int       @id(map: "PK_SCCluster") @default(0, map: "DF_Table_1_SCC_ID")
+  SCClust_Code  String    @default("", map: "DF_Table_1_SCC_Code") @db.NVarChar(12)
+  SCClust_Name  String    @default("", map: "DF_Table_1_SCC_Name") @db.NVarChar(100)
+  SCC_ID        Int       @default(0, map: "DF_Table_1_Node_ID")
+  Node_ID       Int       @default(0, map: "DF_Table_1_DummyStk_ID")
+  MainStk_ID    Int?      @default(0, map: "DF_Table_1_DummyPOS_ID")
+  SCArea_Map    String?   @db.NVarChar(Max)
+  SCArea_Width  Int       @default(0, map: "DF_SCCluster_SCArea_Width")
+  SCArea_Height Int       @default(0, map: "DF_SCCluster_SCArea_Height")
+  Open_Date     DateTime? @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Table_1_Creat_Date") @db.DateTime
+  Disabled_Date DateTime? @db.DateTime
+  Disabled      Boolean   @default(false, map: "DF_SCCluster_Disabled")
+}
+
+model SEARCH {
+  OBJ_CODE    String  @id(map: "PK_SEARCH") @default("", map: "DF_SEARCH_OBJ_CODE") @db.VarChar(6)
+  FORM_CAPT   String  @default("", map: "DF_SEARCH_FORM_CAPT") @db.NVarChar(100)
+  GRD_PARA    String  @default("", map: "DF_SEARCH_PARAMETERS") @db.NVarChar(Max)
+  GRD_PARA_ML String  @default("", map: "DF_SEARCH_GRD_PARA_ML") @db.NVarChar(Max)
+  FLT_COND    String  @default("", map: "DF_SEARCH_FLT_COND") @db.NVarChar(100)
+  RESULT      String  @default("", map: "DF_SEARCH_RESULT") @db.VarChar(50)
+  STATUS      Boolean @default(true, map: "DF_SEARCH_STATUS")
+  Resource_ID Int     @default(-1, map: "DF_SEARCH_Resource_ID")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model SENDEVENTHIST {
+  Event_ID    Decimal  @db.Decimal(18, 0)
+  Event_Code  String   @db.VarChar(13)
+  Obj_ID      Int
+  Event_IDX   Int
+  Cr_SUnit_ID Int
+  Cr_Time     DateTime @db.DateTime
+  Fr_SUnit_ID Int
+  Fr_Time     DateTime @db.DateTime
+  To_SUnit_ID Int
+  To_Time     DateTime @db.DateTime
+  Send_Stat   String   @db.Char(1)
+  Event_XML   String   @db.NVarChar(Max)
+  Event_Key   String   @db.VarChar(30)
+  Priority    Int
+  Status      String   @db.Char(1)
+
+  @@ignore
+}
+
+model SENDEVENTQUEUE {
+  Event_ID    Decimal  @id(map: "PK_SENDEVENTQUEUE") @db.Decimal(18, 0)
+  Event_Code  String   @default("", map: "DF_SENDEVENTQUEUE_Event_Code") @db.VarChar(13)
+  Obj_ID      Int      @default(0, map: "DF_SENDEVENTQUEUE_Obj_ID")
+  Event_IDX   Int      @default(0, map: "DF_SENDEVENTQUEUE_Event_IDX")
+  Cr_SUnit_ID Int      @default(0, map: "DF_SENDEVENTQUEUE_Cr_SUnit_ID")
+  Cr_Time     DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_SENDEVENTQUEUE_Cr_Time") @db.DateTime
+  Fr_SUnit_ID Int      @default(0, map: "DF_SENDEVENTQUEUE_Fr_SUnit_ID")
+  Fr_Time     DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_SENDEVENTQUEUE_Fr_Time") @db.DateTime
+  To_SUnit_ID Int      @default(0, map: "DF_SENDEVENTQUEUE_To_SUnit_ID")
+  To_Time     DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_SENDEVENTQUEUE_To_Time") @db.DateTime
+  Send_Stat   String   @default("", map: "DF_SENDEVENTQUEUE_Send_Stat") @db.Char(1)
+  Event_XML   String   @default("", map: "DF_SENDEVENTQUEUE_Event_XML") @db.NVarChar(Max)
+  Event_Key   String   @default("", map: "DF_SENDEVENTQUEUE_Event_Key") @db.VarChar(30)
+  Priority    Int      @default(1, map: "DF_SENDEVENTQUEUE_Priority")
+  Status      String   @default("1", map: "DF_SENDEVENTQUEUE_Status") @db.Char(1)
+
+  @@index([Send_Stat], map: "SENDEVENTQUEUE_SENDSTAT")
+}
+
+model SKUBarcode {
+  Barcode  String  @id(map: "PK_SKUBarcode") @default("", map: "DF_SKUBarcode_Barcode") @db.Char(12)
+  Goods_ID Int     @default(0, map: "DF_SKUBarcode_Good_ID")
+  SKU_Code String  @default("", map: "DF_SKUBarcode_SKU_Code") @db.Char(12)
+  Unit_Idx Int     @default(0, map: "DF_SKUBarcode_Unit_Idx")
+  UnitConv Decimal @default(0, map: "DF_SKUBarcode_UnitConv") @db.Decimal(12, 2)
+  Disabled Boolean @default(false, map: "DF_SKUBarcode_Disabled")
+}
+
+model SKUItemBIN {
+  STK_ID     Int     @default(0, map: "DF_SKUItemBIN_STK_ID")
+  BIN_ID     Int     @default(0, map: "DF_SKUItemBIN_BIN_ID")
+  BIN_Code   String  @default("", map: "DF_SKUItemBIN_BIN_Code") @db.Char(4)
+  StkZone_ID Int     @default(0, map: "DF_SKUItemBIN_StkZone_ID")
+  StkLoca_ID Int     @default(0, map: "DF_SKUItemBIN_StkLoca_ID")
+  Good_ID    Int     @default(0, map: "DF_SKUItemBIN_Good_ID")
+  SKUMin_Qty Int     @default(0, map: "DF_SKUItemBIN_SKUMin_Qty")
+  SKUMax_Qty Int     @default(0, map: "DF_SKUItemBIN_SKUMax_Qty")
+  Disabled   Boolean @default(false, map: "DF_SKUItemBIN_Disabled")
+
+  @@id([STK_ID, BIN_ID], map: "PK_SKUItemBIN")
+}
+
+model SKUItemLeast {
+  STK_ID         Int     @default(0, map: "DF_SKUItemLeast_STK_ID")
+  Good_ID        Int     @default(0, map: "DF_SKUItemLeast_Good_ID")
+  SKU_Code       String  @default("", map: "DF_SKUItemLeast_SKU_Code") @db.Char(12)
+  SKUBaseUnit_ID Int     @default(0, map: "DF_SKUItemLeast_SKUBaseUnit_ID")
+  Least_Qty      Decimal @default(0, map: "DF_SKUItemLeast_Least_Qty") @db.Decimal(12, 2)
+  Max_Qty        Decimal @default(0, map: "DF_SKUItemLeast_Max_Qty") @db.Decimal(12, 2)
+  Alert_Qty      Decimal @default(0, map: "DF_SKUItemLeast_Alert_Qty") @db.Decimal(12, 2)
+  Disabled       Boolean @default(false, map: "DF_SKUItemLeast_Disabled")
+
+  @@id([STK_ID, Good_ID, SKU_Code], map: "PK_SKUItemLeast")
+}
+
+model SKUItemLoca {
+  STK_ID        Int     @default(0, map: "DF_SKUItemLoca_STK_ID")
+  STKLoca_ID    Int     @default(0, map: "DF_SKUItemLoca_STKLoca_ID")
+  Good_ID       Int     @default(0, map: "DF_SKUItemLoca_Good_ID")
+  SKU_Code      String  @default("0", map: "DF_SKUItemLoca_SKU_Code") @db.Char(12)
+  STKZone_ID    Int     @default(dbgenerated(), map: "DF_SKUItemLoca_STKZone_ID")
+  isReplenished Boolean @default(false, map: "DF_SKUItemLoca_isReplenished")
+  SKUMinQty     Decimal @default(0, map: "DF_SKUItemLoca_SKUMinQty") @db.Decimal(12, 2)
+  SKUMaxQty     Decimal @default(0, map: "DF_SKUItemLoca_SKUMaxQty") @db.Decimal(12, 2)
+  Disabled      Boolean @default(false, map: "DF_SKUItemLoca_Disabled")
+
+  @@id([STK_ID, STKLoca_ID, Good_ID, SKU_Code], map: "PK_SKUItemLoca")
+}
+
+model SKUItemLot {
+  SKU_Code       String   @id(map: "PK_SKUItemLot") @default("", map: "DF_SKUItemLot_SKU_Code") @db.Char(12)
+  Good_ID        Int      @default(0, map: "DF_SKUItemLot_Good_ID")
+  Lot_ID         Int      @default(0, map: "DF_SKUItemLot_Lot_ID")
+  Lot_No         String   @default("", map: "DF_SKUItemLot_Lot_No") @db.NVarChar(20)
+  LotReset_IDX   Int      @default(0, map: "DF_SKUItemLot_LotReset_IDX")
+  SKUStat_ID     Int      @default(0, map: "DF_SKUItemLot_SKUStat_ID")
+  Start_Date     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemLot_Start_Date") @db.DateTime
+  Expiry_Date    DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemLot_Expiry_Date") @db.DateTime
+  ExtObjCls_ID   Int      @default(0, map: "DF_SKUItemLot_ExtObjCls_ID")
+  ExtObj_ID      Int      @default(0, map: "DF_SKUItemLot_ExtObj_ID")
+  StkTrans_No    String   @default("", map: "DF_SKUItemLot_StkTrans_No") @db.NVarChar(20)
+  StkTrans_Date  DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemLot_StkTrans_Date") @db.DateTime
+  SKUBaseUnit_ID Int      @default(0, map: "DF_SKUItemLot_SKUBaseUnit_ID")
+  UnitCost_Amt   Decimal  @default(0, map: "DF_SKUItemLot_UnitCost_Amt") @db.Decimal(12, 2)
+  Disabled       Boolean  @default(false, map: "DF_SKUItemLot_Disabled")
+}
+
+model SKUItems {
+  SKU_Code     String   @id(map: "PK_SKUItems") @default("", map: "DF_SKUItems_SKU_Code") @db.Char(12)
+  Goods_ID     Int      @default(0, map: "DF_SKUItems_Good_ID")
+  Product_Code String   @default("", map: "DF_SKUItems_Product_Code") @db.NVarChar(30)
+  Product_Name String   @default("", map: "DF_SKUItems_Product_Name") @db.NVarChar(60)
+  Quality_Rank Int      @default(0, map: "DF_SKUItems_Quality_Rank")
+  Cr_Date      DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItems_Cr_Date") @db.DateTime
+  Last_Cleared DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItems_Last_Cleared") @db.DateTime
+  Disabled     Boolean  @default(false, map: "DF_SKUItems_Disabled")
+}
+
+model SKUItemSerial {
+  SKU_Code           String   @default("", map: "DF_SKUItemSerial_SKU_Code") @db.Char(12)
+  Serial_No          String   @default("", map: "DF_SKUItemSerial_Serial_No") @db.NVarChar(20)
+  Lot_ID             Int      @default(0, map: "DF_SKUItemSerial_Lot_ID")
+  Lot_No             String   @default("", map: "DF_SKUItemSerial_Lot_No") @db.NVarChar(20)
+  SKUStat_ID         Int      @default(0, map: "DF_SKUItemSerial_SKUStat_ID")
+  Expiry_Date        DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemSerial_Expiry_Date") @db.DateTime
+  StkTrans_No        String   @default("", map: "DF_SKUItemSerial_StkTrans_No") @db.NVarChar(20)
+  StkTrans_Date      DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemSerial_StkTrans_Date") @db.DateTime
+  STK_ID             Int      @default(0, map: "DF_SKUItemSerial_STK_ID")
+  STKLoca_ID         Int      @default(0, map: "DF_SKUItemSerial_STKLoca_ID")
+  SKUBaseUnit_ID     Int      @default(0, map: "DF_SKUItemSerial_SKUBaseUnit_ID")
+  Serial_Unit_ID     Int      @default(0, map: "DF_SKUItemSerial_Serial_Unit_ID")
+  Serial_SKUBase_Qty Int      @default(0, map: "DF_SKUItemSerial_Serial_SKUBase_Qty")
+  Sold_SKUBase_Qty   Int      @default(0, map: "DF_SKUItemSerial_Sold_SKUBase_Qty")
+  UnitCost_Amt       Decimal  @default(0, map: "DF_SKUItemSerial_UnitCost_Amt") @db.Decimal(12, 2)
+  UnitSale_Amt       Decimal  @default(0, map: "DF_SKUItemSerial_UnitSale_Amt") @db.Decimal(12, 2)
+  ExtObjCls_ID       Int      @default(0, map: "DF_SKUItemSerial_ExtObjCls_ID")
+  ExtObj_ID          Int      @default(0, map: "DF_SKUItemSerial_ExtObj_ID")
+  StkClear_Date      DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemSerial_StkClear_Date") @db.DateTime
+  Cust_ID            Int      @default(0, map: "DF_SKUItemSerial_Cust_ID")
+  SaleTrans_No       Int      @default(0, map: "DF_SKUItemSerial_SaleTrans_No")
+  SaleTrans_Date     Int      @default(0, map: "DF_SKUItemSerial_SaleTrans_Date")
+  Disabled           Boolean  @default(false, map: "DF_SKUItemSerial_Disabled")
+
+  @@id([SKU_Code, Serial_No], map: "PK_SKUItemSerial")
+}
+
+model SKUItemZone {
+  STK_ID     Int      @default(0, map: "DF_SKUItemZone_STK_ID")
+  STKZone_ID Int      @default(0, map: "DF_SKUItemZone_STKZone_ID")
+  Good_ID    Int      @default(0, map: "DF_SKUItemZone_Good_ID")
+  SKU_Code   String   @default("", map: "DF_SKUItemZone_SKU_Code") @db.Char(12)
+  StkTake_Fr DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemZone_StkTake_Fr") @db.DateTime
+  StkTake_To DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUItemZone_StkTake_To") @db.DateTime
+  StkTake_St String   @default("", map: "DF_SKUItemZone_StkTake_St") @db.Char(1)
+  Disabled   Boolean  @default(false, map: "DF_SKUItemZone_Disabled")
+
+  @@id([STK_ID, STKZone_ID, Good_ID, SKU_Code], map: "PK_SKUItemZone")
+}
+
+model SKUnit {
+  Goods_ID      Int
+  Unit_Idx      Int
+  Unit_ID       Int     @default(0, map: "DF_SKUnit_Unit_ID")
+  Unit_Desc     String  @default("", map: "DF_SKUnit_Unit_Desc") @db.NVarChar(20)
+  isFixDesc     Boolean @default(false, map: "DF_SKUnit_isFixDesc")
+  isSerialized  Boolean @default(false, map: "DF_SKUnit_isSerialized")
+  Serial_FW     String  @default("", map: "DF_SKUnit_Serial_FW") @db.NVarChar(20)
+  isLot         Boolean @default(false, map: "DF_SKUnit_isLot")
+  isBase        Boolean @default(false, map: "DF_SKUnit_isBase")
+  isCost        Boolean @default(false, map: "DF_SKUnit_isCost")
+  UnitConv      Decimal @default(0, map: "DF_SKUnit_UnitConv") @db.Decimal(12, 2)
+  IsBarcode     Boolean @default(false, map: "DF_SKUnit_IsBarcode")
+  isCoverWeight Boolean @default(false, map: "DF_SKUnit_isCoverWeight")
+  CoverWQty     Decimal @default(0, map: "DF_SKUnit_CoverWQty") @db.Decimal(12, 2)
+  Weight_Unit   Int     @default(0, map: "DF_SKUnit_Weight_Unit")
+  Weight_Qty    Decimal @default(0, map: "DF_SKUnit_Weight_Qty") @db.Decimal(12, 2)
+  Dim_Unit      Int     @default(0, map: "DF_SKUnit_Dim_Unit")
+  Length_Qty    Decimal @default(0, map: "DF_SKUnit_Length_Qty") @db.Decimal(12, 2)
+  Breadth_Qty   Decimal @default(0, map: "DF_SKUnit_Breadth_Qty") @db.Decimal(12, 2)
+  Height_Qty    Decimal @default(0, map: "DF_SKUnit_Height_Qty") @db.Decimal(12, 2)
+  Volume_Unit   Int     @default(0, map: "DF_SKUnit_Volume_Unit")
+  Volume_Qty    Decimal @default(0, map: "DF_SKUnit_Volume_Qty") @db.Decimal(12, 2)
+  ORD_Unit      Boolean @default(false, map: "DF_SKUnit_ORD_Unit")
+  TRF_Unit      Boolean @default(false, map: "DF_SKUnit_TRF_Unit")
+  WHS_Unit      Boolean @default(false, map: "DF_SKUnit_WHS_Unit")
+  RTS_Unit      Boolean @default(false, map: "DF_SKUnit_RTS_Unit")
+  RPT_Unit      Boolean @default(false, map: "DF_SKUnit_RPT_Unit")
+  Disabled      Boolean @default(false, map: "DF_SKUnit_Disabled")
+
+  @@id([Goods_ID, Unit_Idx], map: "PK_SKUnit")
+}
+
+model SKUStatus {
+  SKUStat_ID    Int      @id(map: "PK_SKUStatus") @default(0, map: "DF_SKUStatus_SKUStat_ID")
+  SKUStat_Code  String   @default("", map: "DF_SKUStatus_SKUStat_Code") @db.VarChar(12)
+  SKUStat_Descr String   @default("", map: "DF_SKUStatus_SKUStat_Descr") @db.NVarChar(40)
+  TrCls_IDs     String   @default("", map: "DF_SKUStatus_TrCls_IDs") @db.VarChar(32)
+  Active_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUStatus_Active_Date") @db.DateTime
+  Deactive_Date DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SKUStatus_Deactive_Date") @db.DateTime
+  User_ID       Int      @default(0, map: "DF_SKUStatus_User_ID")
+  Disabled      Boolean  @default(false, map: "DF_SKUStatus_Disabled")
+}
+
+model SocialEvent {
+  SocialEvt_ID   Int     @id(map: "PK_SocialEvent") @default(0, map: "DF_SocialEvent_SocialEvt_ID")
+  SocialEvt_Code String  @default("", map: "DF_SocialEvent_SocialEvt_Code") @db.Char(20)
+  SocialEvt_Desc String  @default("", map: "DF_SocialEvent_SocialEvt_Desc") @db.NVarChar(100)
+  SocialEvt_Img  String  @default("", map: "DF_SocialEvent_SocialEvt_Img") @db.NVarChar(Max)
+  Disabled       Boolean @default(false, map: "DF_SocialEvent_Disabled")
+}
+
+model SOrder_Dtl {
+  SOrder_Code       String  @default("", map: "DF_SOrder_Dtl_SOrder_Code") @db.Char(20)
+  Item_IDX          Int     @default(0, map: "DF_SOrder_Dtl_SCC_ID1")
+  Goods_ID          Int
+  SKU_Code          String? @default("", map: "DF_SOrder_Dtl_SKU_Code") @db.Char(12)
+  SKUBase_Qty       Float?  @default(0, map: "DF_SOrder_Dtl_SKUBase_Qty")
+  SKUBaseUnit_ID    Int?    @default(0, map: "DF_SOrder_Dtl_SKUBaseUnit_ID")
+  SKUStat_ID        Int?    @default(0, map: "DF_SOrder_Dtl_SKUStat_ID")
+  Sales_Amt         Float?  @default(0, map: "DF_SOrder_Dtl_Sales_Amt")
+  VAT_Amt           Float?  @default(0, map: "DF_SOrder_Dtl_VAT_Amt")
+  Direct_Disc_Amt   Float?  @default(0, map: "DF_SOrder_Dtl_Direct_Disc_Amt")
+  Indirect_Disc_Amt Float?  @default(0, map: "DF_SOrder_Dtl_Indirect_Disc_Amt")
+  WS_ID             Int     @default(0, map: "DF_SOrder_Dtl_WS_ID")
+  Disabled          Boolean @default(false, map: "DF_SOrder_Dtl_Disabled")
+
+  @@id([SOrder_Code, Item_IDX], map: "PK_SOrder_Dtl")
+}
+
+model SOrder_Export {
+  SOrder_Code String  @db.Char(20)
+  Disabled    Boolean
+  Event_Code  String  @db.NVarChar(20)
+
+  @@id([SOrder_Code, Disabled], map: "PK_SOrder_Export")
+}
+
+model SOrder_Hdr {
+  SOrder_Code     String    @id(map: "PK_SOrder_Hdr") @default("", map: "DF_SOrder_Hdr_SOrder_Code") @db.Char(20)
+  SOrder_Type     String?   @default("", map: "DF_SOrder_Hdr_SOrder_Type") @db.Char(1)
+  SODelivery_Type String?   @default("", map: "DF_SOrder_Hdr_SOrder_Type1") @db.Char(1)
+  SCC_ID          Int?      @default(0, map: "DF_SOrder_Hdr_StkClust_ID")
+  StkClust_ID     Int?      @default(0, map: "DF_SOrder_Hdr_StkType_ID")
+  WS_ID           Int?      @default(0, map: "DF_SOrder_Hdr_WS_ID")
+  Customer_Info   String?   @default("", map: "DF_SOrder_Hdr_Customer_Info") @db.NVarChar(100)
+  Member_No       String?   @default("", map: "DF_SOrder_Hdr_Customer_Info1") @db.NVarChar(20)
+  Receiver_Info   String?   @default("", map: "DF_SOrder_Hdr_Member_No1") @db.NVarChar(100)
+  Receiver_Email  String?   @default("", map: "DF_SOrder_Hdr_Member_No2") @db.NVarChar(20)
+  Receiver_Mobile String?   @default("", map: "DF_SOrder_Hdr_Member_No3") @db.NVarChar(20)
+  RecvPlace_ID    Int?      @default(0, map: "DF_SOrder_Hdr_RecvPlace_ID")
+  SOrder_Time     DateTime  @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SOrder_Hdr_SOrder_Time") @db.DateTime
+  Delivery_Time   DateTime  @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SOrder_Hdr_Delivery_Time") @db.DateTime
+  SOTrans_No      String?   @default("", map: "DF_SOrder_Hdr_SOrder_Code1") @db.Char(20)
+  SOTran_Date     DateTime? @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SOrder_Hdr_SOTran_Date") @db.DateTime
+  SOFnTrans_No    String?   @default("", map: "DF_SOrder_Hdr_PmtTrans_No1") @db.Char(20)
+  SOFnTran_Date   DateTime? @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SOrder_Hdr_SOFnTran_Date") @db.DateTime
+  SODisTrans_No   String?   @default("", map: "DF_SOrder_Hdr_SOFnTrans_No1") @db.Char(20)
+  SODisTran_Date  DateTime? @default(dbgenerated("(1)-(1))-(1900"), map: "DF_SOrder_Hdr_SOFnTran_Date1") @db.DateTime
+  Disabled        Boolean   @default(false, map: "DF_SOrder_Hdr_Disabled")
+  Remark          String    @default("", map: "DF_SOrder_Hdr_Remark") @db.NVarChar(Max)
+}
+
+model STATIONS {
+  WS_ID        Int      @id(map: "PK_STATIONS") @default(0, map: "DF_stations_id")
+  SUnit_ID     Int      @default(0, map: "DF_stations_zone_code")
+  WS_Alias     String   @default("", map: "DF_STATIONS_WS_Alias") @db.Char(2)
+  WS_Name      String   @default("", map: "DF_stations_name") @db.VarChar(20)
+  WS_IP4       String   @default("", map: "DF_STATIONS_WS_IP4") @db.VarChar(15)
+  SubNet_IP4   String   @default("", map: "DF_STATIONS_WS_IP41") @db.VarChar(15)
+  WS_Desc      String   @default("", map: "DF_STATIONS_WS_DESC") @db.NVarChar(100)
+  WS_Type      String   @default("", map: "DF_STATIONS_IsPOS") @db.Char(2)
+  IsOffline    Boolean  @default(false, map: "DF_STATIONS_IsOffline")
+  RItem_ID     Int      @default(0, map: "DF_STATIONS_RItem_ID")
+  FA_ID        Int      @default(0, map: "DF_STATIONS_FA_ID")
+  Work_Date    DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_STATIONS_Work_Date") @db.DateTime
+  Work_Shift   String   @default("0", map: "DF_STATIONS_Work_Shift") @db.VarChar(14)
+  Shift_Closed Boolean  @default(true, map: "DF_STATIONS_Shift_Closed")
+  TempDir      String   @default("", map: "DF_stations_tempdir") @db.VarChar(30)
+  Login        Boolean  @default(false, map: "DF_stations_login")
+  User_ID      Int      @default(0, map: "DF_stations_user_id")
+  MenusStat    String   @default("", map: "DF_stations_menustat") @db.VarChar(128)
+  Status       Boolean  @default(true, map: "DF_stations_Status")
+}
+
+model Stktake_Adj {
+  StkT_ID        Int      @default(0, map: "DF_Stktake_Adj_StkT_ID")
+  STK_ID         Int      @default(0, map: "DF_Stktake_Adj_STK_ID")
+  Good_ID        Int      @default(0, map: "DF_Stktake_Adj_Good_ID")
+  SKU_Code       String   @default("", map: "DF_Stktake_Adj_SKU_Code") @db.Char(12)
+  SKUBaseUnit_ID Int      @default(0, map: "DF_Stktake_Adj_SKUBaseUnit_ID")
+  SKUPackUnit_ID Int      @default(0, map: "DF_Stktake_Adj_SKUPackUnit_ID")
+  SKUPack_Qty    Decimal  @default(0, map: "DF_Stktake_Adj_SKUPack_Qty") @db.Decimal(12, 2)
+  SKUBase_Qty    Decimal  @default(0, map: "DF_Stktake_Adj_SKUBase_Qty") @db.Decimal(12, 2)
+  SWSKUBase_Qty  Decimal  @default(0, map: "DF_Stktake_Adj_SWSKUBase_Qty") @db.Decimal(12, 2)
+  SWSKUBase_Amt  Decimal  @default(0, map: "DF_Stktake_Adj_SWSKUBase_Amt") @db.Decimal(12, 2)
+  SKUBase_Amt    Decimal  @default(0, map: "DF_Stktake_Adj_SKUBase_Amt") @db.Decimal(12, 2)
+  Trans_No       String   @default("", map: "DF_Stktake_Adj_Trans_No") @db.VarChar(20)
+  Tran_Date      DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stktake_Adj_Tran_Date") @db.DateTime
+
+  @@id([StkT_ID, STK_ID, Good_ID, SKU_Code], map: "PK_Stktake_Adj")
+}
+
+model Stktake_Dtl {
+  StkT_ID        Int      @default(0, map: "DF_Stktake_Dtl_StkT_ID")
+  STK_ID         Int      @default(0, map: "DF_Stktake_Dtl_STK_ID")
+  StkZone_ID     Int      @default(0, map: "DF_Stktake_Dtl_StkZone_ID")
+  StkLoca_ID     Int      @default(0, map: "DF_Stktake_Dtl_StkLoca_ID")
+  BIN_ID         Int      @default(0, map: "DF_Stktake_Dtl_BIN_ID")
+  Good_ID        Int      @default(0, map: "DF_Stktake_Dtl_Good_ID")
+  SKU_Code       String   @default("", map: "DF_Stktake_Dtl_SKU_Code") @db.Char(12)
+  SKUBaseUnit_ID Int      @default(0, map: "DF_Stktake_Dtl_SKUBaseUnit_ID")
+  SKUPackUnit_ID Int      @default(0, map: "DF_Stktake_Dtl_SKUPackUnit_ID")
+  SKUPack_Qty    Decimal  @default(0, map: "DF_Stktake_Dtl_SKUPack_Qty") @db.Decimal(12, 2)
+  SKUBase_Qty    Decimal  @default(0, map: "DF_Stktake_Dtl_SKUBase_Qty") @db.Decimal(12, 2)
+  SKUBase_Amt    Decimal  @default(0, map: "DF_Stktake_Dtl_SKUBase_Amt") @db.Decimal(12, 2)
+  SWSKUBase_Qty  Decimal  @default(0, map: "DF_Stktake_Dtl_SWSKUBase_Qty") @db.Decimal(12, 2)
+  SWSKUBase_Amt  Decimal  @default(0, map: "DF_Stktake_Dtl_SWSKUBase_Amt") @db.Decimal(12, 2)
+  Stktaker_ID    Int      @default(0, map: "DF_Stktake_Dtl_Stktaker_ID")
+  Blocked_Fr     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stktake_Dtl_Blocked_Fr") @db.DateTime
+  Blocked_To     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stktake_Dtl_Blocked_To") @db.DateTime
+  isBlock        Boolean  @default(false, map: "DF_Stktake_Dtl_isBlock")
+  User_ID        Int      @default(0, map: "DF_Stktake_Dtl_User_ID")
+  Period_Code    String?  @default("", map: "DF_Stktake_Dtl_Period_Code") @db.VarChar(10)
+
+  @@id([StkT_ID, STK_ID, StkZone_ID, StkLoca_ID, BIN_ID, Good_ID, SKU_Code], map: "PK_Stktake_Dtl")
+}
+
+model Stktake_Hdr {
+  StkT_ID      Int      @id(map: "PK_Stktake_Hdr") @default(0, map: "DF_Stktake_Hdr_StkT_ID")
+  StkT_Code    String   @default("", map: "DF_Stktake_Hdr_StkT_Code") @db.Char(8)
+  Period_No    String   @default("", map: "DF_Stktake_Hdr_Period_No") @db.Char(6)
+  StkT_Idx     Int      @default(0, map: "DF_Stktake_Hdr_StkT_Idx")
+  Ref_No       String   @default("", map: "DF_Stktake_Hdr_Ref_No") @db.Char(20)
+  Ref_Date     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stktake_Hdr_Ref_Date") @db.DateTime
+  STK_ID       Int      @default(0, map: "DF_Stktake_Hdr_STK_ID")
+  StkZone_ID   Int      @default(0, map: "DF_Stktake_Hdr_StkZone_ID")
+  Stocktake_Fr DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stktake_Hdr_Stocktake_Fr") @db.DateTime
+  Stocktake_To DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stktake_Hdr_Stocktake_To") @db.DateTime
+  Stktake_stat String   @default("", map: "DF_Stktake_Hdr_Stktake_stat") @db.Char(1)
+  Block_Type   Boolean  @default(false, map: "DF_Stktake_Hdr_Block_Type")
+  Trans_No     String   @default("", map: "DF_Stktake_Hdr_Trans_No") @db.VarChar(20)
+  Tran_Date    DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stktake_Hdr_Tran_Date") @db.DateTime
+  Period_Code  String?  @default("", map: "DF_Stktake_Hdr_Period_Code") @db.VarChar(10)
+}
+
+model StkTranCls {
+  StkTrCls_ID   Int     @id(map: "PK_StkTranCls") @default(0, map: "DF_StkTranCls_StkTrCls_ID")
+  StkTrCls_Code String  @default("", map: "DF_StkTranCls_StkTrCls_Code") @db.Char(2)
+  StkTrCls_Name String  @default("", map: "DF_StkTranCls_StkTrCls_Name") @db.NVarChar(100)
+  Resource_ID   Int     @default(0, map: "DF_StkTranCls_Resource_ID")
+  SKUStat_IDs   String  @default("", map: "DF_StkTranCls_SKUStat_IDs") @db.VarChar(2)
+  GType_IDs     String  @default("", map: "DF_StkTranCls_GType_IDs") @db.VarChar(4)
+  isStockOut    Boolean @default(false, map: "DF_StkTranCls_isStockOut")
+  FrStkType_IDs String  @default("", map: "DF_StkTranCls_FrStkType_IDs") @db.VarChar(4)
+  isStockIn     Boolean @default(false, map: "DF_StkTranCls_isStockIn")
+  ToStkType_IDs String  @default("", map: "DF_StkTranCls_ToStkType_IDs") @db.VarChar(2)
+  ExObjCls_IDs  String  @default("", map: "DF_StkTranCls_ExObjCls_IDs") @db.VarChar(2)
+  isChg_Qty     Boolean @default(false, map: "DF_StkTranCls_isChg_Qty")
+  isChg_Amt     Boolean @default(false, map: "DF_StkTranCls_isChg_Amt")
+  isChg_Status  Boolean @default(false, map: "DF_StkTranCls_isChg_Status")
+  isChg_Loca    Boolean @default(false, map: "DF_StkTranCls_isChg_Loca")
+  isPayment     Boolean @default(false, map: "DF_StkTranCls_isPayment")
+  isDebt        Boolean @default(false, map: "DF_StkTranCls_isDebt")
+  isInvoice     Boolean @default(false, map: "DF_StkTranCls_isInvoice")
+  Obj_ID        Int     @default(0, map: "DF_StkTranCls_Obj_ID")
+  Disabled      Boolean @default(false, map: "DF_StkTranCls_Disabled")
+  StkTrCls_IDX  String? @default("0", map: "DF_StkTrCls_IDX") @db.Char(1)
+}
+
+model Stock {
+  STK_ID        Int      @id(map: "PK_Stock") @default(0, map: "DF_Stock_STK_ID")
+  STK_Code      String   @default("", map: "DF_Stock_STK_Code") @db.Char(12)
+  StkClust_ID   Int      @default(0, map: "DF_Stock_StkClust_ID")
+  StkType_ID    Int      @default(0, map: "DF_Stock_StkType_ID")
+  Node_ID       Int      @default(0, map: "DF_Stock_Node_ID")
+  Owner_Type    String   @default("", map: "DF_Stock_Owner_Type") @db.Char(1)
+  Owner_ID      Int      @default(0, map: "DF_Stock_Owner_ID")
+  STK_SYMB      String   @default("", map: "DF_Stock_STK_SYMB") @db.Char(25)
+  STK_CAP       String   @default("", map: "DF_Stock_STK_CAP") @db.Char(10)
+  STK_Name      String   @default("", map: "DF_Stock_STK_Name") @db.NVarChar(60)
+  STK_Addr      String   @default("", map: "DF_Stock_STK_Addr") @db.NVarChar(120)
+  Place_ID      Int      @default(0, map: "DF_Stock_Place_ID")
+  ACCOUNT_ID    String   @default("", map: "DF_Stock_ACCOUNT_ID") @db.Char(12)
+  ACC_CYS       String   @default("", map: "DF_Stock_ACC_CYS") @db.Char(3)
+  Phone         String   @default("", map: "DF_Stock_Phone") @db.Char(24)
+  Fax           String   @default("", map: "DF_Stock_Fax") @db.Char(24)
+  Email         String   @default("", map: "DF_Stock_Email") @db.Char(40)
+  Con_Person    String   @default("", map: "DF_Stock_Con_Person") @db.NVarChar(50)
+  DIMENSION     Int      @default(0, map: "DF_Stock_DIMENSION")
+  LOCATION      String   @default("", map: "DF_Stock_LOCATION") @db.NVarChar(60)
+  SCC_ID        Int      @default(0, map: "DF_Stock_SCC_ID")
+  IsPhysical    Boolean  @default(false, map: "DF_Stock_IsPhysical")
+  isInventory   Boolean  @default(false, map: "DF_Stock_isInventory")
+  IsDummy       Boolean  @default(false, map: "DF_Stock_IsDummy")
+  IsBase        Boolean  @default(false, map: "DF_Stock_IsBase")
+  isPOS         Boolean  @default(false, map: "DF_Stock_isPOS")
+  isPOD         Boolean  @default(false, map: "DF_Stock_isPOD")
+  isProduction  Boolean  @default(false, map: "DF_Stock_isProduction")
+  Remark        String   @default("", map: "DF_Stock_Remark") @db.NVarChar(60)
+  Open_Date     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stock_Open_Date") @db.DateTime
+  Modi_Date     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stock_Modi_Date") @db.DateTime
+  Layout_Img    String   @default("", map: "DF_Stock_Layout_Img") @db.NVarChar(Max)
+  Layout_Width  Int      @default(0, map: "DF_Stock_Layout_Width")
+  Layout_Height Int      @default(0, map: "DF_Stock_Layout_Height")
+  Ref_No        String   @default("", map: "DF_Stock_Ref_No") @db.NVarChar(20)
+  RefObj_ID     Int      @default(0, map: "DF_Stock_RefObj_ID")
+  Active_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stock_Active_Date") @db.DateTime
+  EstClose_Date DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stock_EstClose_Date") @db.DateTime
+  Closed_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_Stock_Closed_Date") @db.DateTime
+  Disabled      Boolean  @default(false, map: "DF_Stock_Disabled")
+}
+
+model StockCluster {
+  StkClust_ID     Int       @id(map: "PK_StockCluster") @default(0, map: "DF_StockCluster_StkClust_ID")
+  StkClust_Code   String    @default("", map: "DF_StockCluster_StkClust_Code") @db.Char(8)
+  StkClust_Name   String    @default("", map: "DF_StockCluster_StkClust_Name") @db.NVarChar(50)
+  StkClust_Addr   String    @default("", map: "DF_StockCluster_StkClust_Addr") @db.NVarChar(200)
+  Node_ID         Int       @default(0, map: "DF_StockCluster_Node_ID")
+  SCC_ID          Int       @default(0, map: "DF_StockCluster_SCC_ID")
+  StkType_IDs     String    @default("", map: "DF_StockCluster_StkType_IDs") @db.VarChar(8)
+  Delivery_Period String    @default("", map: "DF_StockCluster_Delivery_Period") @db.Char(6)
+  Delivery_Count  Int       @default(0, map: "DF_StockCluster_Delivery_Count")
+  Disabled        Boolean   @default(false, map: "DF_StockCluster_Disabled")
+  Active_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__StockClus__Activ__3C20AE2D") @db.DateTime
+  LastClosed_Date DateTime? @default(dbgenerated("1900/1/1"), map: "DF__StockClus__LastC__3D14D266") @db.DateTime
+  Disabled_Date   DateTime? @default(dbgenerated("1900/1/1"), map: "DF__StockClus__Disab__3E08F69F") @db.DateTime
+}
+
+model StockGate {
+  STK_ID       Int     @default(0, map: "DF_StockGate_STK_ID")
+  STKGate_ID   Int     @default(0, map: "DF_StockGate_STKGate_ID")
+  STKGate_Code String  @default("", map: "DF_StockGate_STKGate_Code") @db.Char(8)
+  STKGate_Type String  @default("", map: "DF_StockGate_STKGate_Type") @db.Char(2)
+  STKGate_Desc String  @default("", map: "DF_StockGate_STKGate_Desc") @db.NVarChar(50)
+  Disabled     Boolean @default(false, map: "DF_StockGate_Disabled")
+
+  @@id([STK_ID, STKGate_ID], map: "PK_StockGate")
+}
+
+model StockGLInfo {
+  STK_ID      Int       @default(0, map: "DF__StockGLIn__STK_I__5B78F632")
+  Period_Code String    @default("", map: "DF__StockGLIn__Perio__5C6D1A6B") @db.VarChar(10)
+  Goods_ID    Int?      @default(0, map: "DF__StockGLIn__Goods__5D613EA4")
+  SKU_Code    String    @default("", map: "DF__StockGLIn__SKU_C__5E5562DD") @db.Char(12)
+  SKUStat_ID  Int       @default(0, map: "DF__StockGLIn__SKUSt__5F498716")
+  Beg_Qty     Float?    @default(0, map: "DF__StockGLIn__Beg_Q__603DAB4F") @db.Real
+  Exp_Qty     Float?    @default(0, map: "DF__StockGLIn__Exp_Q__6131CF88") @db.Real
+  Imp_Qty     Float?    @default(0, map: "DF__StockGLIn__Imp_Q__6225F3C1") @db.Real
+  Beg_Amt     Float?    @default(0, map: "DF__StockGLIn__Beg_A__631A17FA") @db.Real
+  Exp_Amt     Float?    @default(0, map: "DF__StockGLIn__Exp_A__640E3C33") @db.Real
+  Imp_Amt     Float?    @default(0, map: "DF__StockGLIn__Imp_A__6502606C") @db.Real
+  Adj_Qty     Float?    @default(0, map: "DF__StockGLIn__Adj_Q__65F684A5") @db.Real
+  Adj_Amt     Float?    @default(0, map: "DF__StockGLIn__Adj_A__66EAA8DE") @db.Real
+  LastImpPr   Float?    @default(0, map: "DF__StockGLIn__LastI__67DECD17") @db.Real
+  AverImpPr   Float?    @default(0, map: "DF__StockGLIn__AverI__68D2F150") @db.Real
+  Open_Date   DateTime? @db.DateTime
+  Last_Date   DateTime? @db.DateTime
+  Minus_Date  DateTime? @db.DateTime
+  StkTake_Dt  DateTime? @db.DateTime
+  Block_Stat  Boolean?  @default(false, map: "DF__StockGLIn__Block__69C71589")
+  Status      Boolean?  @default(false, map: "DF__StockGLIn__Statu__6ABB39C2")
+
+  @@id([STK_ID, Period_Code, SKU_Code, SKUStat_ID], map: "PK_StockGLInfo")
+}
+
+model StockInfo {
+  STK_ID      Int      @default(0, map: "DF_StockInfo_STK_ID")
+  Period_Code String   @default("", map: "DF_StockInfo_Period_Code") @db.VarChar(10)
+  Goods_ID    Int      @default(0, map: "DF_StockInfo_Good_ID")
+  SKU_Code    String   @default("", map: "DF_StockInfo_SKU_Code") @db.Char(12)
+  SKUStat_ID  Int      @default(0, map: "DF_StockInfo_SKUStat_ID")
+  Beg_Qty     Decimal  @default(0, map: "DF_StockInfo_Beg_Qty") @db.Decimal(18, 2)
+  Exp_Qty     Decimal  @default(0, map: "DF_StockInfo_Exp_Qty") @db.Decimal(18, 2)
+  Imp_Qty     Decimal  @default(0, map: "DF_StockInfo_Imp_Qty") @db.Decimal(18, 2)
+  Adj_Qty     Decimal  @default(0, map: "DF_StockInfo_Adj_Qty") @db.Decimal(18, 2)
+  Open_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockInfo_Open_Date") @db.DateTime
+  Last_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockInfo_Last_Date") @db.DateTime
+  Minus_Date  DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockInfo_Minus_Date") @db.DateTime
+  StkTake_Dt  DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockInfo_StkTake_Dt") @db.DateTime
+  Block_Stat  Boolean  @default(false, map: "DF_StockInfo_Block_Stat")
+  Status      Boolean  @default(true, map: "DF_StockInfo_Status")
+
+  @@id([STK_ID, Period_Code, SKU_Code, SKUStat_ID], map: "PK_StockInfo")
+}
+
+model StockLine {
+  STK_ID       Int     @default(0, map: "DF_StockLine_STK_ID")
+  STKLine_ID   Int     @default(0, map: "DF_StockLine_STKLine_ID")
+  STKLine_Code String  @default("", map: "DF_StockLine_STKLine_Code") @db.Char(8)
+  STKLine_IDX  Int     @default(0, map: "DF_StockLine_STKLine_IDX")
+  GateIn_ID    Int     @default(0, map: "DF_StockLine_GateIn_ID")
+  GateOut_ID   Int     @default(0, map: "DF_StockLine_GateOut_ID")
+  STKLine_Desc String  @default("", map: "DF_StockLine_STKLine_Desc") @db.NVarChar(50)
+  Disabled     Boolean @default(false, map: "DF_StockLine_Disabled")
+
+  @@id([STK_ID, STKLine_ID, STKLine_IDX], map: "PK_StockLine")
+}
+
+model StockLoca {
+  STK_ID       Int      @default(0, map: "DF_StockLoca_STK_ID")
+  StkLoca_ID   Int      @default(0, map: "DF_StockLoca_StkLoca_ID")
+  STKLoca_Code String   @default("", map: "DF_StockLoca_STKLoca_Code") @db.Char(12)
+  STKLoca_Type String   @default("", map: "DF_StockLoca_STKLoca_Type") @db.Char(2)
+  STKLoca_Desc String   @default("", map: "DF_StockLoca_STKLoca_Desc") @db.NVarChar(60)
+  STKZone_ID   Int      @default(0, map: "DF_StockLoca_STKZone_ID")
+  STKLine_ID   Int      @default(0, map: "DF_StockLoca_STKLine_ID")
+  StkLoca_IDX  Int      @default(0, map: "DF_StockLoca_StkLoca_IDX")
+  NoBin        Int      @default(0, map: "DF_StockLoca_NoBin")
+  Bin_FrSeri   Int      @default(0, map: "DF_StockLoca_Bin_FrSeri")
+  Bin_ToSeri   Int      @default(0, map: "DF_StockLoca_Bin_ToSeri")
+  Stktake_Fr   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockLoca_Stktake_Fr") @db.DateTime
+  Stktake_To   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockLoca_Stktake_To") @db.DateTime
+  isStockTake  Boolean  @default(false, map: "DF_StockLoca_isStockTake")
+  Disabled     Boolean  @default(false, map: "DF_StockLoca_Disabled")
+
+  @@id([STK_ID, StkLoca_ID], map: "PK_StockLoca")
+}
+
+model StockType {
+  StkType_ID   Int     @id(map: "PK_StockType") @default(0, map: "DF_StockType_StkType_ID")
+  StkType_Code String  @default("", map: "DF_StockType_StkType_Code") @db.Char(8)
+  StkType_Name String  @default("", map: "DF_StockType_StkType_Name") @db.NVarChar(50)
+  IsPhysical   Boolean @default(false, map: "DF_StockType_IsPhysical")
+  isInventory  Boolean @default(false, map: "DF_StockType_isInventory")
+  IsDummy      Boolean @default(false, map: "DF_StockType_IsDummy")
+  IsBase       Boolean @default(false, map: "DF_StockType_IsBase")
+  isPOS        Boolean @default(false, map: "DF_StockType_isPOS")
+  isPOD        Boolean @default(false, map: "DF_StockType_isPOD")
+  isProduction Boolean @default(false, map: "DF_StockType_isProduction")
+  isGoodOwned  Boolean @default(false, map: "DF_StockType_isGoodOwned")
+  isOwned      Boolean @default(false, map: "DF_StockType_isOwned")
+  Disabled     Boolean @default(false, map: "DF_StockType_Disabled")
+}
+
+model StockZone {
+  STK_ID       Int      @default(0, map: "DF_StockZone_STK_ID")
+  STKZone_ID   Int      @default(0, map: "DF_StockZone_STKZone_ID")
+  STKZone_Code String   @default("", map: "DF_StockZone_STKZone_Code") @db.Char(12)
+  StkZone_Symb String   @default("", map: "DF_StockZone_StkZone_Symb") @db.Char(12)
+  STKZone_Type String   @default("", map: "DF_StockZone_STKZone_Type") @db.Char(2)
+  STKZone_Desc String   @default("", map: "DF_StockZone_STKZone_Desc") @db.NVarChar(50)
+  StkTake_Fr   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockZone_StkTake_Fr") @db.DateTime
+  StkTake_To   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_StockZone_StkTake_To") @db.DateTime
+  StkTake_St   String   @default("", map: "DF_StockZone_StkTake_St") @db.Char(1)
+  Disabled     Boolean  @default(false, map: "DF_StockZone_Disabled")
+
+  @@id([STK_ID, STKZone_ID], map: "PK_StockZone")
+}
+
+model STr_CollectPmt {
+  Trans_No       String    @default("", map: "DF__STr_Colle__Trans__25276EE5") @db.Char(12)
+  Trans_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_Colle__Trans__261B931E") @db.Date
+  Shift_No       Int?      @default(0, map: "DF__STr_Colle__Shift__270FB757")
+  StkTrCls_ID    Int?      @default(0, map: "DF__STr_Colle__StkTr__2803DB90")
+  SCC_ID         Int?      @default(0, map: "DF__STr_Colle__SCC_I__28F7FFC9")
+  Stk_ID         Int       @default(0, map: "DF__STr_Colle__Stk_I__29EC2402")
+  RRequest_ID    String?   @default("", map: "DF__STr_Colle__RRequ__2AE0483B") @db.NVarChar(20)
+  ROrder_No      String?   @default("", map: "DF__STr_Colle__ROrde__2BD46C74") @db.NVarChar(50)
+  RDevice_ID     String?   @default("", map: "DF__STr_Colle__RDevi__2CC890AD") @db.NVarChar(50)
+  RResponse_Code String?   @default("", map: "DF__STr_Colle__RResp__2DBCB4E6") @db.NVarChar(2)
+  RResponse_Data String?   @default("", map: "DF__STr_Colle__RResp__2EB0D91F") @db.NVarChar(Max)
+  RTrans_ID      String?   @default("", map: "DF__STr_Colle__RTran__2FA4FD58") @db.NVarChar(20)
+  RTrans_Type    String?   @default("", map: "DF__STr_Colle__RTran__30992191") @db.NVarChar(2)
+  RTrans_Amount  String?   @default("", map: "DF__STr_Colle__RTran__318D45CA") @db.NVarChar(20)
+  RTrans_Date    String?   @default("", map: "DF__STr_Colle__RTran__32816A03") @db.NVarChar(20)
+  RProduct_ID    String?   @default("", map: "DF__STr_Colle__RProd__33758E3C") @db.NVarChar(20)
+  RProduct_Qty   String?   @default("", map: "DF__STr_Colle__RProd__3469B275") @db.NVarChar(20)
+  RApprove_Code  String?   @default("", map: "DF__STr_Colle__RAppr__355DD6AE") @db.NVarChar(20)
+  RService_ID    String?   @default("", map: "DF__STr_Colle__RServ__3651FAE7") @db.NVarChar(20)
+  RService_Code  String?   @default("", map: "DF__STr_Colle__RServ__37461F20") @db.NVarChar(20)
+  RCard_Type     String?   @default("", map: "DF__STr_Colle__RCard__383A4359") @db.NVarChar(2)
+  RCard_Number   String?   @default("", map: "DF__STr_Colle__RCard__392E6792") @db.NVarChar(20)
+  RCard_Value    String?   @default("", map: "DF__STr_Colle__RCard__3A228BCB") @db.NVarChar(20)
+  RSystem_Trace  String?   @default("", map: "DF__STr_Colle__RSyst__3B16B004") @db.NVarChar(20)
+  RCustomer_Code String?   @default("", map: "DF__STr_Colle__RCust__3C0AD43D") @db.NVarChar(20)
+  RDisabled      Boolean?  @default(false, map: "DF__STr_Colle__RDisa__3CFEF876")
+  Period_Code    String?   @default("", map: "DF_STr_CollectPmt_Period_Code") @db.VarChar(10)
+
+  @@id([Trans_No, Stk_ID], map: "PK_STr_CollectPmt")
+}
+
+model STr_GLAcc {
+  Trans_No       String   @default("", map: "DF_STr_GLAcc_Trans_No") @db.VarChar(20)
+  Trans_Date     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_STr_GLAcc_Trans_Date") @db.DateTime
+  StrTrCls_ID    Int      @default(0, map: "DF_STr_GLAcc_StrTrCls_ID")
+  CPany_ID       Int      @default(0, map: "DF_STr_GLAcc_CPany_ID")
+  JourEntry_Idx  Int      @default(0, map: "DF_STr_GLAcc_JourEntry_Idx")
+  GLAcc_ID       String   @default("", map: "DF_STr_GLAcc_GLAcc_ID") @db.NVarChar(8)
+  Contra_GLAccID String   @default("", map: "DF_STr_GLAcc_Contra_GLAccID") @db.NVarChar(8)
+  ValObj_ID      Int      @default(0, map: "DF_STr_GLAcc_ValObj_ID")
+  Is_Credit      Boolean  @default(false, map: "DF_STr_GLAcc_Is_Credit")
+  GLAcc_Cys      String   @default("", map: "DF_STr_GLAcc_GLAcc_Cys") @db.Char(3)
+  GL_CysAmt      Decimal  @default(0, map: "DF_STr_GLAcc_GL_CysAmt") @db.Decimal(12, 2)
+  GL_BaseAmt     Decimal  @default(0, map: "DF_STr_GLAcc_GL_BaseAmt") @db.Decimal(12, 2)
+  BudgetLine_ID  Int      @default(0, map: "DF_STr_GLAcc_BudgetLine_ID")
+  Disabled       Boolean  @default(false, map: "DF_STr_GLAcc_Disabled")
+  Period_Code    String?  @default("", map: "DF_STr_GLAcc_Period_Code") @db.VarChar(10)
+
+  @@id([Trans_No, JourEntry_Idx], map: "PK_STr_GLAcc")
+}
+
+model STr_Hdr {
+  Trans_No        String    @id(map: "PK__STr_Hdr__7B617456858FE1A6") @default("", map: "DF__STr_Hdr__Trans_N__507157DA") @db.Char(20)
+  Trans_Date      DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_Hdr__Trans_D__51657C13") @db.DateTime
+  EfTran_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_Hdr__EfTran___5259A04C") @db.DateTime
+  Job_Code        String?   @default("", map: "DF__STr_Hdr__Job_Cod__534DC485") @db.Char(12)
+  Job_Date        DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_Hdr__Job_Dat__5441E8BE") @db.DateTime
+  Event_Item_Code String?   @default("", map: "DF__STr_Hdr__Event_I__55360CF7") @db.NVarChar(15)
+  StkTrCls_ID     Int?      @default(0, map: "DF__STr_Hdr__StkTrCl__562A3130")
+  TrRef_No        String?   @default("", map: "DF__STr_Hdr__TrRef_N__571E5569") @db.NVarChar(20)
+  TrRef_Date      DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_Hdr__TrRef_D__581279A2") @db.Date
+  TrRef_type      String?   @default("", map: "DF__STr_Hdr__TrRef_t__59069DDB") @db.Char(2)
+  Shift_No        Int       @default(0, map: "DF_STr_Hdr_Shift_No")
+  WS_ID           Int       @default(0, map: "DF_STr_Hdr_WS_ID")
+  Member_No       String    @default("", map: "DF_STr_Hdr_DeliveryNote1") @db.NVarChar(25)
+  ExtObjCls_ID    Int?      @default(0, map: "DF__STr_Hdr__ExtObjC__59FAC214")
+  ExtObj_ID       Int?      @default(0, map: "DF__STr_Hdr__ExtObj___5AEEE64D")
+  ExpStkClust_ID  Int?      @default(0, map: "DF__STr_Hdr__ExpStkC__5BE30A86")
+  ImpStkClust_ID  Int?      @default(0, map: "DF__STr_Hdr__ImpStkC__5CD72EBF")
+  Delivery_Term   String?   @default("", map: "DF__STr_Hdr__Deliver__5DCB52F8") @db.Char(2)
+  Deliverer_ID    Int?      @default(0, map: "DF__STr_Hdr__Deliver__5EBF7731")
+  Manifest_ID     Int?      @default(0, map: "DF__STr_Hdr__Manifes__5FB39B6A")
+  DeliveryNote    String?   @default("", map: "DF__STr_Hdr__Deliver__60A7BFA3") @db.NVarChar(20)
+  Order_No        String?   @default("", map: "DF__STr_Hdr__Order_N__619BE3DC") @db.NVarChar(20)
+  OrdDelivery_IDX Int?      @default(0, map: "DF__STr_Hdr__OrdDeli__62900815")
+  Remark          String?   @default("", map: "DF__STr_Hdr__Remark__63842C4E") @db.NVarChar(100)
+  IsAuto          Boolean?  @default(false, map: "DF__STr_Hdr__IsAuto__64785087")
+  User_ID         Int?      @default(0, map: "DF__STr_Hdr__User_ID__656C74C0")
+  Node_ID         Int?      @default(0, map: "DF__STr_Hdr__Node_ID__666098F9")
+  SysUnit_ID      Int?      @default(0, map: "DF__STr_Hdr__SysUnit__6754BD32")
+  BU_ID           Int?      @default(0, map: "DF__STr_Hdr__BU_ID__6848E16B")
+  Process_Stat    String?   @default("", map: "DF__STr_Hdr__Process__693D05A4") @db.Char(1)
+  isClosed        Boolean?  @default(false, map: "DF__STr_Hdr__isClose__6A3129DD")
+  QtyPost_IDX     Int?      @default(0, map: "DF__STr_Hdr__QtyPost__6B254E16")
+  GLPost_IDX      Int?      @default(0, map: "DF__STr_Hdr__GLPost___6C19724F")
+  Company_ID      Int?      @default(0, map: "DF__STr_Hdr__Company__6D0D9688")
+  DayType_IDs     Bytes?    @db.Binary(2)
+  Weather_ID      Int?      @default(0, map: "DF__STr_Hdr__Weather__6E01BAC1")
+  Temp_ID         Int?      @default(0, map: "DF__STr_Hdr__Temp_ID__6EF5DEFA")
+  SocialEvt_ID    Int?      @default(0, map: "DF__STr_Hdr__SocialE__6FEA0333")
+  Cust_Sex_Type   String?   @default("", map: "DF__STr_Hdr__Cust_Se__70DE276C") @db.Char(2)
+  Age_ID          Int?      @default(0, map: "DF__STr_Hdr__Age_ID__71D24BA5")
+  Disabled        Boolean?  @default(false, map: "DF__STr_Hdr__Disable__72C66FDE")
+  Partition_Code  String?   @default("", map: "DF_STr_Hdr_Period_Code") @db.VarChar(10)
+  Random_Code     String?   @default("", map: "DF_STr_Hdr_Random_Code") @db.VarChar(20)
+  STr_Reason_Code String    @default("", map: "DF_STr_Hdr_STr_Reason_Code") @db.NVarChar(4)
+  Copies          Int       @default(-1, map: "DF_STr_Hdr_Copies")
+}
+
+model STr_HRM {
+  Trans_No         String   @default("", map: "DF_STr_HRM_Trans_No") @db.VarChar(20)
+  Trans_Date       DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_STr_HRM_Trans_Date") @db.DateTime
+  StrTrCls_ID      Int      @default(0, map: "DF_STr_HRM_StrTrCls_ID")
+  Item_IDX         Int      @default(0, map: "DF_STr_HRM_Item_IDX")
+  Staff_ID         Int      @default(0, map: "DF_STr_HRM_Staff_ID")
+  OrgTitle_ID      Int      @default(0, map: "DF_STr_HRM_OrgTitle_ID")
+  OrgPos_ID        Int      @default(0, map: "DF_STr_HRM_OrgPos_ID")
+  LabContract_Type String   @default("", map: "DF_STr_HRM_LabContract_Type") @db.Char(2)
+  Weight_Rate      Decimal  @default(0, map: "DF_STr_HRM_Weight_Rate") @db.Decimal(12, 2)
+  Allowance_Point  Decimal  @default(0, map: "DF_STr_HRM_Allowance_Point") @db.Decimal(12, 2)
+  Allowance_Amt    Decimal  @default(0, map: "DF_STr_HRM_Allowance_Amt") @db.Decimal(12, 2)
+  Disabled         Boolean  @default(false, map: "DF_STr_HRM_Disabled")
+  Period_Code      String?  @default("", map: "DF_STr_HRM_Period_Code") @db.VarChar(10)
+
+  @@id([Trans_No, Item_IDX], map: "PK_STr_HRM")
+}
+
+model STr_Invoice {
+  Trans_No     String   @default("", map: "DF_STr_Invoice_Trans_No") @db.VarChar(20)
+  Trans_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_STr_Invoice_Trans_Date") @db.DateTime
+  StkTrCls_ID  Int      @default(0, map: "DF_STr_Invoice_StkTrCls_ID")
+  Invoice_IDX  Int      @default(0, map: "DF_STr_Invoice_Invoice_IDX")
+  Invoice_No   String   @default("", map: "DF_STr_Invoice_Invoice_No") @db.NVarChar(50)
+  Invoice_Date DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_STr_Invoice_Invoice_Date") @db.DateTime
+  Tax_ID       Int      @default(0, map: "DF_STr_Invoice_Tax_ID")
+  Pmt_Cys      String   @default("", map: "DF_STr_Invoice_Pmt_Cys") @db.Char(3)
+  Pmt_ExcRate  Decimal  @default(0, map: "DF_STr_Invoice_Pmt_ExcRate") @db.Decimal(12, 2)
+  Amount       Decimal  @default(0, map: "DF_STr_Invoice_Amount") @db.Decimal(12, 2)
+  Tax_Amt      Decimal  @default(0, map: "DF_STr_Invoice_Tax_Amt") @db.Decimal(12, 2)
+  User_ID      Int      @default(0, map: "DF_STr_Invoice_User_ID")
+  Disabled     Boolean  @default(false, map: "DF_STr_Invoice_Disabled")
+  Period_Code  String?  @default("", map: "DF_STr_Invoice_Period_Code") @db.VarChar(10)
+
+  @@id([Trans_No, Invoice_IDX], map: "PK_STr_Invoice")
+}
+
+model STr_Payment {
+  Pmt_IDX        Int      @default(0, map: "DF_STr_Payment_Pmt_IDX")
+  Trans_No       String   @default("", map: "DF_STr_Payment_Trans_No") @db.VarChar(20)
+  Trans_Date     DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_STr_Payment_Trans_Date") @db.DateTime
+  StkTrCls_ID    Int      @default(0, map: "DF_STr_Payment_StkTrCls_ID")
+  Pmt_ID         Int      @default(0, map: "DF_STr_Payment_Pmt_ID")
+  PmtIssuer_ID   Int      @default(0, map: "DF_STr_Payment_PmtIssuer_ID")
+  Payment_Amt    Decimal  @default(0, map: "DF_STr_Payment_Payment_Amt") @db.Decimal(12, 2)
+  Pmt_Cys        String   @default("", map: "DF_STr_Payment_Pmt_Cys") @db.Char(3)
+  Pmt_ExcRate    Decimal  @default(0, map: "DF_STr_Payment_Pmt_ExcRate") @db.Decimal(12, 2)
+  User_ID        Int      @default(0, map: "DF_STr_Payment_User_ID")
+  Disabled       Boolean  @default(false, map: "DF_STr_Payment_Disabled")
+  Partition_Code String?  @default("", map: "DF_STr_Payment_Period_Code") @db.VarChar(10)
+  Request_Data   String?  @default("", map: "DF__STr_Payme__Reque__387A3A7B") @db.NVarChar(Max)
+  Response_Data  String?  @default("", map: "DF__STr_Payme__Respo__396E5EB4") @db.NVarChar(Max)
+  PayRef_No      String   @default("", map: "DF_STr_Payment_PayRef_No") @db.NVarChar(30)
+
+  @@id([Pmt_IDX, Trans_No], map: "PK_STr_Payment_1")
+}
+
+model STr_Promotion {
+  Trans_No       String   @default("", map: "DF__STr_Promo__Trans__3B4130CA") @db.Char(20)
+  Trans_Date     DateTime @default(dbgenerated("1900/1/1"), map: "DF__STr_Promo__Trans__3C355503") @db.DateTime
+  Shift_No       Int?     @default(0, map: "DF__STr_Promo__Shift__3D29793C")
+  StkTrCls_ID    Int?     @default(0, map: "DF__STr_Promo__StkTr__3E1D9D75")
+  SCC_ID         Int?     @default(0, map: "DF__STr_Promo__SCC_I__3F11C1AE")
+  Stk_ID         Int      @default(0, map: "DF__STr_Promo__Stk_I__4005E5E7")
+  Item_IDX       Int      @default(0, map: "DF__STr_Promo__Item___40FA0A20")
+  Promotion_Code String?  @default("", map: "DF__STr_Promo__Promo__41EE2E59") @db.NVarChar(12)
+  PProg_ID       Int?     @default(0, map: "DF__STr_Promo__PProg__42E25292")
+  PCard_No       String?  @default("", map: "DF__STr_Promo__PCard__43D676CB") @db.Char(12)
+  Cust_ID        Int?     @default(0, map: "DF__STr_Promo__Cust___44CA9B04")
+  PManager_ID    Int?     @default(0, map: "DF__STr_Promo__PMana__45BEBF3D")
+  PICls_ID       Int?     @default(0, map: "DF__STr_Promo__PICls__46B2E376")
+  PItem_ID       Int?     @default(0, map: "DF__STr_Promo__PItem__47A707AF")
+  PItem_Code     String?  @default("", map: "DF__STr_Promo__PItem__489B2BE8") @db.Char(20)
+  PItem_Qty      Decimal? @default(0, map: "DF__STr_Promo__PItem__498F5021") @db.Decimal(15, 4)
+  PItem_Cost     Decimal? @default(0, map: "DF__STr_Promo__PItem__4A83745A") @db.Decimal(15, 4)
+  Disabled       Boolean? @default(false, map: "DF__STr_Promo__Disab__4B779893")
+  Partition_Code String?  @default("", map: "DF_STr_Promotion_Period_Code") @db.VarChar(10)
+
+  @@id([Trans_No, Stk_ID, Item_IDX], map: "PK_STr_Promotion")
+}
+
+model STr_PromSet {
+  Trans_No       String    @default("", map: "DF__STr_PromS__Trans__5C8D7DBF") @db.Char(20)
+  Trans_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_PromS__Trans__5D81A1F8") @db.Date
+  Shift_No       Int?      @default(0, map: "DF__STr_PromS__Shift__5E75C631")
+  StkTrCls_ID    Int?      @default(0, map: "DF__STr_PromS__StkTr__5F69EA6A")
+  SCC_ID         Int?      @default(0, map: "DF__STr_PromS__SCC_I__605E0EA3")
+  StkClust_ID    Int?      @default(0, map: "DF__STr_PromS__StkCl__615232DC")
+  Stk_ID         Int?      @default(0, map: "DF__STr_PromS__Stk_I__62465715")
+  SSet_IDX       Int       @default(0, map: "DF__STr_PromS__SSet___633A7B4E")
+  SSet_Qty       Int?      @default(0, map: "DF__STr_PromS__SSet___642E9F87")
+  SSet_QtyMax    Int?      @default(0, map: "DF__STr_PromS__SSet___6522C3C0")
+  Promotion_Code String    @default("", map: "DF__STr_PromS__Promo__6616E7F9") @db.NVarChar(12)
+  PProg_ID       Int?      @default(0, map: "DF__STr_PromS__PProg__670B0C32")
+  PCase_IDX      Int       @default(0, map: "DF__STr_PromS__PCase__67FF306B")
+  PCard_No       String    @default("", map: "DF__STr_PromS__PCard__68F354A4") @db.Char(20)
+  Cust_ID        Int?      @default(0, map: "DF__STr_PromS__Cust___69E778DD")
+  PManager_ID    Int?      @default(0, map: "DF__STr_PromS__PMana__6ADB9D16")
+  PSet_IDX       Int?      @default(0, map: "DF__STr_PromS__PSet___6BCFC14F")
+  PICls_ID       Int?      @default(0, map: "DF__STr_PromS__PICls__6CC3E588")
+  PItem_ID       Int?      @default(0, map: "DF__STr_PromS__PItem__6DB809C1")
+  PItem_Code     String?   @default("", map: "DF__STr_PromS__PItem__6EAC2DFA") @db.Char(20)
+  PItem_Qty      Decimal?  @default(0, map: "DF__STr_PromS__PItem__6FA05233") @db.Decimal(18, 2)
+  PItem_Cost     Decimal?  @default(0, map: "DF__STr_PromS__PItem__7094766C") @db.Decimal(18, 2)
+  Partition_Code String?   @default("", map: "DF__STr_PromS__Parti__71889AA5") @db.Char(12)
+  Disabled       Boolean?  @default(false, map: "DF__STr_PromS__Disab__727CBEDE")
+
+  @@id([Trans_No, SSet_IDX, Promotion_Code, PCase_IDX, PCard_No], map: "PK_STr_PromSet")
+}
+
+model STr_PurcDtl {
+  Trans_No      String    @id(map: "PK_STr_PurcDtl") @default("", map: "DF__STr_PurcD__Trans__17F7F48D") @db.Char(20)
+  Trans_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_PurcD__Trans__18EC18C6") @db.Date
+  StkTrCls_ID   Int?      @default(0, map: "DF__STr_PurcD__StkTr__19E03CFF")
+  Supplier_ID   Int?      @default(0, map: "DF__STr_PurcD__Suppl__1AD46138")
+  Invoice_No    String?   @default("", map: "DF__STr_PurcD__Invoi__1BC88571") @db.NVarChar(20)
+  Invoice_Date  DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_PurcD__Invoi__1CBCA9AA") @db.Date
+  TotalCost_Amt Float?    @default(0, map: "DF__STr_PurcD__Total__1DB0CDE3")
+  TotalVAT_Amt  Float?    @default(0, map: "DF__STr_PurcD__Total__1EA4F21C")
+  PurcOrd_No    String?   @default("", map: "DF__STr_PurcD__PurcO__1F991655") @db.Char(12)
+  PurcOrd_Date  DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_PurcD__PurcO__208D3A8E") @db.Date
+  SP_ProPrg_ID  Int?      @default(0, map: "DF__STr_PurcD__SP_Pr__21815EC7")
+  User_ID       Int?      @default(0, map: "DF__STr_PurcD__User___22758300")
+  Disabled      Boolean?  @default(false, map: "DF__STr_PurcD__Disab__2369A739")
+  Period_Code   String?   @default("", map: "DF_STr_PurcDtl_Period_Code") @db.VarChar(10)
+}
+
+model STr_SaleActs {
+  Trans_No       String    @default("", map: "DF_STr_SaleActs_Trans_No") @db.Char(20)
+  Trans_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF_STr_SaleActs_Trans_Date") @db.DateTime
+  Shift_No       Int?      @default(0, map: "DF_STr_SaleActs_Shift_No")
+  StkTrCls_ID    Int?      @default(0, map: "DF_STr_SaleActs_StkTrCls_ID")
+  EfTran_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF_STr_SaleActs_EfTran_Date") @db.DateTime
+  Stk_ID         Int       @default(0, map: "DF_STr_SaleActs_Stk_ID")
+  StkClust_ID    Int
+  isSKUIn        Boolean?  @default(false, map: "DF_STr_SaleActs_isSKUIn")
+  Item_IDX       Int       @default(0, map: "DF_STr_SaleActs_Item_IDX")
+  Goods_ID       Int?      @default(0, map: "DF_STr_SaleActs_Goods_ID")
+  SKU_Code       String?   @default("", map: "DF_STr_SaleActs_SKU_Code") @db.Char(12)
+  Goods_Qty      Float?    @default(0, map: "DF_STr_SaleActs_Goods_Qty")
+  GsMaxReg_Qty   Float?    @default(0, map: "DF_STr_SaleActs_GsMaxReg_Qty")
+  GoodsUnit_ID   Int?      @default(0, map: "DF_STr_SaleActs_GoodsUnit_ID")
+  User_ID        Int?      @default(0, map: "DF_STr_SaleActs_User_ID")
+  Partition_Code String?   @default("", map: "DF_STr_SaleActs_Partition_Code") @db.VarChar(10)
+  Disabled       Boolean?  @default(false, map: "DF_STr_SaleActs_Disabled")
+
+  @@id([Trans_No, Stk_ID, Item_IDX], map: "PK_STr_SaleActs")
+}
+
+model STr_SaleDtl {
+  Trans_No          String    @default("", map: "DF__STr_SaleD__Trans__264613E4") @db.Char(20)
+  Trans_Date        DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_SaleD__Trans__273A381D") @db.DateTime
+  Shift_No          Int?      @default(0, map: "DF__STr_SaleD__Shift__282E5C56")
+  StkTrCls_ID       Int?      @default(0, map: "DF__STr_SaleD__StkTr__2922808F")
+  EfTran_Date       DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_SaleD__EfTra__2A16A4C8") @db.DateTime
+  Stk_ID            Int       @default(0, map: "DF__STr_SaleD__Stk_I__2B0AC901")
+  isSKUIn           Boolean?  @default(false, map: "DF__STr_SaleD__isSKU__2BFEED3A")
+  Item_IDX          Int       @default(0, map: "DF__STr_SaleD__Item___2CF31173")
+  Goods_ID          Int?      @default(0, map: "DF__STr_SaleD__Goods__2DE735AC")
+  SKU_Code          String?   @default("", map: "DF__STr_SaleD__SKU_C__2EDB59E5") @db.Char(12)
+  SKUBase_Qty       Float?    @default(0, map: "DF__STr_SaleD__SKUBa__2FCF7E1E")
+  SKUBaseUnit_ID    Int?      @default(0, map: "DF__STr_SaleD__SKUBa__30C3A257")
+  SKUStat_ID        Int?      @default(0, map: "DF__STr_SaleD__SKUSt__31B7C690")
+  Sales_Amt         Float?    @default(0, map: "DF__STr_SaleD__Sales__32ABEAC9")
+  VAT_Amt           Float?    @default(0, map: "DF__STr_SaleD__VAT_A__33A00F02")
+  Direct_Disc_Amt   Float?    @default(0, map: "DF__STr_SaleD__Direc__3494333B")
+  Indirect_Disc_Amt Float?    @default(0, map: "DF__STr_SaleD__Indir__35885774")
+  Cost_Amt          Float?    @default(0, map: "DF__STr_SaleD__Cost___367C7BAD")
+  User_ID           Int?      @default(0, map: "DF__STr_SaleD__User___37709FE6")
+  Disabled          Boolean?  @default(false, map: "DF__STr_SaleD__Disab__3864C41F")
+  Partition_Code    String?   @default("", map: "DF_STr_SaleDtl_Period_Code") @db.VarChar(10)
+  STr_Reason_Code   String    @default("", map: "DF_STr_SaleDtl_STr_Reason_Code") @db.NVarChar(4)
+  WS_ID             Int       @default(0, map: "DF_STr_SaleDtl_WS_ID")
+  Tax_ID            Int       @default(0, map: "DF_STr_Hdr_Tax_ID")
+  KIT_ID            Int       @default(0, map: "DF__STr_SaleD__KIT_I__795EC697")
+  PProg_ID          Int?      @default(0, map: "DF__STr_SaleD__PProg__7D2F577B")
+
+  @@id([Trans_No, Stk_ID, Item_IDX], map: "PK_STr_SaleDtl")
+}
+
+model STr_SaleSet {
+  Trans_No       String    @default("", map: "DF__STr_SaleS__Trans__15FB0545") @db.Char(20)
+  Trans_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_SaleS__Trans__16EF297E") @db.Date
+  Shift_No       Int?      @default(0, map: "DF__STr_SaleS__Shift__17E34DB7")
+  StkTrCls_ID    Int?      @default(0, map: "DF__STr_SaleS__StkTr__18D771F0")
+  Stk_ID         Int?      @default(0, map: "DF__STr_SaleS__Stk_I__19CB9629")
+  StkClust_ID    Int?      @default(0, map: "DF__STr_SaleS__StkCl__1ABFBA62")
+  PLayer_ID      Int       @default(0, map: "DF__STr_SaleS__PLaye__1BB3DE9B")
+  PProg_ID       Int?      @default(0, map: "DF__STr_SaleS__PProg__1CA802D4")
+  PCase_IDX      Int?      @default(0, map: "DF__STr_SaleS__PCase__1D9C270D")
+  SSet_IDX       Int       @default(0, map: "DF__STr_SaleS__SSet___1E904B46")
+  SSet_Qty       Int?      @default(0, map: "DF__STr_SaleS__SSet___1F846F7F")
+  Goods_ID       Int       @default(0, map: "DF__STr_SaleS__Goods__207893B8")
+  SKU_Code       String    @default("", map: "DF__STr_SaleS__SKU_C__216CB7F1") @db.Char(12)
+  Goods_Qty      Decimal?  @default(0, map: "DF__STr_SaleS__Goods__2260DC2A") @db.Decimal(18, 2)
+  GoodsUnit_ID   Int?      @default(0, map: "DF__STr_SaleS__Goods__23550063")
+  SKUStat_ID     Int?      @default(0, map: "DF__STr_SaleS__SKUSt__2449249C")
+  Payable_Amt    Decimal?  @default(0, map: "DF__STr_SaleS__Payab__253D48D5") @db.Decimal(18, 2)
+  Tax_ID         Int?      @default(0, map: "DF__STr_SaleS__Tax_I__26316D0E")
+  Partition_Code String?   @default("", map: "DF__STr_SaleS__Parti__27259147") @db.Char(12)
+  Disabled       Boolean?  @default(false, map: "DF__STr_SaleS__Disab__2819B580")
+
+  @@id([Trans_No, PLayer_ID, SSet_IDX, Goods_ID, SKU_Code], map: "PK_STr_SaleSet")
+}
+
+model STr_SaleSusp {
+  Trans_No          String    @default("0", map: "DF__STr_SaleS__Trans__5BCDFBED") @db.Char(20)
+  Trans_Date        DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_SaleS__Trans__5CC22026") @db.DateTime
+  Shift_No          Int?      @default(0, map: "DF__STr_SaleS__Shift__5DB6445F")
+  StkTrCls_ID       Int?      @default(0, map: "DF__STr_SaleS__StkTr__5EAA6898")
+  Stk_ID            Int       @default(0, map: "DF__STr_SaleS__Stk_I__5F9E8CD1")
+  isSKUIn           Boolean?  @default(false, map: "DF__STr_SaleS__isSKU__6092B10A")
+  Item_IDX          Int       @default(0, map: "DF__STr_SaleS__Item___6186D543")
+  Goods_ID          Int?      @default(0, map: "DF__STr_SaleS__Goods__627AF97C")
+  SKU_Code          String?   @default("", map: "DF__STr_SaleS__SKU_C__636F1DB5") @db.VarChar(12)
+  SKUBase_Qty       Float?    @default(0, map: "DF__STr_SaleS__SKUBa__646341EE")
+  SKUBaseUnit_ID    Int?      @default(0, map: "DF__STr_SaleS__SKUBa__65576627")
+  SKUStat_ID        Int?      @default(0, map: "DF__STr_SaleS__SKUSt__664B8A60")
+  Sales_Amt         Float?    @default(0, map: "DF__STr_SaleS__Sales__673FAE99")
+  VAT_Amt           Float?    @default(0, map: "DF__STr_SaleS__VAT_A__6833D2D2")
+  Direct_Disc_Amt   Float?    @default(0, map: "DF__STr_SaleS__Direc__6927F70B")
+  Indirect_Disc_Amt Float?    @default(0, map: "DF__STr_SaleS__Indir__6A1C1B44")
+  Cost_Amt          Float?    @default(0, map: "DF__STr_SaleS__Cost___6B103F7D")
+  Disabled          Boolean?  @default(false, map: "DF__STr_SaleS__Disab__6C0463B6")
+  Period_Code       String?   @db.VarChar(10)
+
+  @@id([Trans_No, Stk_ID, Item_IDX], map: "PK_STr_SaleSusp")
+}
+
+model STr_SKUDtl {
+  Trans_No        String    @default("", map: "DF__STr_SKUDt__Trans__06CD688B") @db.Char(20)
+  Trans_Date      DateTime? @default(dbgenerated("1900/1/1"), map: "DF__STr_SKUDt__Trans__07C18CC4") @db.DateTime
+  StkTrCls_ID     Int?      @default(0, map: "DF__STr_SKUDt__StkTr__08B5B0FD")
+  isSKUIn         Boolean?  @default(false, map: "DF__STr_SKUDt__isSKU__09A9D536")
+  Stk_ID          Int       @default(0, map: "DF__STr_SKUDt__Stk_I__0A9DF96F")
+  Item_IDX        Int       @default(0, map: "DF__STr_SKUDt__Item___0B921DA8")
+  Goods_ID        Int?      @default(0, map: "DF__STr_SKUDt__Goods__0C8641E1")
+  SKU_Code        String?   @default("", map: "DF__STr_SKUDt__SKU_C__0D7A661A") @db.Char(12)
+  SKUBase_Qty     Float?    @default(0, map: "DF__STr_SKUDt__SKUBa__0E6E8A53")
+  SKUBaseUnit_ID  Int?      @default(0, map: "DF__STr_SKUDt__SKUBa__0F62AE8C")
+  SKUPack_Qty     Float?    @default(0, map: "DF__STr_SKUDt__SKUPa__1056D2C5")
+  SKUPackUnit_ID  Int?      @default(0, map: "DF__STr_SKUDt__SKUPa__114AF6FE")
+  STKLoca_ID      Int?      @default(0, map: "DF__STr_SKUDt__STKLo__123F1B37")
+  SKUStat_ID      Int?      @default(0, map: "DF__STr_SKUDt__SKUSt__13333F70")
+  User_ID         Int?      @default(0, map: "DF__STr_SKUDt__User___142763A9")
+  Disabled        Boolean?  @default(false, map: "DF__STr_SKUDt__Disab__151B87E2")
+  Partition_Code  String?   @default("", map: "DF_STr_SKUDtl_Period_Code") @db.VarChar(10)
+  STr_Reason_Code String    @default("", map: "DF_STr_SKUDtl_STr_Reason_Code") @db.NVarChar(4)
+
+  @@id([Trans_No, Stk_ID, Item_IDX], map: "PK_STr_SKUDtl")
+}
+
+model STr_SKUSerial {
+  Trans_No           String   @default("", map: "DF_STr_SKUSerial_Trans_No") @db.VarChar(20)
+  Trans_Date         DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_STr_SKUSerial_Trans_Date") @db.DateTime
+  StrTrCls_ID        Int      @default(0, map: "DF_STr_SKUSerial_StrTrCls_ID")
+  Item_IDX           Int      @default(0, map: "DF_STr_SKUSerial_Item_IDX")
+  SKU_Code           String   @default("", map: "DF_STr_SKUSerial_SKU_Code") @db.Char(12)
+  SKUSerial_No       String   @default("", map: "DF_STr_SKUSerial_SKUSerial_No") @db.NVarChar(20)
+  Serial_Unit_ID     Int      @default(0, map: "DF_STr_SKUSerial_Serial_Unit_ID")
+  Serial_SKUBase_Qty Decimal  @default(0, map: "DF_STr_SKUSerial_Serial_SKUBase_Qty") @db.Decimal(12, 2)
+  SKUBaseUnit_ID     Int      @default(0, map: "DF_STr_SKUSerial_SKUBaseUnit_ID")
+  Lot_No             String   @default("", map: "DF_STr_SKUSerial_Lot_No") @db.NVarChar(20)
+  Expiry_Date        DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_STr_SKUSerial_Expiry_Date") @db.DateTime
+  SKUStat_ID         Int      @default(0, map: "DF_STr_SKUSerial_SKUStat_ID")
+  ExtObjCls_ID       Int      @default(0, map: "DF_STr_SKUSerial_ExtObjCls_ID")
+  ExtObj_ID          Int      @default(0, map: "DF_STr_SKUSerial_ExtObj_ID")
+  User_ID            Int      @default(0, map: "DF_STr_SKUSerial_User_ID")
+  Disabled           Boolean  @default(false, map: "DF_STr_SKUSerial_Disabled")
+  Period_Code        String?  @default("", map: "DF_STr_SKUSerial_Period_Code") @db.VarChar(10)
+
+  @@id([Trans_No, Item_IDX, SKU_Code, SKUSerial_No], map: "PK_STr_SKUSerial")
+}
+
+model SUBSYSCLS {
+  SubS_Code String  @id(map: "PK_SubSysCls") @default("", map: "DF_SubSysCls_Subs_Code") @db.Char(2)
+  SubS_Desc String  @default("", map: "DF_SubSysCls_Subs_Desc") @db.NVarChar(50)
+  Status    Boolean @default(false, map: "DF_SubSysCls_Status")
+}
+
+model SUBSYSEVENTS {
+  SubS_Code     String  @default("", map: "DF_SubSysEvents_SubS_Code") @db.Char(2)
+  Obj_ID        Int     @default(0, map: "DF_SubSysEvents_Obj_ID")
+  Event_IDX     Int     @default(0, map: "DF_SubSysEvents_Event_IDX")
+  Event_Proc    String  @default("", map: "DF_SubSysEvents_Event_Proc") @db.NVarChar(40)
+  Event_DLL     String  @default("", map: "DF_SubSysEvents_Event_DLL") @db.NVarChar(20)
+  GenTbl_IDs    String  @default("", map: "DF_SubSysEvents_GenTbl_IDs") @db.VarChar(64)
+  ProcTbl_IDs   String  @default("", map: "DF_SubSysEvents_ProcTbl_IDs") @db.VarChar(64)
+  isConcentrate Boolean @default(true, map: "DF__SUBSYSEVE__isCon__3EFD1AD8")
+  isDistributed Boolean @default(true, map: "DF__SUBSYSEVE__isDis__3FF13F11")
+  isTransit     Boolean @default(false, map: "DF__SUBSYSEVE__isTra__40E5634A")
+
+  @@id([SubS_Code, Obj_ID, Event_IDX], map: "PK_SubSysEvents")
+}
+
+model SUBSYSRIGHT {
+  SubS_Code   String @default("", map: "DF_SubSysRight_SubS_Code") @db.Char(2)
+  Obj_ID      Int    @default(0, map: "DF_SubSysRight_Obj_ID")
+  ObjKey_IDs  String @default("", map: "DF_SubSysRight_ObjKey_IDs") @db.VarChar(64)
+  GEvent_IDXs String @default("", map: "DF_SubSysRight_GEvent_IDXs") @db.VarChar(4)
+  PEvent_IDXs String @default("", map: "DF_SubSysRight_PEvent_IDXs") @db.VarChar(4)
+  nPassDay    Int    @default(0, map: "DF_SubSysRight_nPassDay")
+
+  @@id([SubS_Code, Obj_ID], map: "PK_SubSysRight")
+}
+
+model SysAlertCls {
+  SysAlertCls_Code String  @id(map: "PK_SysAlertCls") @db.Char(2)
+  SysAlertCls_Desc String? @db.NVarChar(50)
+  API_AlertClsChk  String? @db.VarChar(50)
+  API_AlertClsProc String? @db.VarChar(50)
+  AlertCls_Syntax  String? @db.VarChar(50)
+  AlertCls_Methods String? @db.Char(5)
+  Role_ID          Int     @default(0, map: "DF_SysAlertCls_Role_ID")
+  Org_ID           Int     @default(0, map: "DF_SysAlertCls_Role_ID2")
+  User_ID          Int     @default(0, map: "DF_SysAlertCls_Role_ID1")
+  Disabled         Boolean @default(false, map: "DF_SysAlertCls_Disabled")
+}
+
+model SysAlerts {
+  SysAlert_Code    String    @id(map: "PK_SysAlerts") @db.Char(12)
+  SysAlertCls_Code String?   @db.Char(2)
+  Alert_Method     String?   @db.Char(1)
+  ToUser_ID        Int?
+  SysAlert_Content String?   @db.NVarChar(Max)
+  User_ID          Int       @default(0, map: "DF_SysAlerts_User_ID")
+  Cr_Alert_Date    DateTime? @db.DateTime
+  Disp_Alert_Date  DateTime? @db.DateTime
+  Recv_Alert_Date  DateTime? @db.DateTime
+  Disabled         Boolean   @default(false, map: "DF_SysAlerts_Disabled")
+}
+
+model SYSUNIT {
+  SUnit_ID   Int     @id(map: "PK_SysUnit") @default(0, map: "DF_SysUnit_SUnit_ID")
+  SUnit_Code String? @default("", map: "DF_SysUnit_SUnit_Code") @db.VarChar(20)
+  SUnit_Desc String  @default("", map: "DF_SysUnit_SUnit_Desc") @db.NVarChar(50)
+  SubS_Code  String  @default("", map: "DF_SysUnit_SubS_Code") @db.Char(2)
+  Node_ID    Int     @default(0, map: "DF_SysUnit_Node_ID")
+  isNode     Boolean @default(false, map: "DF_SysUnit_isNode")
+  PUnit_ID   Int     @default(0, map: "DF_SysUnit_PUnit_ID")
+  Event_No   Int     @default(0, map: "DF_SYSUNIT_Event_No")
+  Status     Boolean @default(true, map: "DF_SysUnit_Status")
+}
+
+model SYSVAR {
+  Var_Name    String  @id(map: "PK_SYSVAR") @default("", map: "DF_SYSVAR_NAME") @db.VarChar(20)
+  Data_Type   String  @default("", map: "DF_SYSVAR_TYPE") @db.Char(1)
+  Var_Value   String  @default("", map: "DF_SYSVAR_VALUE") @db.NVarChar(60)
+  Var_Desc    String  @default("", map: "DF_SYSVAR_DESCRIPT") @db.NVarChar(100)
+  InputMask   String  @default("", map: "DF_SYSVAR_INPUTMASK") @db.Char(12)
+  Modify      Boolean @default(true, map: "DF_SYSVAR_MODIFY")
+  Dept_IDs    String  @default("", map: "DF_SYSVAR_DEP_CODE") @db.VarChar(8)
+  Resource_ID Int     @default(-1, map: "DF_SYSVAR_Resource_ID")
+  Status      Boolean @default(true, map: "DF_SYSVAR_Status")
+}
+
+model TABLEDIC {
+  Tbl_ID      Int     @id(map: "PK_FILEDIC") @default(0, map: "DF_FILEDIC_IDX")
+  Tbl_Name    String  @default("", map: "DF_FILEDIC_DEP_CODE") @db.VarChar(20)
+  DB_Name     String  @default("", map: "DF_FILEDIC_DATANAME") @db.VarChar(30)
+  Tbl_Idx     Int     @default(0, map: "DF_TABLEDIC_Tbl_ID1")
+  Tbl_Desc    String  @default("", map: "DF_TABLEDIC_TABLE_KEY") @db.NVarChar(200)
+  isBackUp    Boolean @default(false, map: "DF_FILEDIC_EOD")
+  Devided_by  String  @default("", map: "DF_TABLEDIC_DEL_FILTER1") @db.Char(1)
+  Related_Tbl String  @default("", map: "DF_TABLEDIC_Devided_by1") @db.NVarChar(20)
+  Del_Filter  String  @default("", map: "DF_TABLEDIC_Related_Tbl1") @db.NVarChar(Max)
+  Del_Period  String  @default("", map: "DF_TABLEDIC_Del_Filter1_1") @db.Char(1)
+  Dept_IDs    String  @default("", map: "DF_FILEDIC_DESCRIPT") @db.VarChar(8)
+  Obj_ID      Int     @default(0, map: "DF_TABLEDIC_Tbl_Idx1")
+  Status      Boolean @default(true, map: "DF_FILEDIC_IS_PUBLIC")
+}
+
+model Taxation {
+  Tax_ID      Int     @id(map: "PK_Taxation") @default(0, map: "DF_Taxation_Tax_ID")
+  Tax_Code    String  @default("", map: "DF_Taxation_Tax_Code") @db.Char(2)
+  Description String  @default("", map: "DF_Taxation_Description") @db.NVarChar(50)
+  Tax_Rate    Decimal @default(0, map: "DF_Taxation_Tax_Rate") @db.Decimal(6, 2)
+  Type        String  @default("", map: "DF_Taxation_Type") @db.Char(2)
+  Tax_AR_Code String  @default("", map: "DF_Taxation_Tax_AR_Code") @db.NVarChar(20)
+  Tax_AP_Code String  @default("", map: "DF_Taxation_Tax_AP_Code") @db.NVarChar(20)
+  Disabled    Boolean @default(false, map: "DF_Taxation_Disabled")
+}
+
+model Temperature {
+  Temp_ID    Int     @id(map: "PK_Temperature") @default(0, map: "DF_Temperature_Temp_ID")
+  Temp_Code  String  @default("", map: "DF_Temperature_Temp_Code") @db.Char(20)
+  Temp_Desc  String  @default("", map: "DF_Temperature_Temp_Desc") @db.NVarChar(100)
+  Temp_Img   String  @default("", map: "DF_Temperature_Temp_Img") @db.NVarChar(Max)
+  Fr_Degrees Int     @default(0, map: "DF_Temperature_Fr_Degrees")
+  To_Degrees Int     @default(0, map: "DF_Temperature_To_Degrees")
+  Disabled   Boolean @default(false, map: "DF_Temperature_Disabled")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model TimeRec {
+  Node_ID        Int       @default(0, map: "DF_TimeRec_Node_ID")
+  SysUnit_ID     Int       @default(0, map: "DF_TimeRec_SysUnit_ID")
+  Stk_ID         Int       @default(0, map: "DF_TimeRec_Stk_ID")
+  Stk_Code       String    @default("", map: "DF_TimeRec_Stk_Code") @db.Char(12)
+  User_ID        Int       @default(0, map: "DF_TimeRec_User_ID")
+  WS_ID          Int       @default(0, map: "DF_TimeRec_WS_ID")
+  In_Date        DateTime? @default(dbgenerated("(1900)-(1))-(1"), map: "DF_TimeRec_In_Date") @db.DateTime
+  EfIn_Date      DateTime? @default(dbgenerated("(1900)-(1))-(1"), map: "DF_TimeRec_EfIn_Date") @db.DateTime
+  Out_Date       DateTime? @default(dbgenerated("(1900)-(1))-(1"), map: "DF_TimeRec_Out_Date") @db.DateTime
+  EfOut_Date     DateTime? @default(dbgenerated("(1900)-(1))-(1"), map: "DF_TimeRec_EfOut_Date") @db.DateTime
+  Process_Stat   String?   @default("", map: "DF_TimeRec_Process_Stat") @db.Char(1)
+  Partition_Code String?   @default("", map: "DF_TimeRec_Partition_Code") @db.VarChar(10)
+  Status         Boolean   @default(true, map: "DF_TimeRec_Status")
+
+  @@ignore
+}
+
+model TRCODE {
+  Trans_ID    Decimal @id(map: "PK_TRCODE") @default(0, map: "DF_TRCODE_ID") @db.Decimal(3, 0)
+  Tran_Code   String  @unique(map: "Idx_TranCode") @default("", map: "DF_TRCODE_TRANS_CODE") @db.Char(2)
+  Tran_Name   String  @default("", map: "DF_TRCODE_TRANS_NAME") @db.NVarChar(80)
+  RFTRS_Code  String  @default("", map: "DF_TRCODE_RFTRS_CODE") @db.Char(2)
+  Tran_Type   String  @default("", map: "DF_TRCODE_TRAN_TYPE_1") @db.Char(2)
+  Form_Name   String  @default("", map: "DF_TRCODE_Form_Name") @db.NVarChar(50)
+  SQL_Command String  @default("", map: "DF_TRCODE_SQL_Command") @db.NVarChar(Max)
+  FRCODE      String  @default("", map: "DF_TRCODE_FRCODE_1") @db.Char(12)
+  TOCODE      String  @default("", map: "DF_TRCODE_TOCODE_1") @db.Char(12)
+  Merc_Type   String  @default("", map: "DF_TRCODE_MERC_TYPE") @db.VarChar(8)
+  Obj_ID      Int     @default(0, map: "DF_TRCODE_Obj_ID")
+  Status      Boolean @default(true, map: "DF_TRCODE_isBatch1")
+  Resource_ID Int     @default(-1, map: "DF_TRCode_Resource_ID")
+  DEP_CODE    String  @default("", map: "DF_TRCODE_DEP_CODE_1") @db.VarChar(10)
+  IsPack      Boolean @default(false, map: "DF_TRCODE_IsPack")
+
+  @@index([DEP_CODE], map: "Idx_Dep")
+}
+
+model TRDocPRN {
+  Tran_Code String  @default("", map: "DF_Table_1_TRANS_CODE1") @db.Char(2)
+  Docx_type String  @default("", map: "DF_TRSDOCPRN_TYPE") @db.VarChar(2)
+  PRN_IDX   Int     @default(0, map: "DF_TRSDOCPRN_IDX")
+  PRN_Type  String  @default("0", map: "DF_TRSDOCPRN_PRN_IDX1") @db.VarChar(Max)
+  nCopies   Int     @default(1, map: "DF_TRSDOCPRN_nCopies")
+  FVoucher  String  @default("", map: "DF_TRSDOCPRN_FVOUCHER") @db.NVarChar(100)
+  Doc_Name  String  @default("", map: "DF_TRSDOCPRN_DOC_NAME") @db.NVarChar(50)
+  Status    Boolean @default(true, map: "DF_TRSDOCPRN_Status")
+
+  @@id([Tran_Code, Docx_type], map: "PK_TRSDOCPRN_1")
+}
+
+model Units {
+  Unit_ID   Int     @id(map: "PK_Units") @default(0, map: "DF_Units_Unit_ID")
+  Unit_Code String  @default("", map: "DF_Units_Unit_Code") @db.NVarChar(8)
+  Unit_Name String  @default("", map: "DF_Units_Unit_Name") @db.NVarChar(50)
+  Unit_Type String  @default("", map: "DF_Units_Unit_Type") @db.Char(2)
+  Disabled  Boolean @default(false, map: "DF_Units_Disabled")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model UPDPATCHES {
+  Patch_No       String   @default("", map: "DF_UpdPatches_Patch_No") @db.Char(20)
+  Part_ID        Int      @default(0, map: "DF_UpdPatches_Part_ID")
+  PType_ID       Int      @default(0, map: "DF_UpdPatches_PType_ID")
+  Part_Content   String   @default("", map: "DF_UpdPatches_Part_Content") @db.NVarChar(Max)
+  Node_ID        Int      @default(0, map: "DF_UpdPatches_Node_ID")
+  SysUnit_ID     Int      @default(0, map: "DF_UpdPatches_SysUnit_ID")
+  StartUpd_time  DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_UpdPatches_StartUpd_time") @db.DateTime
+  FinishUpd_time DateTime @default(dbgenerated("(1)/(1))/(1900"), map: "DF_UpdPatches_FinishUpd_time") @db.DateTime
+  Status         String   @default("", map: "DF_UpdPatches_Status") @db.Char(1)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model USER_LEAVE {
+  NODE_ID  String    @default("", map: "DF_USER_LEAVE_NODE_ID") @db.Char(3)
+  USER_ID  Decimal   @default(0, map: "DF_USER_LEAVE_USER_ID") @db.Decimal(3, 0)
+  LEAVE_DT DateTime? @default(now(), map: "DF_Table_1_DATE") @db.DateTime
+  FR_DATE  DateTime? @db.DateTime
+  TO_DATE  DateTime? @db.DateTime
+  RS_CODE  String    @default("", map: "DF_USER_LEAVE_RS_CODE") @db.Char(2)
+
+  @@ignore
+}
+
+model UserAuthority {
+  User_ID      Int @default(0, map: "DF_UserAuthority_User_ID")
+  Authority_ID Int @default(0, map: "DF_UserAuthority_Authority_ID")
+
+  @@id([User_ID, Authority_ID], map: "PK_UserAuthority")
+}
+
+model UserInfo {
+  User_ID     Int     @id(map: "PK_UserInfo") @default(0, map: "DF_UserInfo_User_ID")
+  OrgUnit_ID  Int     @default(0, map: "DF_UserInfo_OrgUnit_ID")
+  OrgPos_ID   Int     @default(0, map: "DF_UserInfo_OrgPos_ID")
+  OrgPosition String? @db.NVarChar(100)
+  Disabled    Boolean @default(false, map: "DF_UserInfo_Disabled")
+}
+
+model USEROBJRIGHT {
+  User_ID    Int
+  Obj_ID     Int
+  ObjKey_IDs String @default("", map: "DF_USEROBJRIGHT_ObjKey_IDs") @db.NVarChar(64)
+  Event_IDXs String @default("", map: "DF_USEROBJRIGHT_Event_IDXs") @db.NVarChar(4)
+  nPassDay   Int    @default(0, map: "DF_USEROBJRIGHT_nPassDay")
+
+  @@id([User_ID, Obj_ID], map: "PK_USEROBJRIGHT")
+}
+
+model UserRoles {
+  Role_ID         Int      @default(0, map: "DF_UserRoles_Role_ID")
+  User_ID         Int      @default(0, map: "DF_UserRoles_User_ID")
+  SetupUser_ID    Int      @default(0, map: "DF_UserRoles_SetupUser_ID")
+  Setup_Date      DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_UserRoles_Setup_Date") @db.DateTime
+  DisabledUser_ID Int      @default(0, map: "DF_UserRoles_DisabledUser_ID")
+  Disabled_Date   DateTime @default(dbgenerated("(1)-(1))-(1900"), map: "DF_UserRoles_Disabled_Date") @db.DateTime
+  Disabled        Boolean  @default(false, map: "DF_UserRoles_Disabled")
+
+  @@id([Role_ID, User_ID], map: "PK_UserRoles")
+}
+
+model USERS {
+  User_ID      Int     @unique(map: "IX_USERS")
+  Node_ID      Int     @default(0, map: "DF_USERS_ZONE_CODE")
+  Type         Int     @default(1, map: "DF_USERS_TYPE")
+  Login_Name   String  @unique(map: "Idx_LoginName") @default("", map: "DF_USERS_NAME") @db.VarChar(15)
+  Password     Int     @default(0, map: "DF_USERS_PASSWORD")
+  Full_Name    String  @default("", map: "DF_USERS_FULLNAME") @db.NVarChar(60)
+  GoodGrp_IDs  String? @db.NVarChar(64)
+  EqualUS_IDs  String? @default("", map: "DF_USERS_GROUPS") @db.NVarChar(64)
+  APSMenus_IDs String? @default("", map: "DF_USERS_APSMenus_IDs") @db.NVarChar(64)
+  BDSMenus_IDs String? @default("", map: "DF_USERS_BDSMenus_IDs") @db.NVarChar(64)
+  POSMenus_IDs String? @default("", map: "DF_USERS_POSMenus_IDs") @db.NVarChar(64)
+  RESMenus_IDs String? @default("", map: "DF_USERS_RESMenus_IDs") @db.NVarChar(64)
+  Confirm_IDs  String? @default("", map: "DF_USERS_Confirm_IDs") @db.NVarChar(64)
+  WS_IDs       String? @default("", map: "DF_USERS_WS_IDs") @db.NVarChar(64)
+  Tran_IDs     String? @default("", map: "DF_USERS_Tran_IDs") @db.NVarChar(64)
+  Reports_IDs  String? @default("", map: "DF_USERS_Reports_IDs") @db.NVarChar(64)
+  SMTPHost     String  @default("", map: "DF_USERS_SMTPHost") @db.NVarChar(50)
+  SMTPPort     Decimal @default(0, map: "DF_USERS_SMTPPort") @db.Decimal(3, 0)
+  SMTPSSL      Decimal @default(0, map: "DF_USERS_SMTPSSL") @db.Decimal(3, 0)
+  SMTPEmail    String  @default("", map: "DF_USERS_SMTPEmail") @db.NVarChar(50)
+  SMTPUser     String  @default("", map: "DF_USERS_SMTPUser") @db.NVarChar(50)
+  SMTPPW       String  @default("", map: "DF_USERS_SMTPPW") @db.NVarChar(50)
+  Login        Boolean @default(false, map: "DF_USERS_LOGIN")
+  Status       Boolean @default(true, map: "DF_USERS_STATUS")
+  PW_Grace     Int     @default(3, map: "DF_USERS_PW_GRACE")
+  Image        String  @default("", map: "DF_USERS_Image") @db.VarChar(Max)
+
+  @@id([Node_ID, User_ID], map: "PK_USERS")
+}
+
+model UTILS {
+  Util_ID     Int     @id(map: "PK_UTILS") @default(0, map: "DF_UTILS_ID")
+  Util_Type   String  @default("", map: "DF_UTILS_Util_Type") @db.NVarChar(2)
+  Util_Code   String  @default("", map: "DF_UTILS_code") @db.VarChar(3)
+  Caption_VN  String  @default("", map: "DF_UTILS_Caption_VN") @db.NVarChar(60)
+  Caption_EN  String  @default("", map: "DF_UTILS_Caption_VN1") @db.NVarChar(60)
+  Util_Desc   String  @default("", map: "DF_UTILS_descript") @db.NVarChar(100)
+  Comment     String  @default("", map: "DF_UTILS_comment") @db.NText
+  Frm_Name    String  @default("", map: "DF_UTILS_command") @db.VarChar(50)
+  File_Path   String  @default("", map: "DF_UTILS_Frm_Name1") @db.VarChar(50)
+  Dep_Code    String  @default("", map: "DF_UTILS_dep_code") @db.Char(1)
+  Paras       String  @default("", map: "DF_UTILS_PARAS") @db.VarChar(50)
+  Obj_ID      Int     @default(0, map: "DF_UTILS_OBJ_ID")
+  Resource_ID Int     @default(-1, map: "DF_UTILS_Resource_ID")
+  Chk         Boolean @default(false, map: "DF_UTILS_Status1")
+  Status      Boolean @default(true, map: "DF_UTILS_Status")
+}
+
+model VoucherInfo {
+  Voucher_No     String    @id(map: "[PK_VoucherInfo") @default("", map: "DF__VoucherIn__Vouch__46693276") @db.NVarChar(20)
+  Rand_Code      String?   @default("", map: "DF__VoucherIn__Rand___475D56AF") @db.NVarChar(20)
+  VoucherPrg_ID  Int?      @default(0, map: "DF__VoucherIn__Vouch__48517AE8")
+  SCC_ID         Int?      @default(0, map: "DF__VoucherIn__SCC_I__49459F21")
+  Goods_ID       Int?      @default(0, map: "DF__VoucherIn__Goods__4A39C35A")
+  SKU_Code       String?   @default("", map: "DF__VoucherIn__SKU_C__4B2DE793") @db.Char(12)
+  Value_Amt      Decimal?  @default(0, map: "DF__VoucherIn__Value__4C220BCC") @db.Decimal(18, 0)
+  Paid_Amt       Decimal?  @default(0, map: "DF__VoucherIn__Paid___4D163005") @db.Decimal(18, 0)
+  Effect_Date    DateTime? @default(dbgenerated("1900/1/1"), map: "DF__VoucherIn__Effec__4E0A543E") @db.Date
+  Due_Date       DateTime? @default(dbgenerated("1900/1/1"), map: "DF__VoucherIn__Due_D__4EFE7877") @db.Date
+  IssueTr_Date   DateTime? @default(dbgenerated("1900/1/1"), map: "DF__VoucherIn__Issue__4FF29CB0") @db.Date
+  IssueTr_Num    String?   @default("", map: "DF__VoucherIn__Issue__50E6C0E9") @db.Char(20)
+  IssueTrCls_ID  Int?      @default(0, map: "DF__VoucherIn__Issue__51DAE522")
+  RevokeTr_Date  DateTime? @default(dbgenerated("1900/1/1"), map: "DF__VoucherIn__Revok__52CF095B") @db.Date
+  RevokeTr_Num   String?   @default("", map: "DF__VoucherIn__Revok__53C32D94") @db.Char(20)
+  RevokeTrCls_ID Int?      @default(0, map: "DF__VoucherIn__Revok__54B751CD")
+  Disabled       Boolean?  @default(false, map: "DF__VoucherIn__Disab__55AB7606")
+}
+
+model VoucherPrg {
+  VoucherPrg_ID   Int       @id(map: "PK_VoucherPrg") @default(0, map: "DF__VoucherPr__Vouch__77C096E8")
+  VoucherPrg_Code String?   @default("", map: "DF__VoucherPr__Vouch__78B4BB21") @db.NVarChar(20)
+  VoucherPrg_Name String?   @default("", map: "DF__VoucherPr__Vouch__79A8DF5A") @db.NVarChar(100)
+  SCC_ID          Int?      @default(0, map: "DF__VoucherPr__SCC_I__7A9D0393")
+  GType_ID        Int?      @default(0, map: "DF__VoucherPr__GType__7B9127CC")
+  Goods_ID        Int?      @default(0, map: "DF__VoucherPr__Goods__7C854C05")
+  SKU_Code        String?   @default("", map: "DF__VoucherPr__SKU_C__7D79703E") @db.Char(12)
+  isSaleItem      Boolean?  @default(false, map: "DF__VoucherPr__isSal__7E6D9477")
+  isPromotion     Boolean?  @default(false, map: "DF__VoucherPr__isPro__7F61B8B0")
+  isElectro       Boolean?  @default(false, map: "DF__VoucherPr__isEle__0055DCE9")
+  Prefix          String?   @default("", map: "DF__VoucherPr__Prefi__014A0122") @db.NVarChar(10)
+  Rand_Length     Int?      @default(0, map: "DF__VoucherPr__Rand___023E255B")
+  Issued_Qty      Int?      @default(0, map: "DF__VoucherPr__Issue__03324994")
+  Max_Qty         Int?      @default(0, map: "DF__VoucherPr__Max_Q__04266DCD")
+  Value_Amt       Decimal?  @default(0, map: "DF__VoucherPr__Value__051A9206") @db.Decimal(18, 2)
+  isMultiPmt      Boolean?  @default(false, map: "DF__VoucherPr__isMul__060EB63F")
+  Effect_Date     DateTime? @default(dbgenerated("1900/1/1"), map: "DF__VoucherPr__Effec__0702DA78") @db.Date
+  Due_Date        DateTime? @default(dbgenerated("1900/1/1"), map: "DF__VoucherPr__Due_D__07F6FEB1") @db.Date
+  Disabled        Boolean?  @default(false, map: "DF__VoucherPr__Disab__08EB22EA")
+  Process         String?   @default("", map: "DF__VoucherPr__Proce__77767E25") @db.Char(1)
+}
+
+model Weather {
+  Weather_ID   Int     @id(map: "PK_Weather") @default(0, map: "DF_Weather_Weather_ID")
+  Weather_Code String  @default("", map: "DF_Weather_Weather_Code") @db.Char(20)
+  Weather_Desc String  @default("", map: "DF_Weather_Weather_Desc") @db.NVarChar(100)
+  Weather_Img  String  @default("", map: "DF_Weather_Weather_Img") @db.NVarChar(Max)
+  Disabled     Boolean @default(false, map: "DF_Weather_Disabled")
+}
+
+model WSTermCls {
+  WSTCls__ID   Int     @id(map: "PK_WSTermCls") @default(0, map: "DF_WSTermCls_WSTCls _ID") @map("WSTCls _ID")
+  WSTCls_Code  String  @default("", map: "DF_WSTermCls_WSTCls_Code") @db.Char(2)
+  WSTCls_Brand String  @default("", map: "DF_WSTermCls_WSTCls_Brand") @db.Char(4)
+  WSTCls_Desc  String  @default("", map: "DF_WSTermCls_WSTCls_Desc") @db.NVarChar(100)
+  API_Code     String  @default("", map: "DF_WSTermCls_API_Code") @db.Char(20)
+  DLL_Name     String  @default("", map: "DF_WSTermCls_DLL_Name") @db.VarChar(30)
+  Status       Boolean @default(true, map: "DF_WSTermCls_Status")
+}
+
+model WSTerminals {
+  WST_ID    Int     @id(map: "PK_WSTerminals") @default(0, map: "DF_WSTerminals_WST_ID")
+  WST_Code  String  @default("", map: "DF_WSTerminals_WST_Code") @db.Char(20)
+  WSTCls_ID String  @default("", map: "DF_WSTerminals_WSTCls_ID") @db.Char(2)
+  WST_Desc  String  @default("", map: "DF_WSTerminals_WST_Desc") @db.NVarChar(50)
+  Node_ID   Int     @default(0, map: "DF_WSTerminals_Node_ID")
+  WS_ID     Int     @default(0, map: "DF_WSTerminals_WS_ID")
+  WST_Port  String  @default("", map: "DF_WSTerminals_WST_Port") @db.Char(2)
+  Addr_IP4  String  @default("", map: "DF_WSTerminals_Addr_IP4") @db.Char(15)
+  Width     Int     @default(0, map: "DF_WSTerminals_Width")
+  isTouch   Boolean @default(false, map: "DF_WSTerminals_isTouch")
+  IsJournal Boolean @default(false, map: "DF_WSTerminals_IsJournal")
+  IsDocu    Boolean @default(false, map: "DF_WSTerminals_IsDocu")
+  MSR_Track Int     @default(0, map: "DF_WSTerminals_MSR_Track")
+  Status    Boolean @default(true, map: "DF_WSTerminals_Status")
+}
