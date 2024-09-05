@@ -10,27 +10,24 @@ export function UpdateInvoice({ id }: { id: number }) {
   const handleDownload = async () => {
     setLoading(true);
     try {
-      // Make a request to your API to fetch the CSV
-      const response = await axios.get(`/api/export?PProg_ID=${id}`, {
-        responseType: 'blob', // Expecting a blob response for the file
-      });
+        // Gửi yêu cầu POST tới API với object
+        const response = await axios.post('/api/export', { pprogId: id }, {
+            responseType: 'blob', 
+        });
 
-      // Create a URL from the blob response
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+        // Tạo URL từ blob response
+        const url = window.URL.createObjectURL(new Blob([response.data]));
 
-      // Create a link and trigger the download
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `promotion_${id}.csv`); // Set the filename
-      document.body.appendChild(link);
-      link.click();
-
-      // Cleanup: Remove the link after triggering the download
-      document.body.removeChild(link);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `promotion_${id}.csv`); // Đặt tên file
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     } catch (error) {
-      console.error('Error downloading file:', error);
+        console.error('Error downloading file:', error);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
