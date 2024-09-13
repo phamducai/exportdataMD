@@ -23,7 +23,7 @@ export function UpdateInvoice({ id ,promotion }: { id: number ,promotion:string|
     // Tạo link để tải file
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `promotion_${promotion}.csv`);
+    link.setAttribute('download', `promotion_${promotion}.xlsx`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
