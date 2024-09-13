@@ -91,8 +91,8 @@ export type Promotion = {
   PType_ID: number;
   Promotion_Code: string;
   Prom_Description: string;
-  Effect_Date: Date;
-  Due_Date: Date;
+  Effect_Date: string;
+  Due_Date: string;
   Disabled: boolean;
 };
 export interface SaleDataDTO {

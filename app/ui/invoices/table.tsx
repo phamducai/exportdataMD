@@ -1,5 +1,4 @@
 import { fetchFilteredPromotion } from "@/app/lib/data";
-import moment from "moment";
 import { UpdateInvoice } from "./UpdateInvoice";
 
 
