@@ -89,10 +89,10 @@ export default async function InvoicesTable({
                     {promotion.Prom_Description}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {moment(promotion.Effect_Date).format("DD/MM/YYYY")}
+                    {promotion.Effect_Date}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {moment(promotion.Due_Date).format("DD/MM/YYYY")}{" "}
+                    {promotion.Due_Date}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">

@@ -3,7 +3,6 @@ import { format } from '@fast-csv/format';
 import { PassThrough } from 'stream';
 import sqlserver1 from '@/app/lib/sqlserver1Client';
 import { SaleDataDTO } from '@/app/lib/definitions';
-import moment from 'moment'; 
 
 export async function POST(req: NextRequest) {   
   const body = await req.json();
@@ -13,17 +12,27 @@ export async function POST(req: NextRequest) {
     if (!pprogId) {
       return NextResponse.json({ message: 'PProg_ID is required' }, { status: 400 });
     }
-  
+    const quantity = await sqlserver1.rT_ProgPSItem.findFirst({
+      where: {
+        PProg_ID:  pprogId
+      },
+      select: {
+        Sold_TrQty: true 
+      }
+    });
+    const soldQuantity = quantity?.Sold_TrQty !== undefined && quantity?.Sold_TrQty !== null 
+    ? quantity.Sold_TrQty 
+    : 1;
     // SQL query and CSV generation logic here...
     const salesData :SaleDataDTO[] = await sqlserver1.$queryRaw`
-    SELECT a.Trans_Date AS DATE, 
-           CONVERT(datetime, LEFT(EfTran_Date, 12), 101) AS EfDate, 
+    SELECT CONVERT(VARCHAR(10), a.Trans_Date, 23) AS DATE, 
+           CONVERT(VARCHAR(10), EfTran_Date, 23) AS EfDate, 
            a.StkClust_ID - 1 AS store, 
            a.Trans_No, 
            a.Goods_ID, 
            c.Short_Name, 
            a.Goods_Qty, 
-           a.Goods_Qty / 2 AS ComboQty, 
+           a.Goods_Qty / ${soldQuantity} AS ComboQty, 
            Promotion_Code 
     FROM STr_SaleSet a
     INNER JOIN Str_Hdr b ON a.Trans_No = b.Trans_No
@@ -32,7 +41,7 @@ export async function POST(req: NextRequest) {
     WHERE a.PProg_ID  = ${pprogId}
     ORDER BY EfTran_Date, Trans_No, a.StkClust_ID ASC
   `;
-  
+    console.log(salesData);
     // CSV stream setup and response generation here...
     const csvStream = format({ headers: true });
     const passThrough = new PassThrough();
@@ -48,8 +57,8 @@ export async function POST(req: NextRequest) {
   
     salesData.forEach((row) => {
       csvStream.write({
-        DATE: moment(row.DATE).format('DD/MM/YYYY'),   // Định dạng ngày với moment
-        EfDate: moment(row.EfDate).format('DD/MM/YYYY'),  // Định dạng ngày với moment
+        DATE: row.DATE,   // Định dạng ngày với moment
+        EfDate: row.EfDate,  // Định dạng ngày với moment
         Store: row.store,
         Trans_No: row.Trans_No,
         Goods_ID: row.Goods_ID,

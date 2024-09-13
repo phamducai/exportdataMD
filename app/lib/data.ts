@@ -5,6 +5,7 @@ import {
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
+  Promotion,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -217,65 +218,127 @@ export async function fetchFilteredCustomers(query: string) {
   }
 }
 
+// export async function fetchFilteredPromotion(
+//   query: string | undefined,
+//   currentPage: number,
+//   startDate: Date | undefined,
+//   endDate: Date | undefined,
+// ) {
+//   const ITEMS_PER_PAGE = 10; // Số lượng item trên mỗi trang
+//   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+//   const whereClause: any = {};
+//   if (query) {
+//     whereClause.OR = [
+//       {
+//         PProg_Code: {
+//           contains: query
+//         },
+//       },
+//       {
+//         Promotion_Code: {
+//           contains: query
+//         },
+//       },
+//       {
+//         Prom_Description: {
+//           contains: query
+//         },
+//       },
+//     ];
+//   }
+//   if (startDate) {
+//     whereClause.Effect_Date = {
+//       gte: startDate, // Lớn hơn hoặc bằng ngày bắt đầu
+//     };
+//   }
+
+//   if (endDate) {
+//     whereClause.Due_Date = {
+//       lte: endDate, // Nhỏ hơn hoặc bằng ngày kết thúc
+//     };
+//   }
+
+//   try {
+//     const promotions = await sqlserver1.rT_PProgs.findMany({
+//       where: whereClause,
+//       select: {
+//         PProg_ID: true,
+//         PProg_Code: true,
+//         PType_ID: true,
+//         Promotion_Code: true,
+//         Prom_Description: true,
+//         Effect_Date: true,
+//         Due_Date: true,
+//         Disabled: true,
+//       },
+//       skip: offset,
+//       take: ITEMS_PER_PAGE,
+//       orderBy: {
+//         Effect_Date: 'desc', // Sắp xếp theo ngày hiệu lực
+//       },
+//     });
+
+//     return promotions;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch promotions.');
+//   }
+// }
 export async function fetchFilteredPromotion(
   query: string | undefined,
   currentPage: number,
   startDate: Date | undefined,
   endDate: Date | undefined,
-) {
+): Promise<Promotion[]> {
   const ITEMS_PER_PAGE = 10; // Số lượng item trên mỗi trang
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-  const whereClause: any = {};
+
+  // Khởi tạo câu lệnh SQL cơ bản
+  let sqlQuery = `
+    SELECT 
+      PProg_ID, 
+      PProg_Code, 
+      PType_ID, 
+      Promotion_Code, 
+      Prom_Description, 
+      CONVERT(VARCHAR(10), Effect_Date, 23) AS Effect_Date, 
+      CONVERT(VARCHAR(10), Due_Date, 23) AS Due_Date, 
+      Disabled
+    FROM rT_PProgs
+    WHERE 1=1
+  `;
+
+  // Điều kiện tìm kiếm theo query (nếu có)
   if (query) {
-    whereClause.OR = [
-      {
-        PProg_Code: {
-          contains: query
-        },
-      },
-      {
-        Promotion_Code: {
-          contains: query
-        },
-      },
-      {
-        Prom_Description: {
-          contains: query
-        },
-      },
-    ];
-  }
-  if (startDate) {
-    whereClause.Effect_Date = {
-      gte: startDate, // Lớn hơn hoặc bằng ngày bắt đầu
-    };
+    sqlQuery += `
+      AND (
+        PProg_Code LIKE '%${query}%' 
+        OR Promotion_Code LIKE '%${query}%'
+        OR Prom_Description LIKE '%${query}%'
+      )
+    `;
   }
 
-  if (endDate) {
-    whereClause.Due_Date = {
-      lte: endDate, // Nhỏ hơn hoặc bằng ngày kết thúc
-    };
+  // Điều kiện tìm kiếm theo ngày bắt đầu (nếu có)
+  if (startDate) {
+    sqlQuery += ` AND Effect_Date >= '${startDate.toISOString().split('T')[0]}'`;
   }
+
+  // Điều kiện tìm kiếm theo ngày kết thúc (nếu có)
+  if (endDate) {
+    sqlQuery += ` AND Due_Date <= '${endDate.toISOString().split('T')[0]}'`;
+  }
+
+  // Phân trang và sắp xếp
+  sqlQuery += `
+    ORDER BY Effect_Date DESC
+    OFFSET ${offset} ROWS
+    FETCH NEXT ${ITEMS_PER_PAGE} ROWS ONLY;
+  `;
 
   try {
-    const promotions = await sqlserver1.rT_PProgs.findMany({
-      where: whereClause,
-      select: {
-        PProg_ID: true,
-        PProg_Code: true,
-        PType_ID: true,
-        Promotion_Code: true,
-        Prom_Description: true,
-        Effect_Date: true,
-        Due_Date: true,
-        Disabled: true,
-      },
-      skip: offset,
-      take: ITEMS_PER_PAGE,
-      orderBy: {
-        Effect_Date: 'desc', // Sắp xếp theo ngày hiệu lực
-      },
-    });
+    // Thực hiện truy vấn SQL thô
+    const promotions: Promotion[] = await sqlserver1.$queryRawUnsafe(sqlQuery);
 
     return promotions;
   } catch (error) {
@@ -283,6 +346,8 @@ export async function fetchFilteredPromotion(
     throw new Error('Failed to fetch promotions.');
   }
 }
+
+
 
 export async function fetchTotalPages(
   query: string | undefined,
