@@ -3,9 +3,11 @@ import ExcelJS from 'exceljs';
 import sqlserver1 from '@/app/lib/sqlserver1Client';
 import { SaleDataDTO } from '@/app/lib/definitions';
 
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { pprogId, ppogCode } = body;
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const pprogId = searchParams.get('pprogId');
+  const ppogCode = searchParams.get('ppogCode');
+
   
   if (!pprogId) {
     return NextResponse.json({ message: 'PProg_ID is required' }, { status: 400 });
@@ -13,7 +15,7 @@ export async function POST(req: NextRequest) {
 
   const quantity = await sqlserver1.rT_ProgPSItem.findFirst({
     where: {
-      PProg_ID: pprogId
+      PProg_ID: +pprogId
     },
     select: {
       Sold_TrQty: true
